@@ -1,0 +1,30 @@
+{
+  "name": "ika-fashion-backend",
+  "version": "1.0.0",
+  "description": "IKA Fashion — Backend API (Node.js + Express)",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "db:setup": "node src/db/setup.js"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.5",
+    "@scalar/express-api-reference": "^0.10.3",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "exceljs": "^4.4.0",
+    "express": "^4.19.2",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "multer": "^2.2.0",
+    "pdfkit": "^0.15.2",
+    "pg": "^8.13.1",
+    "pg-mem": "^3.0.14",
+    "zod": "^3.25.0"
+  }
+}
