@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/favicon.png">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="/manifest.json">
+
+    <title>Tin tức - Hexagon Corporation</title>
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #F8FAFC;
+            color: #1e293b;
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== HEADER ===== */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: #1A6B49;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-area img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .logo-area span {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #d1d5db;
+            transition: color 0.2s;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #fbbf24;
+        }
+
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 16px;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+
+        .lang-btn.active {
+            opacity: 1;
+        }
+
+        .lang-btn img {
+            width: 24px;
+            height: 16px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Mobile menu */
+        #mobile-menu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid #f1f5f9;
+            z-index: 40;
+            padding: 16px 0;
+        }
+
+        #mobile-menu.open {
+            display: block;
+        }
+
+        #mobile-menu a {
+            display: block;
+            padding: 12px 24px;
+            color: #1e293b;
+            font-weight: 500;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        #mobile-menu a:hover {
+            background: #f8fafc;
+            color: #d97706;
+        }
+
+        #mobile-menu .lang-switcher {
+            padding: 16px 24px 0;
+            border-top: 1px solid #f1f5f9;
+            margin-top: 8px;
+        }
+
+        /* ===== BREADCRUMB ===== */
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: #94a3b8;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: #f59e0b;
+        }
+
+        .breadcrumb .separator {
+            color: #94a3b8;
+        }
+
+        .breadcrumb .current {
+            color: #334155;
+            font-weight: 500;
+        }
+
+        /* ===== PAGE HEADER ===== */
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            color: #f59e0b;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .page-header p {
+            font-size: 1.125rem;
+            color: #475569;
+            max-width: 560px;
+        }
+
+        .page-header .line {
+            width: 64px;
+            height: 4px;
+            background: #f59e0b;
+            border-radius: 4px;
+            margin-top: 16px;
+        }
+
+        /* ===== LAYOUT ===== */
+        .page-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        @media (min-width: 1024px) {
+            .page-layout {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+        }
+
+        .page-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .page-sidebar {
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 1024px) {
+            .page-sidebar {
+                width: 320px;
+                position: sticky;
+                top: 100px;
+                align-self: flex-start;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .page-sidebar {
+                width: 384px;
+            }
+        }
+
+        /* ===== POSTS GRID ===== */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .posts-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .post-card {
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
+        }
+
+        .post-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            border-color: #fbbf24;
+            transform: translateY(-4px);
+        }
+
+        .post-card .image-wrap {
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+
+        .post-card .image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .post-card:hover .image-wrap img {
+            transform: scale(1.05);
+        }
+
+        .post-card .info {
+            padding: 20px 24px 24px;
+        }
+
+        .post-card .category-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .post-card .category-badge.hoat-dong {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .post-card .category-badge.su-kien {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .post-card .category-badge.tin-tuc {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .post-card .info h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: color 0.2s;
+        }
+
+        .post-card:hover .info h3 {
+            color: #d97706;
+        }
+
+        .post-card .info p {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .post-card .info .date {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .post-card .info .date svg {
+            width: 14px;
+            height: 14px;
+            color: #fbbf24;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar-card {
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+
+        .sidebar-card .animate-pulse {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .sidebar-card .pulse-bar {
+            height: 16px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-card .pulse-bar.w-3-4 {
+            width: 75%;
+        }
+
+        .sidebar-card .pulse-bar.w-2-3 {
+            width: 66%;
+        }
+
+        .sidebar-card .pulse-image {
+            aspect-ratio: 16/9;
+            background: #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0D5939;
+            padding: 24px 0 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 24px;
+        }
+
+        footer p {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+        footer p span {
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 72px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .nav-inner {
+                padding: 8px 16px;
+            }
+
+            .logo-area img {
+                width: 48px;
+                height: 48px;
+            }
+
+            .logo-area span {
+                font-size: 1rem;
+            }
+
+            .post-card .info {
+                padding: 16px;
+            }
+
+            .post-card .info h3 {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .page-header p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header id="navbar">
+        <div class="nav-inner">
+            <div class="logo-area">
+                <a href="/">
+                    <img src="Logo/logo-hhc.png" alt="Hexagon Logo">
+                </a>
+                <span>HEXAGON</span>
+            </div>
+
+            <nav class="nav-links">
+                <a href="Trang-Chủ.html">Trang chủ</a>
+                <a href="/#gioi-thieu">Giới thiệu</a>
+                <a href="/#dich-vu">Dịch vụ</a>
+                <a href="https://support.hexagon.xyz/" target="_blank" rel="noopener noreferrer">Hỗ trợ</a>
+                <a href="/#lien-he">Liên hệ</a>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" title="Tiếng Việt">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                            style="width:24px;height:16px;object-fit:cover;border-radius:2px;">
+                            <defs>
+                                <clipPath id="vn-a">
+                                    <path fill-opacity=".7" d="M-85.3 0h682.6v512H-85.3z" />
+                                </clipPath>
+                            </defs>
+                            <g fill-rule="evenodd" clip-path="url(#vn-a)" transform="translate(80)scale(.9375)">
+                                <path fill="#da251d" d="M-128 0h768v512h-768z" />
+                                <path fill="#ff0"
+                                    d="M349.6 381 260 314.3l-89 67.3L204 272l-89-67.7 110.1-1 34.2-109.4L294 203l110.1.1-88.5 68.4 33.9 109.6z" />
+                            </g>
+                        </svg>
+                    </button>
+                    <button class="lang-btn" title="English">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                            style="width:24px;height:16px;object-fit:cover;border-radius:2px;">
+                            <path fill="#012169" d="M0 0h640v480H0z" />
+                            <path fill="#FFF"
+                                d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0z" />
+                            <path fill="#C8102E"
+                                d="m424 281 216 159v40L369 281zm-184 20 6 35L54 480H0zM640 0v3L391 191l2-44L590 0zM0 0l239 176h-60L0 42z" />
+                            <path fill="#FFF" d="M241 0v480h160V0zM0 160v160h640V160z" />
+                            <path fill="#C8102E" d="M0 193v96h640v-96zM273 0v480h96V0z" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                ☰
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu">
+            <a href="Trang-Chủ.html">Trang chủ</a>
+            <a href="/#gioi-thieu">Giới thiệu</a>
+            <a href="/#dich-vu">Dịch vụ</a>
+            <a href="https://support.hexagon.xyz/" target="_blank" rel="noopener noreferrer">Hỗ trợ</a>
+            <a href="/#lien-he">Liên hệ</a>
+            <div class="lang-switcher">
+                <button class="lang-btn active" title="Tiếng Việt">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                        style="width:24px;height:16px;object-fit:cover;border-radius:2px;">
+                        <defs>
+                            <clipPath id="vn-b">
+                                <path fill-opacity=".7" d="M-85.3 0h682.6v512H-85.3z" />
+                            </clipPath>
+                        </defs>
+                        <g fill-rule="evenodd" clip-path="url(#vn-b)" transform="translate(80)scale(.9375)">
+                            <path fill="#da251d" d="M-128 0h768v512h-768z" />
+                            <path fill="#ff0"
+                                d="M349.6 381 260 314.3l-89 67.3L204 272l-89-67.7 110.1-1 34.2-109.4L294 203l110.1.1-88.5 68.4 33.9 109.6z" />
+                        </g>
+                    </svg>
+                </button>
+                <button class="lang-btn" title="English">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                        style="width:24px;height:16px;object-fit:cover;border-radius:2px;">
+                        <path fill="#012169" d="M0 0h640v480H0z" />
+                        <path fill="#FFF"
+                            d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0z" />
+                        <path fill="#C8102E"
+                            d="m424 281 216 159v40L369 281zm-184 20 6 35L54 480H0zM640 0v3L391 191l2-44L590 0zM0 0l239 176h-60L0 42z" />
+                        <path fill="#FFF" d="M241 0v480h160V0zM0 160v160h640V160z" />
+                        <path fill="#C8102E" d="M0 193v96h640v-96zM273 0v480h96V0z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main>
+        <div class="container" style="padding-top:40px; padding-bottom:40px;">
+
+            <!-- ===== BREADCRUMB ===== -->
+            <nav class="breadcrumb">
+                <a href="/">Trang chủ</a>
+                <span class="separator">›</span>
+                <span class="current">Tin tức</span>
+            </nav>
+
+            <!-- ===== PAGE LAYOUT ===== -->
+            <div class="page-layout">
+
+                <!-- ===== MAIN CONTENT ===== -->
+                <div class="page-main">
+
+                    <!-- ===== PAGE HEADER ===== -->
+                    <div class="page-header">
+                        <h1>Tin tức</h1>
+                        <p>Tin tức mới nhất, cập nhật và thông tin từ Hexagon Corporation.</p>
+                        <div class="line"></div>
+                    </div>
+
+                    <!-- ===== POSTS GRID ===== -->
+                    <div class="posts-grid">
+
+                        <!-- Post 1: Hoạt động -->
+                        <a href="Tin-Tuc/Không-khí-tưng-bừng.html" class="post-card">
+                            <div class="image-wrap">
+                                <img src="https://beta-api.hexagon.xyz/uploads/teambuilding-01-1774341835079-253071961.jpg"
+                                    alt="Không khí tưng bừng tại Chương trình Teambuilding myH25">
+                            </div>
+                            <div class="info">
+                                <span class="category-badge hoat-dong">Hoạt động</span>
+                                <h3>Không khí tưng bừng tại Chương trình Teambuilding myH25 tại Ngôi nhà Hùng Hậu</h3>
+                                <p>Cùng nhìn lại những khoảnh khắc đáng nhớ và đẹp nhất của đại gia đình HHC trong
+                                    chương trình TEAMBUILDING MYH25, diễn ra tại khu nghỉ dưỡng Vinpearl Nha Trang.</p>
+                                <div class="date">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    26 tháng 6, 2026
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Post 2: Hoạt động -->
+                        <a href="Tin-Tuc/Đồng-hành-cùng-sinh-viên.html" class="post-card">
+                            <div class="image-wrap">
+                                <img src="https://beta-api.hexagon.xyz/uploads/myc-dong-hanh-1-1774341526337-531129418.jpg"
+                                    alt="Đồng hành cùng sinh viên Đại học Văn Hiến">
+                            </div>
+                            <div class="info">
+                                <span class="category-badge hoat-dong">Hoạt động</span>
+                                <h3>Đồng hành cùng sinh viên Đại học Văn Hiến tại Ngày hội sinh viên</h3>
+                                <p>Công ty Cổ phần Lục Giác hân hạnh được đồng hành cùng các bạn sinh viên khoa Công
+                                    nghệ Thông tin - Đại học Văn Hiến trong chương trình "VHE Startup Devote".</p>
+                                <div class="date">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    26 tháng 6, 2026
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Post 3: Sự kiện -->
+                        <a href="Tin-Tuc/Sắm-tết-công-nghệ.html" class="post-card">
+                            <div class="image-wrap">
+                                <img src="assets/images/news_tech_shopping.png" alt="Sắm tết công nghệ">
+                            </div>
+                            <div class="info">
+                                <span class="category-badge su-kien">Sự kiện</span>
+                                <h3>Sắm tết công nghệ - Nâng cấp thiết bị, khởi đầu bứt phá</h3>
+                                <p>Năm mới, vận hội mới, thiết bị cũng phải mới! Đầu tư cho công nghệ là đầu tư cho
+                                    tương lai. Ghé 'Lục Giác' để chọn cho mình những siêu phẩm hỗ trợ đắc lực.</p>
+                                <div class="date">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    26 tháng 6, 2026
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Post 4: Tin tức -->
+                        <a href="Tin-Tuc/Bài-viết-4.html" class="post-card">
+                            <div class="image-wrap">
+                                <img src="assets/images/news_software_dev.png" alt="Bài viết 4">
+                            </div>
+                            <div class="info">
+                                <span class="category-badge tin-tuc">Tin tức</span>
+                                <h3>Bài viết 4</h3>
+                                <p>Bài viết 4</p>
+                                <div class="date">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    25 tháng 6, 2026
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Post 5: Tin tức -->
+                        <a href="Tin-Tuc/Bài-viết-5.html" class="post-card">
+                            <div class="image-wrap">
+                                <img src="assets/images/news_ai_data_analysis.png" alt="Bài viết 5">
+                            </div>
+                            <div class="info">
+                                <span class="category-badge tin-tuc">Tin tức</span>
+                                <h3>Bài viết 5</h3>
+                                <p>Bài viết 5</p>
+                                <div class="date">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    25 tháng 6, 2026
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <!-- ===== SIDEBAR ===== -->
+                <aside class="page-sidebar">
+                    <div class="sidebar-card">
+                        <div class="animate-pulse">
+                            <div class="pulse-bar w-3-4"></div>
+                            <div class="pulse-image"></div>
+                            <div class="pulse-bar"></div>
+                            <div class="pulse-bar w-2-3"></div>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <p>Copyright 2026 © <span>Hexagon Corporation</span>. All rights reserved. | <a href="admin/index.html"
+                    style="color: #fbbf24; text-decoration: none; margin-left: 4px; font-weight: 500;"><i
+                        class="fas fa-user-shield" style="margin-right: 4px;"></i>Quản trị hệ thống</a></p>
+        </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', function () {
+            mobileMenu.classList.toggle('open');
+            this.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function () {
+                mobileMenu.classList.remove('open');
+                menuToggle.textContent = '☰';
+            });
+        });
+
+        // Language switcher
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const parent = this.closest('.lang-switcher');
+                parent.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Header shadow on scroll
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('navbar');
+            if (window.scrollY > 10) {
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+            } else {
+                header.style.boxShadow = '0 2px 12px rgba(0,0,0,0.12)';
+            }
+        });
+    </script>
+
+    <script src="translate.js"></script>
+</body>
+
+</html>

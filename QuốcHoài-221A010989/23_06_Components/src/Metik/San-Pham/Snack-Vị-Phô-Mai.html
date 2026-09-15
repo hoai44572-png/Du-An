@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snack vị Phô mai - METIK</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      font-family: 'Lato', sans-serif;
+    }
+
+    .text-primary {
+      color: #f4851a;
+    }
+
+    .text-secondary {
+      color: #48a842;
+    }
+
+    .bg-primary {
+      background-color: #f4851a;
+    }
+
+    .bg-gold {
+      background-color: #f2bf09;
+    }
+
+    /* Mobile menu */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      display: none;
+    }
+
+    .mobile-menu-overlay.active {
+      display: block;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100%;
+      background: white;
+      z-index: 1000;
+      padding: 30px 20px;
+      transition: left 0.3s ease;
+      overflow-y: auto;
+    }
+
+    .mobile-menu.active {
+      left: 0;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+  <!-- ===== HEADER ===== -->
+  <header class="sticky top-0 z-50 bg-white shadow-md">
+    <div class="container mx-auto px-5">
+      <div class="flex items-center justify-between h-24 md:h-28">
+        <!-- Logo -->
+        <a href="../Trang-Chu.html" class="flex-shrink-0">
+          <img src="https://metik.vn/wp-content/uploads/2026/06/logometik.png.webp" alt="METIK"
+            class="h-16 md:h-20 w-auto" />
+        </a>
+        <!-- Desktop Menu -->
+        <nav class="hidden lg:flex items-center space-x-8">
+          <a href="../Trang-Chu.html" class="font-bold transition-colors" style="color:#48a842;">Trang chủ</a>
+          <a href="../GioiThieu.html" class="text-gray-700 font-bold hover:text-primary transition-colors">Giới
+            thiệu</a>
+          <a href="../San-Pham.html" class="font-bold border-b-2 pb-1 transition-colors"
+            style="color:#f4851a; border-color:#f4851a;">Sản phẩm</a>
+          <a href="/category/tin-tuc/" class="text-gray-700 font-bold hover:text-primary transition-colors">Tin tức</a>
+          <a href="/lien-he/" class="text-gray-700 font-bold hover:text-primary transition-colors">Liên hệ</a>
+        </nav>
+        <!-- Social Icons Desktop -->
+        <div class="hidden lg:flex items-center space-x-3">
+          <a href="https://www.facebook.com/banhmetik" target="_blank"
+            class="w-10 h-10 rounded-full text-white flex items-center justify-center hover:opacity-80 transition-colors"
+            style="background-color:#f4851a;">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://www.tiktok.com/@metik_333" target="_blank"
+            class="w-10 h-10 rounded-full text-white flex items-center justify-center hover:opacity-80 transition-colors"
+            style="background-color:#f4851a;">
+            <i class="fab fa-tiktok"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/112466083/" target="_blank"
+            class="w-10 h-10 rounded-full text-white flex items-center justify-center hover:opacity-80 transition-colors"
+            style="background-color:#f4851a;">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+        <!-- Mobile Menu Button -->
+        <button id="menuToggle" class="lg:hidden text-2xl text-gray-700">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MOBILE MENU ===== -->
+  <div id="mobileOverlay" class="mobile-menu-overlay"></div>
+  <div id="mobileMenu" class="mobile-menu">
+    <button id="menuClose" class="absolute top-4 right-4 text-2xl text-gray-700">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="mt-12">
+      <nav class="flex flex-col space-y-4">
+        <a href="../Trang-Chu.html" class="font-bold text-lg" style="color:#48a842;">Trang chủ</a>
+        <a href="../GioiThieu.html" class="text-gray-700 font-bold text-lg">Giới thiệu</a>
+        <a href="../San-Pham.html" class="font-bold text-lg" style="color:#f4851a;">Sản phẩm</a>
+        <a href="/category/tin-tuc/" class="text-gray-700 font-bold text-lg">Tin tức</a>
+        <a href="/lien-he/" class="text-gray-700 font-bold text-lg">Liên hệ</a>
+      </nav>
+      <div class="mt-8 flex space-x-4">
+        <a href="https://www.facebook.com/banhmetik" target="_blank"
+          class="w-12 h-12 rounded-full text-white flex items-center justify-center hover:opacity-80"
+          style="background-color:#f4851a;">
+          <i class="fab fa-facebook-f text-xl"></i>
+        </a>
+        <a href="https://www.tiktok.com/@metik_333" target="_blank"
+          class="w-12 h-12 rounded-full text-white flex items-center justify-center hover:opacity-80"
+          style="background-color:#f4851a;">
+          <i class="fab fa-tiktok text-xl"></i>
+        </a>
+        <a href="https://www.linkedin.com/company/112466083/" target="_blank"
+          class="w-12 h-12 rounded-full text-white flex items-center justify-center hover:opacity-80"
+          style="background-color:#f4851a;">
+          <i class="fab fa-linkedin-in text-xl"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <nav class="bg-gray-100 py-3 px-5 text-sm text-gray-600">
+    <ol class="flex space-x-2">
+      <li><a href="../Trang-Chu.html" class="hover:text-primary">Trang chủ</a></li>
+      <li>/</li>
+      <li><a href="../San-Pham.html" class="hover:text-primary">Sản phẩm</a></li>
+      <li>/</li>
+      <li class="text-primary">Snack vị Phô mai</li>
+    </ol>
+  </nav>
+
+  <!-- Product Section -->
+  <section class="container mx-auto px-5 py-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Product Image -->
+    <div>
+      <img src="https://metik.vn/wp-content/uploads/2026/06/snack-vi-pho-mai.webp" alt="Snack vị Phô mai"
+        class="rounded-lg shadow-md w-full">
+    </div>
+    <!-- Product Info -->
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800">Snack vị Phô mai</h1>
+      <p class="mt-4 text-gray-600">
+        Snack vị Phô mai Snack Phô Mai METIK là dòng snack hiện đại kết hợp giữa nguyên liệu tự nhiên và công nghệ chế
+        biến tiên tiến từ nhà máy OCHAO tại TPHC. Sản phẩm có thành phần phô mai thơm nhẹ, dễ ăn và mang đến trải nghiệm
+        ăn vặt hấp dẫn.
+      </p>
+      <ul class="mt-6 space-y-2 text-gray-700 list-disc list-inside">
+        <li>Hương vị phô mai béo ngậy đặc trưng</li>
+        <li>Kết cấu giòn tan</li>
+        <li>Bổ sung xơ, tốt cho tiêu hóa</li>
+        <li>Sản xuất theo công nghệ tiên tiến</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Description -->
+  <section class="container mx-auto px-5 py-10">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Chi tiết sản phẩm</h2>
+    <p class="text-gray-600 leading-relaxed">
+      Hương vị phô mai béo nhẹ, kết cấu giòn: Snack có mùi thơm phô mai rõ nét, vị béo ngậy vừa phải, hòa quyện cùng vị
+      umami và thoang thoảng mùi khói nhẹ, mang đến hương vị hẫp dẫn khi ăn
+      <br>
+      Công thức được nghiên cứu bài bản, sản xuất trên dây chuyền hiện đại: Sản phẩm trải qua quá trình nghiên cứu hương
+      vị và hoàn thiện công thức bởi đội ngũ R&D, được sản xuất trên hệ thống máy móc chuyên nghiệp, đảm bảo độ ổn định
+      và chất lượng đồng đều.
+      <br>
+      Đa dạng hình thức chế biến, phù hợp nhiều thị trường: Snack Phô Mai METIK có thể phát triển dạng phôi bánh, dòng
+      chiên và không chiên, linh hoạt theo nhu cầu thị trường và định hướng sản phẩm của từng đối tác.
+    </p>
+  </section>
+
+  <!-- Sản phẩm liên quan -->
+  <section class="bg-gray-100 py-10">
+    <div class="container mx-auto px-5">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6">Sản phẩm liên quan</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a href="Snack-Vị-BBQ.html"
+          class="bg-white shadow rounded-lg p-4 text-center hover:shadow-lg transition-shadow duration-300 block">
+          <img src="https://metik.vn/wp-content/uploads/2026/06/snack-vi-bbq.jpg.webp" alt="Snack vị BBQ"
+            class="mx-auto mb-4 w-full rounded">
+          <p class="font-semibold text-gray-800">Snack vị BBQ</p>
+        </a>
+        <a href="Snack-Vị-Tảo-Biển.html"
+          class="bg-white shadow rounded-lg p-4 text-center hover:shadow-lg transition-shadow duration-300 block">
+          <img src="https://metik.vn/wp-content/uploads/2026/06/snack-vi-tao-bien.jpg.webp" alt="Snack vị Tảo biển"
+            class="mx-auto mb-4 w-full rounded">
+          <p class="font-semibold text-gray-800">Snack vị Tảo biển</p>
+        </a>
+        <a href="Snack-Vị-Bắp.html"
+          class="bg-white shadow rounded-lg p-4 text-center hover:shadow-lg transition-shadow duration-300 block">
+          <img src="https://metik.vn/wp-content/uploads/2026/06/snack-vi-bap.jpg.webp" alt="Snack vị Bắp"
+            class="mx-auto mb-4 w-full rounded">
+          <p class="font-semibold text-gray-800">Snack vị Bắp</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="background-color:#f2bf09;" id="footerSection">
+    <div class="container mx-auto px-5 py-8">
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Left -->
+        <div>
+          <img src="https://metik.vn/wp-content/uploads/2026/06/logometik.png.webp" alt="METIK"
+            class="h-16 w-auto mb-4" />
+          <p class="text-gray-800 text-lg max-w-md">
+            METIK - một thế giới snack dành cho những ai yêu sự giòn giòn ngất ngây, hương vị trẻ trung, đầy cảm hứng để
+            mỗi ngày đều căng tràn sức sống.
+          </p>
+        </div>
+        <!-- Right -->
+        <div>
+          <h3 class="text-xl font-bold mb-4" style="color:#0b7f3e;">Thông tin liên hệ</h3>
+          <div class="space-y-2 text-gray-800">
+            <p><i class="fas fa-phone w-6" style="color:#f4851a;"></i> <a href="tel:0797213333"
+                class="hover:underline">(+84) 79 721 3333</a></p>
+            <p><i class="fas fa-envelope w-6" style="color:#f4851a;"></i> <a href="mailto:info@metik.vn"
+                class="hover:underline">info@metik.vn</a></p>
+            <p><i class="fas fa-map-marker-alt w-6" style="color:#f4851a;"></i> Lô C3-1, Đường D2-N7, KCN Tân Phú Trung,
+              Xã Củ Chi, TP.HCM.</p>
+          </div>
+        </div>
+      </div>
+      <!-- Copyright -->
+      <div class="border-t border-gray-300 mt-6 pt-6 text-center text-gray-700">
+        Copyright 2026 © <strong>METIK</strong>. All rights reserved
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== MOBILE MENU SCRIPT ===== -->
+  <script>
+    (function () {
+      const menu = document.getElementById('mobileMenu');
+      const overlay = document.getElementById('mobileOverlay');
+      const openBtn = document.getElementById('menuToggle');
+      const closeBtn = document.getElementById('menuClose');
+      function openMenu() { menu.classList.add('active'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+      function closeMenu() { menu.classList.remove('active'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
+      if (openBtn) openBtn.addEventListener('click', openMenu);
+      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+      if (overlay) overlay.addEventListener('click', closeMenu);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+    })();
+  </script>
+
+</body>
+
+</html>

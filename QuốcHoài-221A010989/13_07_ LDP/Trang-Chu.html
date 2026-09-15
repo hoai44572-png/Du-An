@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MISS MISTER HÀO KHÍ DU HIỆP - Đăng ký dự thi</title>
+  <link rel="icon" href="assets/iconapp.png">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Fonts: Be Vietnam Pro (Vietnamese body/UI) + Orbitron (sci-fi display, English word MISS MISTER) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- ==========================================================
+     STAGE WRAPPER
+     Toàn bộ trang được thiết kế theo canvas chuẩn 1920px (đúng
+     kích thước ảnh nền gốc trong Figma). JS sẽ scale nguyên khối
+     .ldp-stage theo chiều rộng màn hình để giữ đúng tỉ lệ & vị
+     trí của ảnh nền / logo khi các bạn thay ảnh thật vào.
+=========================================================== -->
+  <div class="ldp-wrapper">
+    <div class="ldp-stage" id="ldpStage">
+
+      <!-- ============ HEADER ============ -->
+      <header class="ldp-header">
+        <div class="header-inner">
+          <a href="#" class="header-logo">
+            <img src="assets/iconapp.png" alt="Hào Khí Du Hiệp" class="header-logo__img">
+            <div class="header-logo__text-group">
+              <span class="header-logo__text">HÀO KHÍ DU HIỆP</span>
+              <span class="header-logo__subtext">NHÀ PHÁT HÀNH MYE</span>
+            </div>
+          </a>
+          <div class="header-actions">
+            <a href="#" class="header-icon" aria-label="Trang chủ"><i class="bi bi-house-door-fill"></i></a>
+            <a href="#" class="header-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="btn-login-img">
+              <img src="assets/đn.png" alt="Đăng nhập" onerror="this.parentElement.classList.add('img-fallback')">
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- ============ HERO ============ -->
+      <section class="ldp-hero">
+        <!-- Ảnh nền chính (nhân vật + hiệu ứng): thay bg-hero.jpg đúng kích thước 1920x1080.
+           File này KHÔNG có trong bộ ảnh TN (chỉ chứa button/box/popup UI) - bạn tự thêm ảnh art riêng. -->
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+          <img class="hero-game-logo" src="assets/Logo-HaoKhiDuHiep.png" alt="Hào Khí Du Hiệp"
+            onerror="this.style.display='none'">
+
+          <img class="hero-title-img" src="assets/text.png" alt="MISS MISTER HÀO KHÍ DU HIỆP">
+        </div>
+
+        <!-- ===== NAV TABS (ảnh thật thele/hd/taigame/napthe) + badge THAM GIA NGAY ===== -->
+        <nav class="ldp-navtabs">
+          <ul class="navtabs-list navtabs-list--img">
+            <li>
+              <button type="button" class="navtab-img-btn" data-bs-toggle="modal" data-bs-target="#modalTheLe">
+                <img src="assets/thele.png" alt="">
+              </button>
+            </li>
+            <li>
+              <button type="button" class="navtab-img-btn" data-bs-toggle="modal" data-bs-target="#modalHuongDan">
+                <img src="assets/hd.png" alt="Hướng dẫn">
+              </button>
+            </li>
+            <li>
+              <a href="#" class="navtab-img-btn"><img src="assets/taigame.png" alt="Tải game"></a>
+            </li>
+            <li>
+              <a href="#" class="navtab-img-btn"><img src="assets/napthe.png" alt="Nạp thẻ"></a>
+            </li>
+          </ul>
+          <!-- Không thấy ảnh riêng cho badge "THAM GIA NGAY" trong bộ TN -> tạm giữ badge dựng bằng CSS,
+             thay bằng ảnh thật (vd: thamgiangay.png) nếu bạn có -->
+          <a href="#dangky" class="navtabs-badge">
+            <span class="badge-top">NGAY</span>
+            <span class="badge-main">THAM GIA<br>NGAY</span>
+          </a>
+        </nav>
+      </section>
+
+      <!-- ============ ĐĂNG KÝ DỰ THI ============ -->
+      <section class="ldp-register" id="dangky">
+        <h2 class="section-title">
+          <img src="../13_07_ LDP/assets/đkdt.png" alt="Đăng ký dự thi">
+        </h2>
+
+        <form class="register-card" id="registerForm">
+          <div class="row g-4">
+
+            <!-- ============ CỘT ẢNH (themanh.png / themanhnho.png) ============ -->
+            <div class="col-lg-5">
+              <label class="upload-main" for="fileMain" style="background-image:url('assets/themanh.png');">
+                <input type="file" id="fileMain" accept="image/*" hidden>
+              </label>
+
+              <div class="upload-thumbs">
+                <label class="upload-thumb" for="fileThumb1" style="background-image:url('assets/themanhnho.png');">
+                  <input type="file" id="fileThumb1" accept="image/*" hidden>
+                </label>
+                <label class="upload-thumb" for="fileThumb2" style="background-image:url('assets/themanhnho.png');">
+                  <input type="file" id="fileThumb2" accept="image/*" hidden>
+                </label>
+                <label class="upload-thumb" for="fileThumb3" style="background-image:url('assets/themanhnho.png');">
+                  <input type="file" id="fileThumb3" accept="image/*" hidden>
+                </label>
+              </div>
+            </div>
+
+            <!-- ============ CỘT THÔNG TIN ============ -->
+            <div class="col-lg-7">
+
+              <div class="info-readonly">
+                <div><span>Nhân vật:</span> <b>Lục Trà Bạc Hà</b></div>
+                <div><span>Bang hội:</span> <b>Lạc Viên</b></div>
+                <div><span>Máy chủ:</span> <b>S1 - Lý Bạch</b></div>
+              </div>
+
+              <!-- THI MISS / THI MISTER : dùng ảnh thật thimiss.png / thimisster.png,
+                 radio tròn native để giữ trạng thái chọn -->
+              <div class="contest-type">
+                <label class="type-radio">
+                  <input type="radio" name="contestType" value="miss" checked>
+                  <img src="assets/thimiss.png" alt="Thi Miss">
+                </label>
+                <label class="type-radio">
+                  <input type="radio" name="contestType" value="mister">
+                  <img src="assets/thimisster.png" alt="Thi Mister">
+                </label>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <input type="text" class="form-control ldp-input" placeholder="Nhập họ và tên thí sinh dự thi"
+                    required>
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="form-control ldp-input" placeholder="Chức vụ">
+                </div>
+
+                <div class="col-12">
+                  <div class="ldp-input-label">Nhập ảnh CMND/CCCD mặt trước và sau</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="ldp-upload-field" for="fileCccdFront"
+                    style="background-image:url('assets/mattruoc.png');">
+                    <input type="file" id="fileCccdFront" accept="image/*" hidden>
+                  </label>
+                </div>
+                <div class="col-md-6">
+                  <label class="ldp-upload-field" for="fileCccdBack" style="background-image:url('assets/matsau.png');">
+                    <input type="file" id="fileCccdBack" accept="image/*" hidden>
+                  </label>
+                </div>
+
+                <div class="col-md-6">
+                  <input type="tel" class="form-control ldp-input"
+                    placeholder="Nhập số điện thoại gửi thông tin xác nhận dự thi" required>
+                </div>
+                <div class="col-md-6">
+                  <input type="email" class="form-control ldp-input" placeholder="Nhập địa chỉ email">
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <p class="register-note">*Bắt buộc phải đăng ký đủ 4 ảnh dự thi</p>
+
+          <div class="register-actions">
+            <button type="submit" class="btn-img-agree"><img src="assets/buttondongy.png" alt="Đồng ý"></button>
+            <button type="reset" class="btn-img-cancel"><img src="assets/buttonhuybo.png" alt="Hủy bỏ"></button>
+          </div>
+        </form>
+      </section>
+
+      <footer class="ldp-footer">
+        <p>&copy; 2026 Hào Khí Du Hiệp. Bản quyền thuộc về nhà phát hành.</p>
+      </footer>
+
+    </div><!-- /.ldp-stage -->
+  </div><!-- /.ldp-wrapper -->
+
+
+  <!-- ================= MODAL: THỂ LỆ (popup_thele.png) ================= -->
+  <div class="modal fade ldp-modal" id="modalTheLe" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content ldp-modal__content">
+        <div class="ldp-modal__frame" style="background-image:url('assets/popup_thele.png');">
+          <button type="button" class="ldp-modal__close" data-bs-dismiss="modal" aria-label="Đóng"><i
+              class="bi bi-x-lg"></i></button>
+          <div class="ldp-modal__body">
+            <!-- Nội dung thể lệ sẽ được cập nhật -->
+            <p>Nội dung thể lệ chương trình đang được cập nhật...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: HƯỚNG DẪN (popup_huongdan.png) ================= -->
+  <div class="modal fade ldp-modal" id="modalHuongDan" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content ldp-modal__content">
+        <div class="ldp-modal__frame" style="background-image:url('assets/popup_huongdan.png');">
+          <button type="button" class="ldp-modal__close" data-bs-dismiss="modal" aria-label="Đóng"><i
+              class="bi bi-x-lg"></i></button>
+          <div class="ldp-modal__body">
+            <!-- Nội dung hướng dẫn sẽ được cập nhật -->
+            <p>Nội dung hướng dẫn tham gia đang được cập nhật...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ĐÃ ĐĂNG KÝ THÀNH CÔNG (popup_thongtinthisinh.png) ================= -->
+  <div class="modal fade ldp-modal ldp-modal--success" id="modalSuccess" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content ldp-modal__content">
+        <div class="ldp-modal__frame" style="background-image:url('assets/popup_thongtinthisinh.png');">
+          <button type="button" class="ldp-modal__close" data-bs-dismiss="modal" aria-label="Đóng"><i
+              class="bi bi-x-lg"></i></button>
+          <p class="ldp-modal__success-text">ĐÃ ĐĂNG KÝ THÀNH CÔNG</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+
+</html>

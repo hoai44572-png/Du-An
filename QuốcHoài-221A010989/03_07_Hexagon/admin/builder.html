@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Builder - Hexagon Corporation</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="bg-[#0b0f19] text-gray-100 flex h-screen overflow-hidden">
+
+    <!-- ===== LEFT PANEL: BUILDER TOOLBOX ===== -->
+    <aside class="w-[420px] bg-[#0e1322] border-r border-gray-800 flex flex-col justify-between flex-shrink-0 z-20 overflow-y-auto">
+        <div>
+            <!-- Toolbox Header -->
+            <div class="px-6 py-5 border-b border-gray-800 flex items-center justify-between sticky top-0 bg-[#0e1322] z-10">
+                <div class="flex items-center space-x-3">
+                    <button onclick="goBack()" class="p-2 hover:bg-gray-800 rounded-lg text-gray-400 hover:text-white transition">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-sm font-bold text-white uppercase tracking-wider">Page Builder</h1>
+                        <span class="text-[10px] text-gray-400">Trình soạn thảo giao diện Demo</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="saveDraft()" class="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-xs font-bold rounded-lg transition">Lưu tạm</button>
+                    <button onclick="publishPage()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-xs font-bold rounded-lg text-white transition">Publish</button>
+                </div>
+            </div>
+
+            <!-- Toolbox Properties Form -->
+            <div class="p-6 space-y-6">
+                <!-- Page Metadata Section -->
+                <div class="space-y-4">
+                    <h3 class="text-xs font-bold text-amber-500 uppercase tracking-widest border-b border-gray-800 pb-2">Thông tin Trang</h3>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Tiêu đề Trang</label>
+                        <input type="text" id="propTitle" class="w-full bg-gray-950 border border-gray-800 rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Slug</label>
+                            <input type="text" id="propSlug" class="w-full bg-gray-950 border border-gray-800 rounded-lg py-2 px-3 text-xs focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Ngôn ngữ</label>
+                            <select id="propLang" class="w-full bg-gray-950 border border-gray-800 rounded-lg py-2 px-3 text-xs focus:outline-none focus:border-amber-500">
+                                <option value="VI">Tiếng Việt (VI)</option>
+                                <option value="EN">Tiếng Anh (EN)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customizations Section -->
+                <div class="space-y-4">
+                    <h3 class="text-xs font-bold text-amber-500 uppercase tracking-widest border-b border-gray-800 pb-2">Cài đặt Giao diện</h3>
+                    
+                    <!-- Animation Controls -->
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-400">Bật hiệu ứng chuyển động (Animation)</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="propAnimation" class="sr-only peer">
+                            <div class="w-9 h-5 bg-gray-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-300 after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#1A6B49]"></div>
+                        </label>
+                    </div>
+
+                    <!-- Animation style select (Visible when anim is enabled) -->
+                    <div id="animStyleGroup" class="space-y-2 hidden">
+                        <label class="block text-xs text-gray-400">Kiểu hiệu ứng</label>
+                        <select id="propAnimStyle" class="w-full bg-gray-950 border border-gray-800 rounded-lg py-2 px-3 text-xs focus:outline-none focus:border-amber-500">
+                            <option value="fadein">Hiện mờ dần (Fade In)</option>
+                            <option value="slideup">Hiện trượt từ dưới lên (Slide Up)</option>
+                            <option value="pulse">Nhấp nháy nhẹ (Pulse)</option>
+                        </select>
+                    </div>
+
+                    <!-- Typography Color Controls -->
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-2">Màu sắc tiêu đề và văn bản</label>
+                        <div class="flex gap-2">
+                            <input type="color" id="propTextColor" class="bg-transparent border-none w-10 h-10 cursor-pointer rounded-lg">
+                            <input type="text" id="propTextColorHex" class="flex-1 bg-gray-950 border border-gray-800 rounded-lg py-2 px-3 text-xs font-mono uppercase focus:outline-none focus:border-amber-500">
+                        </div>
+                    </div>
+
+                    <!-- Background Configuration -->
+                    <div class="space-y-3">
+                        <label class="block text-xs text-gray-400 mb-1">Loại Nền (Background Type)</label>
+                        <select id="propBgType" class="w-full bg-gray-950 border border-gray-800 rounded-lg py-2.5 px-3 text-xs focus:outline-none focus:border-amber-500">
+                            <option value="color">Màu Đơn (Solid Color)</option>
+                            <option value="gradient">Dải Màu (Gradient)</option>
+                            <option value="image">Hình ảnh (Image)</option>
+                            <option value="image-color">Hình ảnh kết hợp Màu đè (Image + Color)</option>
+                            <option value="image-gradient">Hình ảnh kết hợp Gradient đè (Image + Gradient)</option>
+                        </select>
+
+                        <!-- Panel: Solid Color Settings -->
+                        <div id="panelBgColor" class="panel-group hidden space-y-2">
+                            <label class="block text-[11px] text-gray-500">Chọn Màu Nền</label>
+                            <div class="flex gap-2">
+                                <input type="color" id="propBgColor" class="bg-transparent border-none w-10 h-10 cursor-pointer rounded-lg">
+                                <input type="text" id="propBgColorHex" class="flex-1 bg-gray-950 border border-gray-800 rounded-lg py-2 px-3 text-xs font-mono uppercase focus:outline-none focus:border-amber-500">
+                            </div>
+                        </div>
+
+                        <!-- Panel: Gradient Settings -->
+                        <div id="panelBgGradient" class="panel-group hidden space-y-3">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-[11px] text-gray-500 mb-1">Màu bắt đầu</label>
+                                    <input type="color" id="propGradientStart" class="bg-transparent border-none w-full h-8 cursor-pointer rounded-lg">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] text-gray-500 mb-1">Màu kết thúc</label>
+                                    <input type="color" id="propGradientEnd" class="bg-transparent border-none w-full h-8 cursor-pointer rounded-lg">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-gray-500 mb-1">Hướng Gradient (5 hướng)</label>
+                                <select id="propGradientDir" class="w-full bg-gray-950 border border-gray-800 rounded-lg py-2 px-3 text-xs focus:outline-none focus:border-amber-500">
+                                    <option value="to-r">Sang phải (To Right)</option>
+                                    <option value="to-l">Sang trái (To Left)</option>
+                                    <option value="to-t">Lên trên (To Top)</option>
+                                    <option value="to-b">Xuống dưới (To Bottom)</option>
+                                    <option value="to-br">Chéo xuống phải (To Bottom Right)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Panel: Image Settings -->
+                        <div id="panelBgImage" class="panel-group hidden space-y-3">
+                            <div>
+                                <label class="block text-[11px] text-gray-500 mb-1">Chọn ảnh mẫu (Premium High-tech)</label>
+                                <select id="propImageSelect" class="w-full bg-gray-950 border border-gray-800 rounded-lg py-2 px-3 text-xs focus:outline-none focus:border-amber-500 mb-2">
+                                    <option value="">-- Nhập URL tự do hoặc chọn mẫu --</option>
+                                </select>
+                                <label class="block text-[11px] text-gray-500 mb-1">Hoặc nhập URL hình ảnh</label>
+                                <input type="text" id="propImageUrl" placeholder="https://..." class="w-full bg-gray-950 border border-gray-800 rounded-lg py-2 px-3 text-xs focus:outline-none focus:border-amber-500 font-mono">
+                            </div>
+                        </div>
+
+                        <!-- Panel: Overlay Settings (Color & Gradient opacities) -->
+                        <div id="panelOverlay" class="panel-group hidden space-y-3">
+                            <div id="overlayColorGroup" class="hidden">
+                                <label class="block text-[11px] text-gray-500 mb-1">Màu sắc lớp phủ</label>
+                                <input type="color" id="propOverlayColor" class="bg-transparent border-none w-10 h-8 cursor-pointer rounded-lg">
+                            </div>
+                            <div id="overlayGradientGroup" class="hidden grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-[11px] text-gray-500 mb-1">Gradient đè đầu</label>
+                                    <input type="color" id="propOverlayGradStart" class="bg-transparent border-none w-full h-8 cursor-pointer rounded-lg">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] text-gray-500 mb-1">Gradient đè cuối</label>
+                                    <input type="color" id="propOverlayGradEnd" class="bg-transparent border-none w-full h-8 cursor-pointer rounded-lg">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-gray-500 mb-1">Độ mờ đè (Overlay Opacity)</label>
+                                <div class="flex items-center gap-3">
+                                    <input type="range" id="propOverlayOpacity" min="0" max="1" step="0.05" class="flex-1 accent-amber-500 cursor-pointer">
+                                    <span id="opacityVal" class="text-xs font-mono text-amber-500 w-8 text-right">0.5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action Buttons Customizer -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                        <h3 class="text-xs font-bold text-amber-500 uppercase tracking-widest">Nút bấm (Call to Action)</h3>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="propBtnEnabled" class="sr-only peer">
+                            <div class="w-9 h-5 bg-gray-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-300 after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#1A6B49]"></div>
+                        </label>
+                    </div>
+
+                    <div id="btnSettingsGroup" class="space-y-3 hidden">
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Nội dung chữ trên nút</label>
+                            <input type="text" id="propBtnText" class="w-full bg-gray-950 border border-gray-800 rounded-lg py-2 px-3 text-xs focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Đường dẫn liên kết (Href)</label>
+                            <input type="text" id="propBtnUrl" class="w-full bg-gray-950 border border-gray-800 rounded-lg py-2 px-3 text-xs focus:outline-none focus:border-amber-500 font-mono">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Kiểu phong cách nút</label>
+                            <select id="propBtnStyle" class="w-full bg-gray-950 border border-gray-800 rounded-lg py-2 px-3 text-xs focus:outline-none focus:border-amber-500">
+                                <option value="gold">Vàng Lục Giác (Gold Accent)</option>
+                                <option value="green">Xanh Lục Đậm (Hexagon Green)</option>
+                                <option value="outline">Viền sáng (Outline Light)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ===== RIGHT PANEL: LIVE PREVIEW WORKSPACE ===== -->
+    <main class="flex-1 flex flex-col h-full bg-[#070a13] relative">
+        <!-- Preview Top Bar -->
+        <div class="h-16 border-b border-gray-800/40 flex items-center justify-between px-8 bg-[#0b0f19]/30">
+            <span class="text-xs text-gray-500 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                Chế độ xem trước trực quan (Live Preview)
+            </span>
+            <div class="flex items-center gap-4">
+                <span class="text-xs text-gray-400">Căn chỉnh: Thống nhất giao diện</span>
+            </div>
+        </div>
+
+        <!-- Preview Workspace Container -->
+        <div class="flex-1 flex items-center justify-center p-8 overflow-y-auto">
+            <!-- Simulated Section Banner Frame -->
+            <div id="previewFrame" class="w-full max-w-4xl h-[460px] rounded-3xl overflow-hidden shadow-2xl relative flex items-center justify-center p-12 transition-all duration-500 border border-gray-800">
+                
+                <!-- Background Image layer -->
+                <div id="previewBgImage" class="absolute inset-0 bg-cover bg-center transition-all duration-300"></div>
+
+                <!-- Overlay Color/Gradient Layer -->
+                <div id="previewOverlay" class="absolute inset-0 transition-all duration-300"></div>
+
+                <!-- Content Area -->
+                <div id="previewContent" class="text-center z-10 max-w-xl space-y-6">
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-white/80 text-xs font-semibold mb-2">
+                        <i class="fas fa-cube text-amber-500"></i>
+                        HEXAGON ECOSYSTEM
+                    </div>
+                    <h2 id="previewTitle" class="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+                        Tiêu Đề Trang Chạy Thử
+                    </h2>
+                    <p id="previewText" class="text-base text-gray-300/80 leading-relaxed">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tristique nisl eget justo egestas, non pulvinar diam interdum.
+                    </p>
+                    <div class="pt-4">
+                        <a href="#" id="previewBtn" class="hidden px-8 py-3.5 rounded-xl font-bold transition-all shadow-lg active:scale-95 duration-200">
+                            Button text
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Core Javascript -->
+    <script src="admin.js"></script>
+    <script>
+        // Check Auth
+        checkAuth();
+
+        // Get target page ID from Query Param
+        const urlParams = new URLSearchParams(window.location.search);
+        let pageId = urlParams.get('pageId');
+        
+        let pages = getPages();
+        let pageData = null;
+
+        // If no valid ID is passed, default to first or redirect
+        if (!pageId) {
+            pageId = pages.length > 0 ? pages[0].id : null;
+        }
+        
+        pageData = pages.find(p => p.id === pageId);
+        
+        if (!pageData) {
+            showToast('Không tìm thấy dữ liệu trang chỉnh sửa!', 'error');
+            setTimeout(() => window.location.href = 'dashboard.html', 1500);
+        }
+
+        // Initialize Builder properties selection drop-downs
+        (function initFormOptions() {
+            const select = document.getElementById('propImageSelect');
+            mockImages.forEach(img => {
+                const opt = document.createElement('option');
+                opt.value = img.url;
+                opt.textContent = img.name;
+                select.appendChild(opt);
+            });
+        })();
+
+        // Populate elements with saved state
+        function populateForm() {
+            document.getElementById('propTitle').value = pageData.title;
+            document.getElementById('propSlug').value = pageData.slug;
+            document.getElementById('propLang').value = pageData.language;
+            document.getElementById('propAnimation').checked = pageData.animation || false;
+            document.getElementById('propAnimStyle').value = pageData.animStyle || 'fadein';
+            
+            // Texts Colors
+            document.getElementById('propTextColor').value = pageData.textColor || '#ffffff';
+            document.getElementById('propTextColorHex').value = pageData.textColor || '#ffffff';
+
+            // Background configuration
+            document.getElementById('propBgType').value = pageData.bgType || 'color';
+            document.getElementById('propBgColor').value = pageData.bgColor || '#1A6B49';
+            document.getElementById('propBgColorHex').value = pageData.bgColor || '#1A6B49';
+            
+            // Gradient colors
+            document.getElementById('propGradientStart').value = pageData.bgGradientStart || '#0D5939';
+            document.getElementById('propGradientEnd').value = pageData.bgGradientEnd || '#1A6B49';
+            document.getElementById('propGradientDir').value = pageData.bgGradientDir || 'to-r';
+
+            // Image properties
+            document.getElementById('propImageUrl').value = pageData.bgImage || '';
+            document.getElementById('propImageSelect').value = mockImages.map(i => i.url).includes(pageData.bgImage) ? pageData.bgImage : '';
+
+            // Overlays
+            document.getElementById('propOverlayColor').value = pageData.bgOverlayColor || '#000000';
+            document.getElementById('propOverlayGradStart').value = pageData.bgOverlayGradStart || '#0D5939';
+            document.getElementById('propOverlayGradEnd').value = pageData.bgOverlayGradEnd || '#1A6B49';
+            document.getElementById('propOverlayOpacity').value = pageData.bgOverlayOpacity !== undefined ? pageData.bgOverlayOpacity : 0.5;
+
+            // Buttons controls
+            document.getElementById('propBtnEnabled').checked = pageData.btnEnabled || false;
+            document.getElementById('propBtnText').value = pageData.btnText || 'Xem thêm';
+            document.getElementById('propBtnUrl').value = pageData.btnUrl || '#';
+            document.getElementById('propBtnStyle').value = pageData.btnStyle || 'gold';
+
+            updateFormVisibility();
+            updateLivePreview();
+        }
+
+        // Handle show/hide logic depending on configuration selected
+        function updateFormVisibility() {
+            const anim = document.getElementById('propAnimation').checked;
+            document.getElementById('animStyleGroup').classList.toggle('hidden', !anim);
+
+            const bgType = document.getElementById('propBgType').value;
+            // Hide all sub panels
+            document.querySelectorAll('.panel-group').forEach(el => el.classList.add('hidden'));
+
+            if (bgType === 'color') {
+                document.getElementById('panelBgColor').classList.remove('hidden');
+            } else if (bgType === 'gradient') {
+                document.getElementById('panelBgGradient').classList.remove('hidden');
+            } else if (bgType === 'image') {
+                document.getElementById('panelBgImage').classList.remove('hidden');
+            } else if (bgType === 'image-color') {
+                document.getElementById('panelBgImage').classList.remove('hidden');
+                document.getElementById('panelOverlay').classList.remove('hidden');
+                document.getElementById('overlayColorGroup').classList.remove('hidden');
+                document.getElementById('overlayGradientGroup').classList.add('hidden');
+            } else if (bgType === 'image-gradient') {
+                document.getElementById('panelBgImage').classList.remove('hidden');
+                document.getElementById('panelOverlay').classList.remove('hidden');
+                document.getElementById('overlayColorGroup').classList.add('hidden');
+                document.getElementById('overlayGradientGroup').classList.remove('hidden');
+            }
+
+            // Button visible inputs group
+            const btnEnabled = document.getElementById('propBtnEnabled').checked;
+            document.getElementById('btnSettingsGroup').classList.toggle('hidden', !btnEnabled);
+        }
+
+        // Live Binding preview updates
+        function updateLivePreview() {
+            const title = document.getElementById('propTitle').value;
+            const textColor = document.getElementById('propTextColor').value;
+            const animEnabled = document.getElementById('propAnimation').checked;
+            const animStyle = document.getElementById('propAnimStyle').value;
+
+            // Apply titles & colors
+            document.getElementById('previewTitle').textContent = title || "Tiêu đề trang";
+            document.getElementById('previewTitle').style.color = textColor;
+            document.getElementById('previewText').style.color = textColor;
+
+            // Apply Animations
+            const previewContent = document.getElementById('previewContent');
+            previewContent.className = 'text-center z-10 max-w-xl space-y-6'; // Reset classes
+            if (animEnabled) {
+                previewContent.classList.add(`preview-animate-${animStyle}`);
+            }
+
+            // Apply backgrounds layout styling
+            const bgType = document.getElementById('propBgType').value;
+            const frame = document.getElementById('previewFrame');
+            const bgImageLayer = document.getElementById('previewBgImage');
+            const overlayLayer = document.getElementById('previewOverlay');
+
+            // Reset inline styles & configurations
+            frame.style.background = '';
+            bgImageLayer.style.backgroundImage = '';
+            overlayLayer.style.background = '';
+            overlayLayer.style.opacity = '';
+
+            const bgColor = document.getElementById('propBgColor').value;
+            const gradStart = document.getElementById('propGradientStart').value;
+            const gradEnd = document.getElementById('propGradientEnd').value;
+            const gradDir = document.getElementById('propGradientDir').value;
+            const imageUrl = document.getElementById('propImageUrl').value;
+            const overlayOpacity = document.getElementById('propOverlayOpacity').value;
+            
+            document.getElementById('opacityVal').textContent = overlayOpacity;
+
+            if (bgType === 'color') {
+                frame.style.backgroundColor = bgColor;
+            } 
+            else if (bgType === 'gradient') {
+                // Direction mappings
+                let cssDir = 'to right';
+                if (gradDir === 'to-l') cssDir = 'to left';
+                if (gradDir === 'to-t') cssDir = 'to top';
+                if (gradDir === 'to-b') cssDir = 'to bottom';
+                if (gradDir === 'to-br') cssDir = 'to bottom right';
+
+                frame.style.background = `linear-gradient(${cssDir}, ${gradStart}, ${gradEnd})`;
+            } 
+            else if (bgType === 'image') {
+                if (imageUrl) bgImageLayer.style.backgroundImage = `url('${imageUrl}')`;
+            } 
+            else if (bgType === 'image-color') {
+                if (imageUrl) bgImageLayer.style.backgroundImage = `url('${imageUrl}')`;
+                
+                const overlayColor = document.getElementById('propOverlayColor').value;
+                overlayLayer.style.backgroundColor = overlayColor;
+                overlayLayer.style.opacity = overlayOpacity;
+            } 
+            else if (bgType === 'image-gradient') {
+                if (imageUrl) bgImageLayer.style.backgroundImage = `url('${imageUrl}')`;
+                
+                const overGradStart = document.getElementById('propOverlayGradStart').value;
+                const overGradEnd = document.getElementById('propOverlayGradEnd').value;
+                
+                let cssDir = 'to right';
+                if (gradDir === 'to-l') cssDir = 'to left';
+                if (gradDir === 'to-t') cssDir = 'to top';
+                if (gradDir === 'to-b') cssDir = 'to bottom';
+                if (gradDir === 'to-br') cssDir = 'to bottom right';
+                
+                overlayLayer.style.background = `linear-gradient(${cssDir}, ${overGradStart}, ${overGradEnd})`;
+                overlayLayer.style.opacity = overlayOpacity;
+            }
+
+            // Render Buttons styles
+            const btnEnabled = document.getElementById('propBtnEnabled').checked;
+            const btnText = document.getElementById('propBtnText').value;
+            const btnStyle = document.getElementById('propBtnStyle').value;
+            const previewBtn = document.getElementById('previewBtn');
+
+            if (btnEnabled) {
+                previewBtn.classList.remove('hidden');
+                previewBtn.textContent = btnText || "Nút bấm";
+                
+                // Style classes reset
+                previewBtn.className = "px-8 py-3.5 rounded-xl font-bold transition-all shadow-lg active:scale-95 duration-200";
+                
+                if (btnStyle === 'gold') {
+                    previewBtn.classList.add('bg-amber-500', 'hover:bg-amber-600', 'text-gray-900', 'shadow-amber-500/10');
+                } else if (btnStyle === 'green') {
+                    previewBtn.classList.add('bg-[#1A6B49]', 'hover:bg-emerald-700', 'text-white', 'shadow-emerald-950/20');
+                } else if (btnStyle === 'outline') {
+                    previewBtn.classList.add('border-2', 'border-white', 'text-white', 'hover:bg-white', 'hover:text-gray-900');
+                }
+            } else {
+                previewBtn.classList.add('hidden');
+            }
+        }
+
+        // Synergize Hex colors with color pickers inputs
+        function syncColorsPickers() {
+            document.getElementById('propTextColor').addEventListener('input', function() {
+                document.getElementById('propTextColorHex').value = this.value;
+                updateLivePreview();
+            });
+            document.getElementById('propTextColorHex').addEventListener('input', function() {
+                if (/^#[0-9A-F]{6}$/i.test(this.value)) {
+                    document.getElementById('propTextColor').value = this.value;
+                    updateLivePreview();
+                }
+            });
+
+            document.getElementById('propBgColor').addEventListener('input', function() {
+                document.getElementById('propBgColorHex').value = this.value;
+                updateLivePreview();
+            });
+            document.getElementById('propBgColorHex').addEventListener('input', function() {
+                if (/^#[0-9A-F]{6}$/i.test(this.value)) {
+                    document.getElementById('propBgColor').value = this.value;
+                    updateLivePreview();
+                }
+            });
+        }
+
+        // Handle presets selects for images URLs
+        document.getElementById('propImageSelect').addEventListener('change', function() {
+            if (this.value) {
+                document.getElementById('propImageUrl').value = this.value;
+                updateLivePreview();
+            }
+        });
+
+        // Trigger input listeners
+        const inputsToBind = [
+            'propTitle', 'propSlug', 'propLang', 'propAnimation', 'propAnimStyle',
+            'propBgType', 'propGradientStart', 'propGradientEnd', 'propGradientDir',
+            'propImageUrl', 'propOverlayColor', 'propOverlayGradStart', 'propOverlayGradEnd',
+            'propOverlayOpacity', 'propBtnEnabled', 'propBtnText', 'propBtnUrl', 'propBtnStyle'
+        ];
+        inputsToBind.forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                updateFormVisibility();
+                updateLivePreview();
+            });
+            document.getElementById(id).addEventListener('change', () => {
+                updateFormVisibility();
+                updateLivePreview();
+            });
+        });
+
+        // Collect inputs state into pageData structure
+        function collectData() {
+            pageData.title = document.getElementById('propTitle').value.trim();
+            pageData.slug = document.getElementById('propSlug').value.trim();
+            pageData.language = document.getElementById('propLang').value;
+            pageData.animation = document.getElementById('propAnimation').checked;
+            pageData.animStyle = document.getElementById('propAnimStyle').value;
+            pageData.textColor = document.getElementById('propTextColorHex').value;
+            pageData.bgType = document.getElementById('propBgType').value;
+            
+            pageData.bgColor = document.getElementById('propBgColorHex').value;
+            pageData.bgGradientStart = document.getElementById('propGradientStart').value;
+            pageData.bgGradientEnd = document.getElementById('propGradientEnd').value;
+            pageData.bgGradientDir = document.getElementById('propGradientDir').value;
+            
+            pageData.bgImage = document.getElementById('propImageUrl').value.trim();
+            
+            pageData.bgOverlayColor = document.getElementById('propOverlayColor').value;
+            pageData.bgOverlayGradStart = document.getElementById('propOverlayGradStart').value;
+            pageData.bgOverlayGradEnd = document.getElementById('propOverlayGradEnd').value;
+            pageData.bgOverlayOpacity = Number(document.getElementById('propOverlayOpacity').value);
+
+            pageData.btnEnabled = document.getElementById('propBtnEnabled').checked;
+            pageData.btnText = document.getElementById('propBtnText').value.trim();
+            pageData.btnUrl = document.getElementById('propBtnUrl').value.trim();
+            pageData.btnStyle = document.getElementById('propBtnStyle').value;
+
+            pageData.lastUpdated = getFormattedDateTime();
+        }
+
+        // Save page to local storage as Draft
+        window.saveDraft = function() {
+            collectData();
+            pageData.status = 'Draft';
+            
+            const index = pages.findIndex(p => p.id === pageId);
+            pages[index] = pageData;
+            savePages(pages);
+
+            showToast('Đã lưu trang dưới dạng Bản nháp!', 'success');
+        };
+
+        // Publish page
+        window.publishPage = function() {
+            collectData();
+            pageData.status = 'Published';
+            
+            const index = pages.findIndex(p => p.id === pageId);
+            pages[index] = pageData;
+            savePages(pages);
+
+            showToast('Chúc mừng! Trang của bạn đã được Xuất bản thành công!', 'success');
+        };
+
+        // Safe Navigation prompt back
+        window.goBack = function() {
+            if (confirm('Bạn có muốn lưu các chỉnh sửa vừa rồi trước khi quay lại Dashboard?')) {
+                saveDraft();
+            }
+            window.location.href = 'dashboard.html';
+        };
+
+        // Initialization calls
+        populateForm();
+        syncColorsPickers();
+    </script>
+</body>
+</html>

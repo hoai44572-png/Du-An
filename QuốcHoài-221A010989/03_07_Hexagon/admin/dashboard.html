@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Hexagon Corporation</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="bg-[#0b0f19] text-gray-100 flex h-screen overflow-hidden">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="w-64 bg-[#0e1322] border-r border-gray-800 flex flex-col justify-between flex-shrink-0 z-20">
+        <div>
+            <!-- Sidebar Brand Header -->
+            <div class="px-6 py-6 border-b border-gray-800 flex items-center space-x-3">
+                <div class="w-10 h-10 bg-[#1A6B49] rounded-xl flex items-center justify-center border border-emerald-500/20">
+                    <img src="../Logo/logo-hhc.png" alt="Hexagon Logo" class="w-6 h-6 object-contain">
+                </div>
+                <div>
+                    <h1 class="text-sm font-bold text-white tracking-wider uppercase">Hexagon</h1>
+                    <span class="text-[10px] text-amber-500 font-semibold tracking-widest uppercase">Admin System</span>
+                </div>
+            </div>
+            
+            <!-- Sidebar Navigation Links -->
+            <nav class="mt-6 px-4 space-y-1">
+                <a href="#" class="sidebar-link active flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200">
+                    <i class="fas fa-file-invoice mr-3 text-lg"></i>
+                    Quản lý Trang (Pages)
+                </a>
+                <a href="builder.html" class="sidebar-link flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200">
+                    <i class="fas fa-laptop-code mr-3 text-lg"></i>
+                    Page Builder Demo
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer/Logout -->
+        <div class="p-4 border-t border-gray-800">
+            <button onclick="handleLogout()" class="w-full flex items-center justify-center px-4 py-3 bg-red-950/20 hover:bg-red-900/40 text-red-400 hover:text-red-300 font-semibold rounded-xl transition-all border border-red-500/20">
+                <i class="fas fa-sign-out-alt mr-2"></i>
+                Đăng xuất
+            </button>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT WRAPPER ===== -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        
+        <!-- ===== HEADER ===== -->
+        <header class="bg-[#0e1322] border-b border-gray-800 h-16 flex items-center justify-between px-8 flex-shrink-0">
+            <div>
+                <h2 class="text-lg font-bold text-white flex items-center">
+                    Chào mừng quay lại, <span class="text-amber-500 ml-1">Admin!</span>
+                </h2>
+            </div>
+            <div class="flex items-center space-x-6">
+                <!-- Date time display -->
+                <span id="currentTime" class="text-xs text-gray-400 font-mono hidden md:inline"></span>
+                <a href="../Trang-Chủ.html" target="_blank" class="px-4 py-1.5 bg-[#1A6B49]/10 hover:bg-[#1A6B49]/20 text-[#41b67d] hover:text-[#41b67d] font-bold text-xs rounded-lg transition border border-[#1A6B49]/30 flex items-center">
+                    <i class="fas fa-external-link-alt mr-1.5"></i> Xem Website
+                </a>
+            </div>
+        </header>
+
+        <!-- ===== MAIN VIEWPORT ===== -->
+        <main class="flex-1 overflow-y-auto p-8">
+            <div class="max-w-6xl mx-auto space-y-8">
+                
+                <!-- Page Title -->
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-white tracking-tight">Quản lý Trang (Pages)</h2>
+                        <p class="text-gray-400 text-sm mt-1">Tạo, chỉnh sửa, dịch thuật và xuất bản các trang tĩnh.</p>
+                    </div>
+                    <button onclick="openCreateModal()" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold rounded-xl shadow-lg hover:shadow-amber-500/10 transition-all duration-200 flex items-center">
+                        <i class="fas fa-plus mr-2"></i> Tạo Trang Mới
+                    </button>
+                </div>
+
+                <!-- ===== STATISTICS SUMMARY CARDS ===== -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="glass-card p-5 rounded-2xl">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Tổng số trang</p>
+                                <h3 id="statTotal" class="text-3xl font-extrabold text-white mt-2">0</h3>
+                            </div>
+                            <span class="p-3 bg-blue-500/10 rounded-xl text-blue-400"><i class="far fa-file"></i></span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-5 rounded-2xl">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Đã xuất bản</p>
+                                <h3 id="statPublished" class="text-3xl font-extrabold text-emerald-400 mt-2">0</h3>
+                            </div>
+                            <span class="p-3 bg-emerald-500/10 rounded-xl text-emerald-400"><i class="fas fa-globe"></i></span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-5 rounded-2xl">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Bản nháp</p>
+                                <h3 id="statDraft" class="text-3xl font-extrabold text-amber-500 mt-2">0</h3>
+                            </div>
+                            <span class="p-3 bg-amber-500/10 rounded-xl text-amber-400"><i class="far fa-edit"></i></span>
+                        </div>
+                    </div>
+                    <div class="glass-card p-5 rounded-2xl">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">VI / EN Pages</p>
+                                <h3 id="statLangs" class="text-xl font-extrabold text-white mt-3">0 VI / 0 EN</h3>
+                            </div>
+                            <span class="p-3 bg-[#1A6B49]/10 rounded-xl text-[#41b67d]"><i class="fas fa-language"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== FILTER & SEARCH BAR ===== -->
+                <div class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row gap-4 justify-between items-center">
+                    <div class="relative w-full md:w-80">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" id="searchInput" placeholder="Tìm kiếm trang..." 
+                            class="w-full bg-gray-900 border border-gray-700/80 rounded-xl py-2 pl-10 pr-4 text-white focus:outline-none focus:border-amber-500/80 transition-all text-sm">
+                    </div>
+                    
+                    <div class="flex flex-wrap items-center gap-3 w-full md:w-auto justify-end">
+                        <!-- Language Filter -->
+                        <select id="langFilter" class="bg-gray-900 border border-gray-700/80 rounded-xl py-2 px-3 text-sm text-gray-300 focus:outline-none focus:border-amber-500/80">
+                            <option value="all">Ngôn ngữ: Tất cả</option>
+                            <option value="VI">Tiếng Việt (VI)</option>
+                            <option value="EN">Tiếng Anh (EN)</option>
+                        </select>
+                        
+                        <!-- Status Filter -->
+                        <select id="statusFilter" class="bg-gray-900 border border-gray-700/80 rounded-xl py-2 px-3 text-sm text-gray-300 focus:outline-none focus:border-amber-500/80">
+                            <option value="all">Trạng thái: Tất cả</option>
+                            <option value="Published">Đã xuất bản (Published)</option>
+                            <option value="Draft">Bản nháp (Draft)</option>
+                        </select>
+
+                        <!-- Sort Order -->
+                        <select id="sortOrder" class="bg-gray-900 border border-gray-700/80 rounded-xl py-2 px-3 text-sm text-gray-300 focus:outline-none focus:border-amber-500/80">
+                            <option value="newest">Ngày cập nhật: Mới nhất</option>
+                            <option value="oldest">Ngày cập nhật: Cũ nhất</option>
+                            <option value="az">Tiêu đề: A - Z</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ===== PAGES LISTING TABLE ===== -->
+                <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-800 text-xs font-semibold text-gray-400 uppercase tracking-wider bg-gray-900/40">
+                                    <th class="py-4 px-6">ID</th>
+                                    <th class="py-4 px-6">Tên trang</th>
+                                    <th class="py-4 px-6">Slug</th>
+                                    <th class="py-4 px-6">Ngôn ngữ</th>
+                                    <th class="py-4 px-6">Trạng thái</th>
+                                    <th class="py-4 px-6">Ngày cập nhật</th>
+                                    <th class="py-4 px-6 text-right">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pagesTableBody" class="divide-y divide-gray-800/60 text-sm">
+                                <!-- Dynamic Pages Rendered Here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="emptyState" class="hidden p-12 text-center">
+                        <span class="inline-flex items-center justify-center w-12 h-12 bg-gray-800 text-gray-500 rounded-full mb-3"><i class="fas fa-folder-open text-xl"></i></span>
+                        <p class="text-gray-400 font-semibold">Không tìm thấy trang nào phù hợp</p>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ===== CREATE PAGE MODAL ===== -->
+    <div id="createModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div class="glass-panel w-full max-w-lg p-8 rounded-2xl shadow-2xl animate-scale-in">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-white">Tạo Page mới</h3>
+                <button onclick="closeCreateModal()" class="text-gray-400 hover:text-white transition"><i class="fas fa-times text-lg"></i></button>
+            </div>
+            
+            <form id="createPageForm" class="space-y-5">
+                <div>
+                    <label for="pageTitle" class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Tiêu đề Trang</label>
+                    <input type="text" id="pageTitle" required placeholder="Nhập tiêu đề trang..." 
+                        class="w-full bg-gray-950 border border-gray-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 transition-all">
+                </div>
+
+                <div>
+                    <label for="pageSlug" class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Slug (Đường dẫn tĩnh)</label>
+                    <input type="text" id="pageSlug" required placeholder="trang-moi" 
+                        class="w-full bg-gray-950 border border-gray-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 transition-all">
+                </div>
+
+                <div>
+                    <label for="pageLang" class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Ngôn ngữ</label>
+                    <select id="pageLang" class="w-full bg-gray-950 border border-gray-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 transition-all">
+                        <option value="VI">Tiếng Việt (VI)</option>
+                        <option value="EN">Tiếng Anh (EN)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="pageDesc" class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Mô tả tóm tắt</label>
+                    <textarea id="pageDesc" rows="3" placeholder="Mô tả về trang này..." 
+                        class="w-full bg-gray-950 border border-gray-800 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500 transition-all"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 border-t border-gray-800">
+                    <button type="button" onclick="closeCreateModal()" class="px-5 py-2.5 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-xl transition">Hủy</button>
+                    <button type="submit" class="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold rounded-xl shadow-lg transition-all">Xác nhận tạo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Core Javascript -->
+    <script src="admin.js"></script>
+    <script>
+        // Check auth on load
+        checkAuth();
+
+        // Display current date time in header
+        setInterval(() => {
+            const timeSpan = document.getElementById('currentTime');
+            if (timeSpan) {
+                const now = new Date();
+                timeSpan.textContent = now.toLocaleString('vi-VN', { dateStyle: 'full', timeStyle: 'medium' });
+            }
+        }, 1000);
+
+        // Render statistics summary cards
+        function updateStats() {
+            const pages = getPages();
+            const published = pages.filter(p => p.status === 'Published').length;
+            const drafts = pages.filter(p => p.status === 'Draft').length;
+            const vi = pages.filter(p => p.language === 'VI').length;
+            const en = pages.filter(p => p.language === 'EN').length;
+
+            document.getElementById('statTotal').textContent = pages.length;
+            document.getElementById('statPublished').textContent = published;
+            document.getElementById('statDraft').textContent = drafts;
+            document.getElementById('statLangs').textContent = `${vi} VI / ${en} EN`;
+        }
+
+        // Render Page manager table
+        function renderPagesList() {
+            const pages = getPages();
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const lang = document.getElementById('langFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            const sort = document.getElementById('sortOrder').value;
+
+            // Filter
+            let filtered = pages.filter(p => {
+                const matchesSearch = p.title.toLowerCase().includes(search) || p.slug.toLowerCase().includes(search);
+                const matchesLang = lang === 'all' || p.language === lang;
+                const matchesStatus = status === 'all' || p.status === status;
+                return matchesSearch && matchesLang && matchesStatus;
+            });
+
+            // Sort
+            filtered.sort((a, b) => {
+                if (sort === 'az') return a.title.localeCompare(b.title);
+                if (sort === 'oldest') return new Date(a.lastUpdated) - new Date(b.lastUpdated);
+                return new Date(b.lastUpdated) - new Date(a.lastUpdated); // newest
+            });
+
+            const tbody = document.getElementById('pagesTableBody');
+            const emptyState = document.getElementById('emptyState');
+            tbody.innerHTML = '';
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            emptyState.classList.add('hidden');
+
+            filtered.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-gray-800/40 hover:bg-gray-900/20 transition-all';
+                
+                // Badges
+                const langBadge = p.language === 'VI' 
+                    ? '<span class="px-2.5 py-1 text-xs font-bold text-red-400 bg-red-500/10 rounded-full border border-red-500/20">VI</span>'
+                    : '<span class="px-2.5 py-1 text-xs font-bold text-blue-400 bg-blue-500/10 rounded-full border border-blue-500/20">EN</span>';
+                
+                const statusBadge = p.status === 'Published'
+                    ? `<button onclick="toggleStatus('${p.id}')" title="Nhấp để đổi trạng thái" class="px-2.5 py-1 text-xs font-bold text-emerald-400 bg-emerald-500/10 rounded-full border border-emerald-500/20 hover:bg-emerald-500/20 transition flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Published</button>`
+                    : `<button onclick="toggleStatus('${p.id}')" title="Nhấp để đổi trạng thái" class="px-2.5 py-1 text-xs font-bold text-amber-500 bg-amber-500/10 rounded-full border border-amber-500/20 hover:bg-amber-500/20 transition flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Draft</button>`;
+
+                tr.innerHTML = `
+                    <td class="py-4 px-6 font-mono text-gray-500">${p.id}</td>
+                    <td class="py-4 px-6 font-bold text-white">${p.title}</td>
+                    <td class="py-4 px-6 font-mono text-gray-400 text-xs">/${p.slug}</td>
+                    <td class="py-4 px-6">${langBadge}</td>
+                    <td class="py-4 px-6">${statusBadge}</td>
+                    <td class="py-4 px-6 text-gray-400 text-xs">${p.lastUpdated}</td>
+                    <td class="py-4 px-6 text-right">
+                        <div class="flex items-center justify-end gap-2">
+                            <a href="builder.html?pageId=${p.id}" class="p-2 bg-[#1A6B49]/10 hover:bg-[#1A6B49]/30 text-[#41b67d] hover:text-white rounded-lg transition border border-[#1A6B49]/20" title="Chỉnh sửa Page">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button onclick="duplicateAndTranslatePage('${p.id}')" class="p-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-white rounded-lg transition border border-amber-500/20" title="Tạo bản dịch (Duplicate Page)">
+                                <i class="fas fa-language"></i>
+                            </button>
+                            <button onclick="handleDeletePage('${p.id}')" class="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-white rounded-lg transition border border-red-500/20" title="Xóa Page">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Toggle page status quick toggle
+        window.toggleStatus = function(id) {
+            const pages = getPages();
+            const page = pages.find(p => p.id === id);
+            if (page) {
+                page.status = page.status === 'Published' ? 'Draft' : 'Published';
+                page.lastUpdated = getFormattedDateTime();
+                savePages(pages);
+                showToast(`Đã chuyển trạng thái sang ${page.status === 'Published' ? 'Xuất bản' : 'Bản nháp'}`, 'success');
+                renderPagesList();
+                updateStats();
+            }
+        };
+
+        // Delete Page wrapper
+        window.handleDeletePage = function(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa trang này? Dữ liệu không thể phục hồi!')) {
+                deletePage(id);
+                renderPagesList();
+                updateStats();
+            }
+        };
+
+        // Modal triggers
+        window.openCreateModal = function() {
+            document.getElementById('createModal').classList.remove('hidden');
+            document.getElementById('pageTitle').focus();
+        };
+
+        window.closeCreateModal = function() {
+            document.getElementById('createModal').classList.add('hidden');
+            document.getElementById('createPageForm').reset();
+        };
+
+        // Auto-slug generation from Title in modal
+        document.getElementById('pageTitle').addEventListener('input', function() {
+            const title = this.value;
+            // Simple slugification logic
+            let slug = title.toLowerCase()
+                .replace(/á|à|ả|ã|ạ|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/g, 'a')
+                .replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/g, 'e')
+                .replace(/í|ì|ỉ|ĩ|ị/g, 'i')
+                .replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/g, 'o')
+                .replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/g, 'u')
+                .replace(/ý|ỳ|ỷ|ỹ|ỵ/g, 'y')
+                .replace(/đ/g, 'd')
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+            document.getElementById('pageSlug').value = slug;
+        });
+
+        // Form Submit for new page
+        document.getElementById('createPageForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const title = document.getElementById('pageTitle').value.trim();
+            const slug = document.getElementById('pageSlug').value.trim();
+            const lang = document.getElementById('pageLang').value;
+            const desc = document.getElementById('pageDesc').value.trim();
+
+            createPage(title, slug, lang, desc);
+            closeCreateModal();
+            renderPagesList();
+            updateStats();
+        });
+
+        // Bind filter change events
+        document.getElementById('searchInput').addEventListener('input', renderPagesList);
+        document.getElementById('langFilter').addEventListener('change', renderPagesList);
+        document.getElementById('statusFilter').addEventListener('change', renderPagesList);
+        document.getElementById('sortOrder').addEventListener('change', renderPagesList);
+
+        // Initial calls
+        updateStats();
+        renderPagesList();
+    </script>
+</body>
+</html>

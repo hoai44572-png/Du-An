@@ -1,0 +1,433 @@
+/* ==========================================================
+   reward-popup.css
+   "Nhận Thưởng" Reward Code Popup — Cyberpunk / Futuristic Style
+   BEM class prefix: reward-popup__
+   ========================================================== */
+
+/* ── Fonts Import ──────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;600;700;800;900&family=Orbitron:wght@600;700;900&display=swap');
+
+/* ── Modal Overlay (Anchored inside .v-milestone__box) ───────── */
+.reward-popup__overlay {
+    position: absolute;
+    top: 56%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.88);
+    width: 95%;
+    max-width: 480px;
+    z-index: 1000;
+    background: transparent !important;
+    background-color: transparent !important;
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s ease, opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Open State */
+.reward-popup__overlay.is-open,
+.reward-popup__overlay.show {
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* ── Main Container / Cyber Frame ──────────────────────── */
+.reward-popup__container {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background: radial-gradient(ellipse at 50% 35%, #2a0952 0%, #150434 55%, #0a011a 100%);
+    border: 2px solid #00f0ff;
+    border-radius: 8px;
+    padding: 34px 38px 26px 38px;
+    box-sizing: border-box;
+    pointer-events: auto;
+    box-shadow:
+        0 0 14px rgba(0, 240, 255, 0.85),
+        0 0 32px rgba(0, 240, 255, 0.45),
+        0 0 55px rgba(255, 0, 170, 0.3),
+        inset 0 0 45px rgba(0, 0, 0, 0.85);
+    overflow: hidden;
+}
+
+.reward-popup__overlay.is-open .reward-popup__container,
+.reward-popup__overlay.show .reward-popup__container {
+    transform: scale(1);
+}
+
+/* Exit Animation */
+.reward-popup__overlay.is-closing .reward-popup__container {
+    transform: scale(0.85);
+    opacity: 0;
+    transition: transform 0.25s ease-in, opacity 0.25s ease-in;
+}
+
+/* Horizontal Scanlines Overlay */
+.reward-popup__container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0) 0px,
+        rgba(0, 0, 0, 0) 2px,
+        rgba(0, 240, 255, 0.035) 3px,
+        rgba(0, 240, 255, 0.035) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Hexagon Grid Pattern Overlay */
+.reward-popup__container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(circle, rgba(0, 240, 255, 0.06) 1px, transparent 1px);
+    background-size: 14px 14px;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── Cyber Frame Corner Accents ────────────────────────── */
+.reward-popup__cyber-border {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Top-Left Cyan Cut Corner Tab */
+.reward-popup__cyber-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 20px;
+    width: 90px;
+    height: 9px;
+    background: #00f0ff;
+    clip-path: polygon(0 0, 100% 0, 84% 100%, 0 100%);
+    box-shadow: 0 0 10px #00f0ff;
+}
+
+/* Top-Right Magenta Cap Tab */
+.reward-popup__cyber-border::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: 75px;
+    width: 65px;
+    height: 6px;
+    background: #ff00aa;
+    box-shadow: 0 0 10px #ff00aa;
+}
+
+/* ── Top Tech Header Label ─────────────────────────────── */
+.reward-popup__header-tech {
+    position: absolute;
+    top: 11px;
+    left: 32px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+}
+
+.reward-popup__tech-tag {
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(0, 240, 255, 0.6);
+    letter-spacing: 2px;
+    user-select: none;
+}
+
+/* ── Close Button (Neon Pink Cross) ────────────────────── */
+.reward-popup__close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    width: 42px;
+    height: 42px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    transition: transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.22s ease;
+}
+
+.reward-popup__close:hover {
+    transform: scale(1.18) rotate(90deg);
+    filter: drop-shadow(0 0 14px #ff00aa);
+}
+
+.reward-popup__close-icon {
+    filter: drop-shadow(0 0 8px #ff00aa);
+}
+
+/* ── Side HUD Text Columns (Left & Right) ──────────────── */
+.reward-popup__hud {
+    position: absolute;
+    top: 32px;
+    bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: 'Orbitron', monospace;
+    font-size: 8px;
+    font-weight: 600;
+    color: rgba(0, 240, 255, 0.38);
+    letter-spacing: 1px;
+    pointer-events: none;
+    z-index: 2;
+    user-select: none;
+}
+
+.reward-popup__hud--left {
+    left: 15px;
+    text-align: left;
+}
+
+.reward-popup__hud--right {
+    right: 15px;
+    text-align: right;
+}
+
+.reward-popup__hud-gap {
+    height: 10px;
+}
+
+/* ── Main Body ─────────────────────────────────────────── */
+.reward-popup__body {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* ── Title Text ────────────────────────────────────────── */
+.reward-popup__title {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 1.42;
+    color: #ffffff;
+    margin: 8px 0 24px 0;
+    letter-spacing: 0.3px;
+    text-shadow: 
+        0 0 12px rgba(255, 255, 255, 0.45),
+        0 0 24px rgba(0, 240, 255, 0.35);
+}
+
+/* ── Code Display Box (Chamfered Cut-Corners) ───────────── */
+.reward-popup__code-box {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    background: linear-gradient(90deg, #12164a 0%, #1a226e 50%, #12164a 100%);
+    border: 1.5px solid #00f0ff;
+    padding: 15px 22px;
+    margin-bottom: 28px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Chamfered Cut Corners Left & Right */
+    clip-path: polygon(
+        14px 0, 
+        100% 0, 
+        100% calc(100% - 14px), 
+        calc(100% - 14px) 100%, 
+        0 100%, 
+        0 14px
+    );
+
+    box-shadow: 
+        0 0 16px rgba(0, 240, 255, 0.4),
+        inset 0 0 18px rgba(0, 240, 255, 0.18);
+}
+
+.reward-popup__code-text {
+    font-family: 'Be Vietnam Pro', 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 3.5px;
+    color: #ffffff;
+    text-shadow: 0 0 14px rgba(0, 240, 255, 0.85);
+    user-select: all;
+}
+
+/* ── Action Area & SAO CHÉP Button ────────────────────── */
+.reward-popup__action {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Decorative Gold Outer Ring Frame */
+.reward-popup__gold-frame {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 18px;
+}
+
+/* Outer Gold Ring Arc Line */
+.reward-popup__gold-frame::before {
+    content: '';
+    position: absolute;
+    inset: -4px -14px;
+    border: 1.5px solid #ffea79;
+    border-radius: 50px;
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(255, 234, 121, 0.5);
+}
+
+/* 4-Point Gold Stars Left & Right */
+.reward-popup__star {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    filter: drop-shadow(0 0 6px #ffea79);
+    z-index: 4;
+}
+
+.reward-popup__star--left {
+    left: -24px;
+}
+
+.reward-popup__star--right {
+    right: -24px;
+}
+
+/* Button Base Styling */
+.reward-popup__copy-btn {
+    position: relative;
+    z-index: 3;
+    padding: 14px 46px;
+    background: linear-gradient(90deg, #8a25d2 0%, #bd47f6 50%, #8a25d2 100%);
+    border: 1.5px solid #e2aaff;
+    border-radius: 32px;
+    color: #ffffff;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    outline: none;
+
+    box-shadow: 
+        0 0 22px rgba(189, 71, 246, 0.65),
+        0 4px 16px rgba(0, 0, 0, 0.45),
+        inset 0 1px 2px rgba(255, 255, 255, 0.45);
+
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+/* Hover Light Glow + Scale Animation */
+.reward-popup__copy-btn:hover {
+    transform: scale(1.06);
+    filter: brightness(1.15);
+    box-shadow: 
+        0 0 32px rgba(205, 95, 255, 0.95),
+        0 6px 22px rgba(0, 0, 0, 0.55),
+        inset 0 1px 4px rgba(255, 255, 255, 0.65);
+}
+
+/* Active Press Effect */
+.reward-popup__copy-btn:active {
+    transform: scale(0.96);
+}
+
+/* Bottom Diamond Accent */
+.reward-popup__diamond {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 6px #ff00aa);
+}
+
+/* Toast Message Notification */
+.reward-popup__toast {
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(12, 4, 30, 0.94);
+    border: 1px solid #00f0ff;
+    border-radius: 20px;
+    padding: 6px 22px;
+    color: #00f0ff;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    box-shadow: 0 0 14px rgba(0, 240, 255, 0.6);
+}
+
+.reward-popup__toast.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Bottom Cyber Notch Bar */
+.reward-popup__bottom-bar {
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 6px;
+    background: #00f0ff;
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
+    box-shadow: 0 0 10px #00f0ff;
+    z-index: 2;
+}
+
+/* ── Responsive Mobile Styling ─────────────────────────── */
+@media (max-width: 600px) {
+    .reward-popup__container {
+        padding: 38px 24px 28px 24px;
+        width: 95%;
+    }
+    .reward-popup__title {
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+    .reward-popup__code-box {
+        padding: 12px 14px;
+        margin-bottom: 22px;
+    }
+    .reward-popup__code-text {
+        font-size: 18px;
+        letter-spacing: 2px;
+    }
+    .reward-popup__copy-btn {
+        padding: 12px 34px;
+        font-size: 15px;
+    }
+    .reward-popup__hud {
+        display: none; /* Hide side HUD text on smaller mobile screens */
+    }
+}

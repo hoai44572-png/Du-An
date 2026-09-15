@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/favicon.png">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="/manifest.json">
+
+    <title>Đồng hành cùng sinh viên Đại học Văn Hiến tại Ngày hội sinh viên - Hexagon Corporation</title>
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #F8FAFC;
+            color: #1e293b;
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== HEADER ===== */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: #1A6B49;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-area img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .logo-area span {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #d1d5db;
+            transition: color 0.2s;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #fbbf24;
+        }
+
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 16px;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+
+        .lang-btn.active {
+            opacity: 1;
+        }
+
+        .lang-btn img {
+            width: 24px;
+            height: 16px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Mobile menu */
+        #mobile-menu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid #f1f5f9;
+            z-index: 40;
+            padding: 16px 0;
+        }
+
+        #mobile-menu.open {
+            display: block;
+        }
+
+        #mobile-menu a {
+            display: block;
+            padding: 12px 24px;
+            color: #1e293b;
+            font-weight: 500;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        #mobile-menu a:hover {
+            background: #f8fafc;
+            color: #d97706;
+        }
+
+        #mobile-menu .lang-switcher {
+            padding: 16px 24px 0;
+            border-top: 1px solid #f1f5f9;
+            margin-top: 8px;
+        }
+
+        /* ===== BREADCRUMB ===== */
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: #94a3b8;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: #f59e0b;
+        }
+
+        .breadcrumb .separator {
+            color: #94a3b8;
+        }
+
+        .breadcrumb .current {
+            color: #475569;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 200px;
+        }
+
+        /* ===== ARTICLE LAYOUT ===== */
+        .article-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        @media (min-width: 1024px) {
+            .article-layout {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+        }
+
+        .article-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .article-sidebar {
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 1024px) {
+            .article-sidebar {
+                width: 320px;
+                position: sticky;
+                top: 100px;
+                align-self: flex-start;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .article-sidebar {
+                width: 384px;
+            }
+        }
+
+        /* ===== ARTICLE CARD ===== */
+        .article-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            border: 1px solid #f1f5f9;
+        }
+
+        .article-header {
+            padding: 32px 40px 24px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .article-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+
+        .article-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .article-meta-item svg {
+            width: 16px;
+            height: 16px;
+            color: #fbbf24;
+            flex-shrink: 0;
+        }
+
+        .article-body {
+            padding: 40px;
+        }
+
+        /* ===== ARTICLE CONTENT ===== */
+        .article-content {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: #334155;
+        }
+
+        .article-content p {
+            margin-bottom: 16px;
+        }
+
+        .article-content img {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin: 24px auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .article-content h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 32px 0 16px;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 24px 0 12px;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            padding-left: 24px;
+            margin-bottom: 16px;
+            color: #334155;
+        }
+
+        .article-content li {
+            margin-bottom: 4px;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid #fbbf24;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .article-content a {
+            color: #d97706;
+            text-decoration: none;
+        }
+
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+
+        .article-content .hashtag {
+            color: #d97706;
+            font-weight: 500;
+        }
+
+        .article-content .divider {
+            border: none;
+            border-top: 1px solid #e2e8f0;
+            margin: 24px 0;
+        }
+
+        .article-content .signature {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        /* ===== BACK BUTTON ===== */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #d97706;
+            font-weight: 600;
+            margin-bottom: 16px;
+            transition: gap 0.2s;
+        }
+
+        .back-link:hover {
+            gap: 12px;
+        }
+
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ===== SIDEBAR PLACEHOLDER ===== */
+        .sidebar-card {
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+
+        .sidebar-card .animate-pulse {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .sidebar-card .pulse-bar {
+            height: 16px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-card .pulse-bar.w-3-4 {
+            width: 75%;
+        }
+
+        .sidebar-card .pulse-bar.w-2-3 {
+            width: 66%;
+        }
+
+        .sidebar-card .pulse-image {
+            aspect-ratio: 16/9;
+            background: #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        /* ===== RELATED POSTS ===== */
+        .related-section {
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .related-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .related-header .bar {
+            width: 4px;
+            height: 28px;
+            background: #fbbf24;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .related-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .related-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .related-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .related-card {
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .related-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            border-color: #fbbf24;
+        }
+
+        .related-card .image-wrap {
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+
+        .related-card .image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .related-card:hover .image-wrap img {
+            transform: scale(1.05);
+        }
+
+        .related-card .info {
+            padding: 16px;
+        }
+
+        .related-card .info h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #1e293b;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: color 0.2s;
+        }
+
+        .related-card:hover .info h4 {
+            color: #d97706;
+        }
+
+        .related-card .info .date {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 6px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0D5939;
+            padding: 24px 0 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 24px;
+        }
+
+        footer p {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+        footer p span {
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 72px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .article-header {
+                padding: 20px;
+            }
+
+            .article-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .article-body {
+                padding: 20px;
+            }
+
+            .article-content {
+                font-size: 1rem;
+            }
+
+            .article-content img {
+                margin: 16px 0;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .nav-inner {
+                padding: 8px 16px;
+            }
+
+            .logo-area img {
+                width: 48px;
+                height: 48px;
+            }
+
+            .logo-area span {
+                font-size: 1rem;
+            }
+
+            .breadcrumb .current {
+                max-width: 120px;
+            }
+
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-meta {
+                gap: 10px;
+                font-size: 0.75rem;
+            }
+
+            .article-header h1 {
+                font-size: 1.25rem;
+            }
+
+            .article-content {
+                font-size: 0.95rem;
+            }
+
+            .article-content h2 {
+                font-size: 1.25rem;
+            }
+
+            .related-header h2 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header id="navbar">
+        <div class="nav-inner">
+            <div class="logo-area">
+                <a href="/">
+                    <img src="../Logo/logo-hhc.png" alt="Hexagon Logo">
+                </a>
+                <span>HEXAGON</span>
+            </div>
+
+            <nav class="nav-links">
+                <a href="../Trang-Chủ.html">Trang chủ</a>
+                <a href="/#gioi-thieu">Giới thiệu</a>
+                <a href="/#dich-vu">Dịch vụ</a>
+                <a href="https://support.hexagon.xyz/" target="_blank" rel="noopener noreferrer">Hỗ trợ</a>
+                <a href="/#lien-he">Liên hệ</a>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" title="Tiếng Việt">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                            style="width:24px;height:16px;object-fit:cover;border-radius:2px;">
+                            <defs>
+                                <clipPath id="vn-a">
+                                    <path fill-opacity=".7" d="M-85.3 0h682.6v512H-85.3z" />
+                                </clipPath>
+                            </defs>
+                            <g fill-rule="evenodd" clip-path="url(#vn-a)" transform="translate(80)scale(.9375)">
+                                <path fill="#da251d" d="M-128 0h768v512h-768z" />
+                                <path fill="#ff0"
+                                    d="M349.6 381 260 314.3l-89 67.3L204 272l-89-67.7 110.1-1 34.2-109.4L294 203l110.1.1-88.5 68.4 33.9 109.6z" />
+                            </g>
+                        </svg>
+                    </button>
+                    <button class="lang-btn" title="English">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                            style="width:24px;height:16px;object-fit:cover;border-radius:2px;">
+                            <path fill="#012169" d="M0 0h640v480H0z" />
+                            <path fill="#FFF"
+                                d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0z" />
+                            <path fill="#C8102E"
+                                d="m424 281 216 159v40L369 281zm-184 20 6 35L54 480H0zM640 0v3L391 191l2-44L590 0zM0 0l239 176h-60L0 42z" />
+                            <path fill="#FFF" d="M241 0v480h160V0zM0 160v160h640V160z" />
+                            <path fill="#C8102E" d="M0 193v96h640v-96zM273 0v480h96V0z" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                ☰
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu">
+            <a href="../Trang-Chủ.html">Trang chủ</a>
+            <a href="/#gioi-thieu">Giới thiệu</a>
+            <a href="/#dich-vu">Dịch vụ</a>
+            <a href="https://support.hexagon.xyz/" target="_blank" rel="noopener noreferrer">Hỗ trợ</a>
+            <a href="/#lien-he">Liên hệ</a>
+            <div class="lang-switcher">
+                <button class="lang-btn active" title="Tiếng Việt">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                        style="width:24px;height:16px;object-fit:cover;border-radius:2px;">
+                        <defs>
+                            <clipPath id="vn-b">
+                                <path fill-opacity=".7" d="M-85.3 0h682.6v512H-85.3z" />
+                            </clipPath>
+                        </defs>
+                        <g fill-rule="evenodd" clip-path="url(#vn-b)" transform="translate(80)scale(.9375)">
+                            <path fill="#da251d" d="M-128 0h768v512h-768z" />
+                            <path fill="#ff0"
+                                d="M349.6 381 260 314.3l-89 67.3L204 272l-89-67.7 110.1-1 34.2-109.4L294 203l110.1.1-88.5 68.4 33.9 109.6z" />
+                        </g>
+                    </svg>
+                </button>
+                <button class="lang-btn" title="English">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                        style="width:24px;height:16px;object-fit:cover;border-radius:2px;">
+                        <path fill="#012169" d="M0 0h640v480H0z" />
+                        <path fill="#FFF"
+                            d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0z" />
+                        <path fill="#C8102E"
+                            d="m424 281 216 159v40L369 281zm-184 20 6 35L54 480H0zM640 0v3L391 191l2-44L590 0zM0 0l239 176h-60L0 42z" />
+                        <path fill="#FFF" d="M241 0v480h160V0zM0 160v160h640V160z" />
+                        <path fill="#C8102E" d="M0 193v96h640v-96zM273 0v480h96V0z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main>
+        <div class="container" style="padding-top:40px; padding-bottom:40px;">
+
+            <!-- ===== BREADCRUMB ===== -->
+            <nav class="breadcrumb">
+                <a href="/">Trang chủ</a>
+                <span class="separator">›</span>
+                <a href="/vi/bai-viet">Bài viết</a>
+                <span class="separator">›</span>
+                <a href="/vi/bai-viet">Hoạt động</a>
+                <span class="separator">›</span>
+                <span class="current">Đồng hành cùng sinh viên Đại học Văn Hiến tại Ngày hội sinh viên</span>
+            </nav>
+
+            <!-- ===== ARTICLE LAYOUT ===== -->
+            <div class="article-layout">
+
+                <!-- ===== MAIN CONTENT ===== -->
+                <div class="article-main">
+
+                    <!-- ===== ARTICLE CARD ===== -->
+                    <article class="article-card">
+
+                        <!-- Header -->
+                        <div class="article-header">
+                            <h1>Đồng hành cùng sinh viên Đại học Văn Hiến tại Ngày hội sinh viên</h1>
+                            <div class="article-meta">
+                                <span class="article-meta-item">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    26 tháng 6, 2026
+                                </span>
+                                <span class="article-meta-item">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    01:25
+                                </span>
+                                <span class="article-meta-item">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                                    </svg>
+                                    Tiếng Việt
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="article-body">
+                            <div class="article-content">
+
+                                <p>Công ty Cổ phần Lục Giác hân hạnh được đồng hành cùng các bạn sinh viên khoa Công
+                                    nghệ Thông tin - Đại học Văn Hiến trong chương trình "VHE Startup Devote".</p>
+
+                                <p>Trong khuôn khổ cuộc thi, Lục Giác đã hỗ trợ các bạn sinh viên xây dựng mô hình kinh
+                                    doanh thiết bị công nghệ điện tử, đồng thời chia sẻ phương pháp trình bày kế hoạch
+                                    kinh doanh chuyên nghiệp và khả thi.</p>
+
+                                <p><img src="https://beta-api.hexagon.xyz/uploads/myc-dong-hanh-1-1774341526337-531129418.jpg"
+                                        alt="Đồng hành cùng sinh viên Đại học Văn Hiến"></p>
+
+                                <p>Với kinh nghiệm thực tế từ doanh nghiệp cùng sự sáng tạo và linh hoạt của các bạn
+                                    sinh viên, đội myU đã xuất sắc chinh phục ban giám khảo và mang về giải thưởng cao
+                                    nhất - Giải Nhất Khởi Nghiệp.</p>
+
+                                <p>Thành công này không chỉ khẳng định sự chuyên nghiệp và tiềm năng của sinh viên Đại
+                                    học Văn Hiến, mà còn thể hiện tầm nhìn phát triển mạnh mẽ của mô hình kinh doanh đến
+                                    từ Lục Giác.</p>
+
+                                <p>Lục Giác hy vọng sẽ tiếp tục đồng hành cùng các bạn sinh viên trong hành trình lan
+                                    tỏa tinh thần khởi nghiệp trong kỷ nguyên số.</p>
+
+                                <p>
+                                    <a href="#" class="hashtag">#HexagonCorporation</a>
+                                    <a href="#" class="hashtag">#SGD</a>
+                                    <a href="#" class="hashtag">#Technology</a>
+                                </p>
+
+                                <hr class="divider">
+
+                                <p class="signature">𝐇𝐄𝐗𝐀𝐆𝐎𝐍 𝐂𝐎𝐑𝐏𝐎𝐑𝐀𝐓𝐈𝐎𝐍</p>
+                                <p>Address: 615 Au Co Str, Tan Phu Ward, HCMC</p>
+                                <p>Hotline: +84 70 390 9333</p>
+
+                            </div>
+                        </div>
+
+                    </article>
+
+                    <!-- ===== RELATED POSTS ===== -->
+                    <section class="related-section">
+                        <div class="related-header">
+                            <span class="bar"></span>
+                            <h2>Bài viết liên quan</h2>
+                        </div>
+
+                        <div class="related-grid">
+                            <a href="#" class="related-card">
+                                <div class="image-wrap">
+                                    <img src="https://beta-api.hexagon.xyz/uploads/teambuilding-01-1774341835079-253071961.jpg"
+                                        alt="Không khí tưng bừng tại Chương trình Teambuilding">
+                                </div>
+                                <div class="info">
+                                    <h4>Không khí tưng bừng tại Chương trình Teambuilding myH25 tại Ngôi nhà Hùng Hậu
+                                    </h4>
+                                    <p class="date">26 tháng 6, 2026</p>
+                                </div>
+                            </a>
+
+                            <a href="#" class="related-card">
+                                <div class="image-wrap">
+                                    <img src="https://beta-api.hexagon.xyz/uploads/dv-1-1782723514912-477828992.jpg"
+                                        alt="Giải pháp công nghệ thông tin">
+                                </div>
+                                <div class="info">
+                                    <h4>Giải pháp công nghệ thông tin cho doanh nghiệp hiện đại</h4>
+                                    <p class="date">25 tháng 6, 2026</p>
+                                </div>
+                            </a>
+
+                            <a href="#" class="related-card">
+                                <div class="image-wrap">
+                                    <img src="https://beta-api.hexagon.xyz/uploads/dv-2-1782723514900-716634177.jpg"
+                                        alt="Cung cấp thiết bị CNTT">
+                                </div>
+                                <div class="info">
+                                    <h4>Cung cấp thiết bị CNTT chất lượng cao cho doanh nghiệp</h4>
+                                    <p class="date">24 tháng 6, 2026</p>
+                                </div>
+                            </a>
+
+                            <a href="#" class="related-card">
+                                <div class="image-wrap">
+                                    <img src="https://beta-api.hexagon.xyz/uploads/dv-3-1782723514934-106533730.jpg"
+                                        alt="Giải pháp phần mềm doanh nghiệp">
+                                </div>
+                                <div class="info">
+                                    <h4>Giải pháp phần mềm doanh nghiệp - Tối ưu hóa vận hành</h4>
+                                    <p class="date">23 tháng 6, 2026</p>
+                                </div>
+                            </a>
+                        </div>
+                    </section>
+
+                </div>
+
+                <!-- ===== SIDEBAR ===== -->
+                <aside class="article-sidebar">
+                    <a href="/vi/bai-viet" class="back-link">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        Quay lại danh sách
+                    </a>
+
+                    <div class="sidebar-card">
+                        <div class="animate-pulse">
+                            <div class="pulse-bar w-3-4"></div>
+                            <div class="pulse-image"></div>
+                            <div class="pulse-bar"></div>
+                            <div class="pulse-bar w-2-3"></div>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <p>Copyright 2026 © <span>Hexagon Corporation</span>. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', function () {
+            mobileMenu.classList.toggle('open');
+            this.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function () {
+                mobileMenu.classList.remove('open');
+                menuToggle.textContent = '☰';
+            });
+        });
+
+        // Language switcher
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const parent = this.closest('.lang-switcher');
+                parent.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Header shadow on scroll
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('navbar');
+            if (window.scrollY > 10) {
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+            } else {
+                header.style.boxShadow = '0 2px 12px rgba(0,0,0,0.12)';
+            }
+        });
+    </script>
+
+<script src="../translate.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Giải pháp thi công &amp; lắp đặt - Hexagon Corporation</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .bg-gold-accent {
+            background-color: #f59e0b;
+        }
+
+        .text-gold-accent {
+            color: #f59e0b;
+        }
+
+        .hover-gold-accent:hover {
+            color: #f59e0b;
+        }
+
+        .border-gold-accent {
+            border-color: #f59e0b;
+        }
+
+        .shadow-gold {
+            box-shadow: 0 10px 40px rgba(245, 158, 11, 0.25);
+        }
+
+        .shadow-gold-lg {
+            box-shadow: 0 20px 60px rgba(245, 158, 11, 0.3);
+        }
+
+        .bg-hexagon-green {
+            background-color: #1A6B49;
+        }
+
+        .bg-hexagon-dark {
+            background-color: #0D5939;
+        }
+
+        .gradient-hero {
+            background: linear-gradient(135deg, #0D5939 0%, #1A6B49 50%, #2A8B5F 100%);
+        }
+
+        .gradient-hero-alt {
+            background: linear-gradient(135deg, #0B4A2E 0%, #1A6B49 60%, #2A8B5F 100%);
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .process-step {
+            position: relative;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 40px;
+            right: -30px;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .process-step:not(:last-child)::after {
+                display: none;
+            }
+        }
+
+        .floating-shape {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(3deg);
+            }
+        }
+
+        .pulse-dot {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.5);
+            }
+        }
+
+        .service-icon {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.05));
+            transition: all 0.3s ease;
+        }
+
+        .group:hover .service-icon {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(245, 158, 11, 0.1));
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile menu */
+        #mobile-menu {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+
+        #mobile-menu.open {
+            max-height: 600px;
+            opacity: 1;
+        }
+
+        .icon-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(245, 158, 11, 0.02));
+            transition: all 0.3s ease;
+        }
+
+        .group:hover .icon-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.08));
+            transform: scale(1.05);
+        }
+
+        .stat-item {
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+        }
+
+        @media (max-width: 768px) {
+            .stat-item {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                padding-bottom: 1rem;
+            }
+
+            .stat-item:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+        }
+
+        .badge-pulse {
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-hexagon-green shadow-lg">
+        <nav class="mx-auto py-3 flex justify-between items-center" style="padding-inline: clamp(1.5rem, 5vw, 5rem);">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center bg-white/10 rounded-xl">
+                    <a href="/" class="block">
+                        <svg class="w-8 h-8 md:w-10 md:h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="12,2 2,7 12,12 22,7 12,2" />
+                            <polygon points="2,17 12,22 22,17 12,12 2,17" />
+                            <polygon points="2,12 12,17 22,12 12,7 2,12" />
+                        </svg>
+                    </a>
+                </div>
+                <div>
+                    <span class="text-xl md:text-2xl font-extrabold text-white tracking-tight">HEXAGON</span>
+                    <span
+                        class="block text-[10px] md:text-xs text-gold-accent font-medium tracking-widest uppercase">Corporation</span>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="../Trang-Chủ.html"
+                    s="text-gray-200 hover:text-gold-accent transition font-medium text-sm">Trang
+                    chủ</a>
+                <a href="/#gioi-thieu" class="text-gray-200 hover:text-gold-accent transition font-medium text-sm">Giới
+                    thiệu</a>
+                <a href="/#dich-vu" class="text-gold-accent font-medium text-sm border-b-2 border-gold-accent pb-1">Dịch
+                    vụ</a>
+                <a href="https://support.hexagon.xyz/" target="_blank" rel="noopener noreferrer"
+                    class="text-gray-200 hover:text-gold-accent transition font-medium text-sm">Hỗ trợ</a>
+                <a href="/#lien-he" class="text-gray-200 hover:text-gold-accent transition font-medium text-sm">Liên
+                    hệ</a>
+
+                <!-- Language Switcher -->
+                <div class="lang-switcher flex items-center gap-2 ml-4 border-l border-white/20 pl-4">
+                    <button type="button" title="Tiếng Việt"
+                        class="opacity-100 transition cursor-pointer bg-none border-none p-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                            class="w-6 h-4 rounded-sm shadow-sm">
+                            <defs>
+                                <clipPath id="vn-a">
+                                    <path fill-opacity=".7" d="M-85.3 0h682.6v512H-85.3z" />
+                                </clipPath>
+                            </defs>
+                            <g fill-rule="evenodd" clip-path="url(#vn-a)" transform="translate(80)scale(.9375)">
+                                <path fill="#da251d" d="M-128 0h768v512h-768z" />
+                                <path fill="#ff0"
+                                    d="M349.6 381 260 314.3l-89 67.3L204 272l-89-67.7 110.1-1 34.2-109.4L294 203l110.1.1-88.5 68.4 33.9 109.6z" />
+                            </g>
+                        </svg>
+                    </button>
+                    <button type="button" title="English"
+                        class="opacity-45 transition cursor-pointer bg-none border-none p-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                            class="w-6 h-4 rounded-sm shadow-sm">
+                            <path fill="#012169" d="M0 0h640v480H0z" />
+                            <path fill="#FFF"
+                                d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0z" />
+                            <path fill="#C8102E"
+                                d="m424 281 216 159v40L369 281zm-184 20 6 35L54 480H0zM640 0v3L391 191l2-44L590 0zM0 0l239 176h-60L0 42z" />
+                            <path fill="#FFF" d="M241 0v480h160V0zM0 160v160h640V160z" />
+                            <path fill="#C8102E" d="M0 193v96h640v-96zM273 0v480h96V0z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn"
+                class="lg:hidden text-white focus:outline-none p-2 hover:bg-white/10 rounded-lg transition">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden bg-white shadow-2xl border-t border-gray-100">
+            <div class="py-3">
+                <a href="../Trang-Chủ.html"
+                    class="block py-3 px-6 text-base font-medium text-gray-700 hover:text-gold-accent hover:bg-gray-50 transition">Trang
+                    chủ</a>
+                <a href="/#gioi-thieu"
+                    class="block py-3 px-6 text-base font-medium text-gray-700 hover:text-gold-accent hover:bg-gray-50 transition">Giới
+                    thiệu</a>
+                <a href="/#dich-vu"
+                    class="block py-3 px-6 text-base font-medium text-gold-accent bg-amber-50 hover:bg-amber-100 transition">Dịch
+                    vụ</a>
+                <a href="https://support.hexagon.xyz/" target="_blank" rel="noopener noreferrer"
+                    class="block py-3 px-6 text-base font-medium text-gray-700 hover:text-gold-accent hover:bg-gray-50 transition">Hỗ
+                    trợ</a>
+                <a href="/#lien-he"
+                    class="block py-3 px-6 text-base font-medium text-gray-700 hover:text-gold-accent hover:bg-gray-50 transition">Liên
+                    hệ</a>
+                <div class="lang-switcher flex items-center gap-4 px-6 pt-4 mt-2 border-t border-gray-100">
+                    <button type="button" title="Tiếng Việt"
+                        class="opacity-100 transition cursor-pointer bg-none border-none p-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                            class="w-7 h-5 rounded-sm shadow-sm">
+                            <defs>
+                                <clipPath id="vn-b">
+                                    <path fill-opacity=".7" d="M-85.3 0h682.6v512H-85.3z" />
+                                </clipPath>
+                            </defs>
+                            <g fill-rule="evenodd" clip-path="url(#vn-b)" transform="translate(80)scale(.9375)">
+                                <path fill="#da251d" d="M-128 0h768v512h-768z" />
+                                <path fill="#ff0"
+                                    d="M349.6 381 260 314.3l-89 67.3L204 272l-89-67.7 110.1-1 34.2-109.4L294 203l110.1.1-88.5 68.4 33.9 109.6z" />
+                            </g>
+                        </svg>
+                    </button>
+                    <button type="button" title="English"
+                        class="opacity-45 transition cursor-pointer bg-none border-none p-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                            class="w-7 h-5 rounded-sm shadow-sm">
+                            <path fill="#012169" d="M0 0h640v480H0z" />
+                            <path fill="#FFF"
+                                d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0z" />
+                            <path fill="#C8102E"
+                                d="m424 281 216 159v40L369 281zm-184 20 6 35L54 480H0zM640 0v3L391 191l2-44L590 0zM0 0l239 176h-60L0 42z" />
+                            <path fill="#FFF" d="M241 0v480h160V0zM0 160v160h640V160z" />
+                            <path fill="#C8102E" d="M0 193v96h640v-96zM273 0v480h96V0z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-20 lg:pt-28">
+        <!-- Hero Section -->
+        <section class="gradient-hero-alt relative overflow-hidden">
+            <!-- Decorative Shapes -->
+            <div class="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl floating-shape"></div>
+            <div class="absolute bottom-0 left-0 w-72 h-72 bg-gold-accent/10 rounded-full blur-2xl floating-shape"
+                style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl floating-shape"
+                style="animation-delay: 4s;"></div>
+
+            <div class="container mx-auto px-6 py-12 md:py-20 relative z-10">
+                <!-- Breadcrumb -->
+                <nav class="text-sm mb-6 text-white/60">
+                    <a href="/" class="hover:text-gold-accent transition"><i class="fas fa-home mr-1"></i>Trang chủ</a>
+                    <span class="mx-2">›</span>
+                    <a href="/#dich-vu" class="hover:text-gold-accent transition">Dịch vụ</a>
+                    <span class="mx-2">›</span>
+                    <span class="text-gold-accent font-medium">Giải pháp thi công &amp; lắp đặt</span>
+                </nav>
+
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="text-left">
+                        <div
+                            class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-white/80 text-sm font-medium mb-6 badge-pulse">
+                            <span class="w-2 h-2 bg-gold-accent rounded-full animate-pulse"></span>
+                            Dịch vụ thi công & lắp đặt
+                        </div>
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
+                            Giải pháp <br />
+                            <span class="text-gold-accent">thi công &amp; lắp đặt</span>
+                        </h1>
+                        <p class="max-w-xl text-lg text-white/80 leading-relaxed mb-8">
+                            Tư vấn chiến lược chuyển đổi số toàn diện, giúp doanh nghiệp tối ưu quy trình, nâng cao trải
+                            nghiệm khách hàng và tăng trưởng bền vững trong môi trường số hóa.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="/#lien-he"
+                                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold-accent hover:bg-amber-500 text-white font-bold rounded-xl transition-all shadow-gold hover:shadow-gold-lg">
+                                <i class="fas fa-phone-alt"></i>
+                                Liên hệ Tư vấn
+                            </a>
+                            <a href="#solutions"
+                                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold rounded-xl transition-all border border-white/20">
+                                <i class="fas fa-arrow-down"></i>
+                                Xem giải pháp
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div
+                            class="rounded-2xl overflow-hidden shadow-2xl shadow-black/20 transform hover:scale-[1.02] transition-all duration-500">
+                            <img src="https://beta-api.hexagon.xyz/uploads/dv-4-1782723514901-308215051.jpg"
+                                alt="Giải pháp thi công &amp; lắp đặt" class="w-full h-auto object-cover" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent">
+                            </div>
+                        </div>
+                        <!-- Floating Badge -->
+                        <div class="absolute -bottom-6 -right-6 bg-white rounded-xl shadow-2xl p-4 flex items-center gap-4 animate-bounce"
+                            style="animation-duration: 3s;">
+                            <div class="w-12 h-12 bg-gold-accent/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-tools text-gold-accent text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-gray-900">100+</div>
+                                <div class="text-sm text-gray-500">Dự án hoàn thành</div>
+                            </div>
+                        </div>
+                        <!-- Second Badge -->
+                        <div class="absolute -top-4 -left-4 bg-white/90 backdrop-blur-sm rounded-xl shadow-xl p-3 flex items-center gap-3 floating-shape"
+                            style="animation-delay: 1s;">
+                            <div class="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-bold text-gray-900">Chất lượng</div>
+                                <div class="text-xs text-gray-500">Đảm bảo tiến độ</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trust Indicators -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-8 border-t border-white/10">
+                    <div class="stat-item text-center">
+                        <div class="text-2xl font-bold text-white"><span class="counter" data-target="100">0</span>+
+                        </div>
+                        <div class="text-sm text-white/60">Dự án hoàn thành</div>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="text-2xl font-bold text-white"><span class="counter" data-target="98">0</span>%
+                        </div>
+                        <div class="text-sm text-white/60">Khách hàng hài lòng</div>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="text-2xl font-bold text-white">24/7</div>
+                        <div class="text-sm text-white/60">Hỗ trợ kỹ thuật</div>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="text-2xl font-bold text-white"><span class="counter" data-target="10">0</span>+
+                        </div>
+                        <div class="text-sm text-white/60">Năm kinh nghiệm</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solutions Section -->
+        <section id="solutions" class="py-16 md:py-24 bg-[#F8FAFC]">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate">
+                    <span
+                        class="inline-block px-4 py-2 bg-gold-accent/10 text-gold-accent rounded-full text-sm font-semibold tracking-wider mb-4">
+                        <i class="fas fa-cubes mr-2"></i>GIẢI PHÁP
+                    </span>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
+                        Giải pháp <span class="text-gold-accent">nổi bật</span>
+                    </h2>
+                    <div class="w-20 h-1 bg-gold-accent mx-auto rounded-full mb-4"></div>
+                    <p class="text-gray-600 text-lg">Chúng tôi cung cấp các giải pháp thi công và lắp đặt chuyên nghiệp,
+                        đáp ứng mọi nhu cầu của doanh nghiệp</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Solution 1 -->
+                    <div
+                        class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-gold-accent/40 card-hover scroll-animate">
+                        <div class="p-8">
+                            <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                                <i class="fas fa-clipboard-check text-2xl text-gold-accent"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Đánh giá hiện trạng &amp; mức độ trưởng
+                                thành số</h3>
+                            <p class="text-gray-600 leading-relaxed">Phân tích toàn diện hệ thống, quy trình và năng lực
+                                công nghệ hiện tại, từ đó xác định mức độ sẵn sàng chuyển đổi số của doanh nghiệp.</p>
+                            <div class="mt-6 pt-6 border-t border-gray-100">
+                                <span
+                                    class="inline-flex items-center text-gold-accent font-medium group-hover:gap-2 transition-all">
+                                    Tìm hiểu thêm
+                                    <i
+                                        class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Solution 2 -->
+                    <div
+                        class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-gold-accent/40 card-hover scroll-animate">
+                        <div class="p-8">
+                            <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                                <i class="fas fa-sitemap text-2xl text-gold-accent"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Xây dựng chiến lược chuyển đổi số tổng thể
+                            </h3>
+                            <p class="text-gray-600 leading-relaxed">Tư vấn lộ trình chuyển đổi số theo từng giai đoạn,
+                                phù hợp với mục tiêu kinh doanh, nguồn lực và ngành nghề của doanh nghiệp.</p>
+                            <div class="mt-6 pt-6 border-t border-gray-100">
+                                <span
+                                    class="inline-flex items-center text-gold-accent font-medium group-hover:gap-2 transition-all">
+                                    Tìm hiểu thêm
+                                    <i
+                                        class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Solution 3 -->
+                    <div
+                        class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-gold-accent/40 card-hover scroll-animate">
+                        <div class="p-8">
+                            <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                                <i class="fas fa-microchip text-2xl text-gold-accent"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Tư vấn lựa chọn công nghệ &amp; giải pháp
+                                triển khai</h3>
+                            <p class="text-gray-600 leading-relaxed">Đề xuất các nền tảng, công nghệ và mô hình triển
+                                khai tối ưu (Cloud, AI, Data, CRM, ERP…), đảm bảo hiệu quả đầu tư và khả năng mở rộng.
+                            </p>
+                            <div class="mt-6 pt-6 border-t border-gray-100">
+                                <span
+                                    class="inline-flex items-center text-gold-accent font-medium group-hover:gap-2 transition-all">
+                                    Tìm hiểu thêm
+                                    <i
+                                        class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="py-16 md:py-24 bg-white relative overflow-hidden">
+            <div class="absolute inset-0 opacity-5">
+                <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#0D5939" stroke-width="0.5" />
+                    </pattern>
+                    <rect width="100" height="100" fill="url(#grid)" />
+                </svg>
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate">
+                    <span
+                        class="inline-block px-4 py-2 bg-gold-accent/10 text-gold-accent rounded-full text-sm font-semibold tracking-wider mb-4">
+                        <i class="fas fa-diagram-project mr-2"></i>QUY TRÌNH
+                    </span>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
+                        Quy trình <span class="text-gold-accent">thực hiện</span>
+                    </h2>
+                    <div class="w-20 h-1 bg-gold-accent mx-auto rounded-full mb-4"></div>
+                    <p class="text-gray-600 text-lg">Quy trình chuyên nghiệp, minh bạch và hiệu quả, đảm bảo chất lượng
+                        cao nhất</p>
+                </div>
+
+                <div class="grid md:grid-cols-4 gap-8 relative">
+                    <!-- Step 1 -->
+                    <div class="process-step text-center group scroll-animate">
+                        <div class="relative inline-block mb-6">
+                            <div
+                                class="w-20 h-20 bg-gold-accent/10 rounded-2xl flex items-center justify-center mx-auto group-hover:bg-gold-accent/20 transition-all group-hover:scale-110 group-hover:rotate-3">
+                                <span class="text-3xl font-extrabold text-gold-accent">01</span>
+                            </div>
+                            <div
+                                class="absolute -top-2 -right-2 w-8 h-8 bg-gold-accent rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-gray-900 text-lg mb-2">Khảo sát &amp; đánh giá doanh nghiệp</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed">Thu thập và phân tích dữ liệu để hiểu rõ hiện
+                            trạng doanh nghiệp</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="process-step text-center group scroll-animate">
+                        <div class="relative inline-block mb-6">
+                            <div
+                                class="w-20 h-20 bg-gold-accent/10 rounded-2xl flex items-center justify-center mx-auto group-hover:bg-gold-accent/20 transition-all group-hover:scale-110 group-hover:rotate-3">
+                                <span class="text-3xl font-extrabold text-gold-accent">02</span>
+                            </div>
+                            <div
+                                class="absolute -top-2 -right-2 w-8 h-8 bg-gold-accent rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-gray-900 text-lg mb-2">Xác định mục tiêu &amp; định hướng chuyển đổi
+                        </h4>
+                        <p class="text-gray-500 text-sm leading-relaxed">Định hình chiến lược và mục tiêu cụ thể cho quá
+                            trình chuyển đổi</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="process-step text-center group scroll-animate">
+                        <div class="relative inline-block mb-6">
+                            <div
+                                class="w-20 h-20 bg-gold-accent/10 rounded-2xl flex items-center justify-center mx-auto group-hover:bg-gold-accent/20 transition-all group-hover:scale-110 group-hover:rotate-3">
+                                <span class="text-3xl font-extrabold text-gold-accent">03</span>
+                            </div>
+                            <div
+                                class="absolute -top-2 -right-2 w-8 h-8 bg-gold-accent rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg">
+                                <i class="fas fa-route"></i>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-gray-900 text-lg mb-2">Xây dựng lộ trình &amp; giải pháp</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed">Lập kế hoạch chi tiết và lựa chọn giải pháp tối
+                            ưu cho từng giai đoạn</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="process-step text-center group scroll-animate">
+                        <div class="relative inline-block mb-6">
+                            <div
+                                class="w-20 h-20 bg-gold-accent/10 rounded-2xl flex items-center justify-center mx-auto group-hover:bg-gold-accent/20 transition-all group-hover:scale-110 group-hover:rotate-3">
+                                <span class="text-3xl font-extrabold text-gold-accent">04</span>
+                            </div>
+                            <div
+                                class="absolute -top-2 -right-2 w-8 h-8 bg-gold-accent rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-gray-900 text-lg mb-2">Đồng hành triển khai &amp; tối ưu</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed">Hỗ trợ triển khai và tối ưu hóa liên tục để đạt
+                            hiệu quả cao nhất</p>
+                    </div>
+                </div>
+
+                <!-- Process Flow Line (Desktop) -->
+                <div class="hidden md:block relative mt-8">
+                    <div
+                        class="absolute left-0 right-0 top-1/2 h-0.5 bg-gradient-to-r from-gold-accent via-gold-accent/50 to-gold-accent -translate-y-1/2">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-16 md:py-20 bg-[#F8FAFC]">
+            <div class="container mx-auto px-6">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="flex items-start gap-4 scroll-animate">
+                        <div
+                            class="w-12 h-12 bg-gold-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-clock text-gold-accent text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Đúng tiến độ</h4>
+                            <p class="text-gray-600 text-sm">Cam kết bàn giao đúng thời hạn đã thỏa thuận</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 scroll-animate">
+                        <div
+                            class="w-12 h-12 bg-gold-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-shield-alt text-gold-accent text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Bảo hành dài hạn</h4>
+                            <p class="text-gray-600 text-sm">Chính sách bảo hành và hỗ trợ kỹ thuật lên đến 24 tháng</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 scroll-animate">
+                        <div
+                            class="w-12 h-12 bg-gold-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-users text-gold-accent text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Đội ngũ chuyên nghiệp</h4>
+                            <p class="text-gray-600 text-sm">Kỹ sư giàu kinh nghiệm, tay nghề cao</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-16 md:py-24 bg-hexagon-dark relative overflow-hidden">
+            <!-- Decorative background -->
+            <div class="absolute inset-0 opacity-5">
+                <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <pattern id="grid2" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5" />
+                    </pattern>
+                    <rect width="100" height="100" fill="url(#grid2)" />
+                </svg>
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10 text-center">
+                <div class="max-w-3xl mx-auto scroll-animate">
+                    <div
+                        class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-5 py-2 rounded-full text-white/80 text-sm font-medium mb-6">
+                        <i class="fas fa-bolt text-gold-accent"></i>
+                        SẴN SÀNG TRIỂN KHAI
+                    </div>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6">
+                        Đừng để công nghệ làm <span class="text-gold-accent">rào cản</span>
+                    </h2>
+                    <p class="text-xl text-white/70 mb-10 max-w-2xl mx-auto leading-relaxed">
+                        Hãy biến nó thành lợi thế cạnh tranh của bạn cùng <span
+                            class="text-gold-accent font-bold">Hexagon</span>.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                        <a href="/"
+                            class="inline-flex items-center justify-center gap-2 px-10 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold rounded-xl transition-all border border-white/20 group">
+                            <i class="fas fa-home group-hover:translate-y-[-2px] transition-transform"></i>
+                            Về Trang chủ
+                        </a>
+                        <a href="/#lien-he"
+                            class="inline-flex items-center justify-center gap-2 px-10 py-4 bg-gold-accent hover:bg-amber-500 text-white font-bold rounded-xl transition-all shadow-gold hover:shadow-gold-lg group">
+                            <i class="fas fa-headset group-hover:scale-110 transition-transform"></i>
+                            Liên hệ ngay
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-6 bg-[#0D5939] border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <svg class="w-6 h-6 text-gold-accent" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="12,2 2,7 12,12 22,7 12,2" />
+                        <polygon points="2,17 12,22 22,17 12,12 2,17" />
+                        <polygon points="2,12 12,17 22,12 12,7 2,12" />
+                    </svg>
+                    <span class="text-white font-bold">Hexagon Corporation</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="text-white/40 hover:text-gold-accent transition transform hover:scale-110"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white/40 hover:text-gold-accent transition transform hover:scale-110"><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="text-white/40 hover:text-gold-accent transition transform hover:scale-110"><i
+                            class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white/40 hover:text-gold-accent transition transform hover:scale-110"><i
+                            class="fab fa-youtube"></i></a>
+                </div>
+                <p class="text-white/40 text-sm">
+                    Copyright 2026 © <span class="text-white/60 font-medium">Hexagon Corporation</span>. All rights
+                    reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > 50) {
+                navbar.classList.add('shadow-2xl', 'bg-opacity-95');
+                navbar.classList.remove('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-2xl', 'bg-opacity-95');
+                navbar.classList.add('shadow-lg');
+            }
+            lastScroll = currentScroll;
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 150);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.getAttribute('data-target'));
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
+
+                    const updateCounter = () => {
+                        current += step;
+                        if (current < target) {
+                            entry.target.textContent = Math.floor(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            entry.target.textContent = target;
+                        }
+                    };
+
+                    updateCounter();
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => {
+            counterObserver.observe(counter);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+    <script src="../translate.js"></script>
+</body>
+
+</html>

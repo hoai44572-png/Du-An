@@ -1,0 +1,159 @@
+/* ===== App.css - Bổ sung animation và styles không có trong Tailwind ===== */
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradientFlow {
+  animation: gradientFlow 2s ease-in-out infinite;
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.animate-marqueeScroll {
+  animation: marquee-scroll 24s linear infinite;
+}
+
+.hover\:animation-play-state-paused:hover {
+  animation-play-state: paused;
+}
+
+/* Hero title */
+.hero-title {
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.45);
+}
+
+/* Logo marquee gradient masks */
+.logo-marquee::before,
+.logo-marquee::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.logo-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, #cdeeff 0%, rgba(205, 238, 255, 0) 100%);
+}
+
+.logo-marquee::after {
+  right: 0;
+  background: linear-gradient(270deg, #e6efff 0%, rgba(230, 239, 255, 0) 100%);
+}
+
+/* Responsive overrides */
+@media (max-width: 1200px) {
+  .hero-title {
+    font-size: 64px;
+  }
+  .about-container {
+    grid-template-columns: 1fr !important;
+    gap: 30px;
+  }
+  .about-card {
+    min-height: auto !important;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .values-stack {
+    width: 100% !important;
+    height: auto !important;
+  }
+  .value-glass-card {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    margin: 0 auto !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 48px;
+  }
+  .hero-glass-card {
+    width: 100%;
+    padding: 35px 25px;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px;
+  }
+  .stat-number {
+    font-size: 38px;
+    margin-bottom: 10px;
+  }
+  .stat-desc {
+    max-width: 100%;
+    font-size: 12px;
+  }
+  .news-card {
+    grid-column: span 6 !important;
+  }
+  .contact-info-pill-bar {
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+    margin: 35px 0;
+  }
+  .contact-pill-item {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 10px 14px;
+    gap: 10px;
+  }
+  .pill-text {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .team-glass-card {
+    flex: 0 1 calc(50% - 15px) !important;
+    min-width: 0 !important;
+    border-radius: 40px 10px 40px 10px !important;
+    padding: 20px 12px !important;
+  }
+  .team-card-btn {
+    padding: 8px 14px !important;
+    font-size: 12px !important;
+    gap: 6px !important;
+    white-space: nowrap !important;
+    justify-content: center !important;
+  }
+  .about-card.left-card {
+    border-radius: 20px !important;
+  }
+  .about-card.right-card {
+    border-radius: 20px !important;
+  }
+  #footer-main-grid {
+    grid-template-columns: 1fr !important;
+    gap: 30px;
+  }
+  #footer-bottom-line {
+    flex-direction: column !important;
+    text-align: center;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .team-glass-card {
+    flex: 0 1 calc(50% - 15px) !important;
+    min-width: 280px !important;
+  }
+}

@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/favicon.png">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="/manifest.json">
+    <script>
+        // Forward MSAL callbacks (from Azure AD) to /callback handler
+        if (window.location.hash.includes('code=') || window.location.hash.includes('error=')) {
+            window.location.replace('/callback' + window.location.hash);
+        }
+        // Sync language from URL path prefix so React islands initialise correctly
+        (function () {
+            var p = window.location.pathname;
+            if (p.startsWith('/en/') || p === '/en') {
+                localStorage.setItem('hhc_lang', 'en');
+            } else if (p.startsWith('/vi/') || p === '/vi') {
+                localStorage.setItem('hhc_lang', 'vi');
+            }
+        })();
+    </script>
+    <script>
+        // After React islands hydrate, re-scroll to hash if needed
+        if (window.location.hash) {
+            window.addEventListener('load', function () {
+                setTimeout(function () {
+                    var el = document.querySelector(window.location.hash);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 300);
+            });
+        }
+    </script>
+    <title>Hexagon Corporation - Hệ sinh thái Công nghệ Hexagon</title>
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gold-accent': '#FAF390',
+                        'brand-green': '#196B49',
+                        'brand-dark': '#0D5939'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="/assets/v1.DlqRtMr7.css">
+    <style>
+        .App {
+            text-align: center
+        }
+
+        .App-logo {
+            height: 40vmin;
+            pointer-events: none
+        }
+
+        @media(prefers-reduced-motion:no-preference) {
+            .App-logo {
+                animation: App-logo-spin infinite 20s linear
+            }
+        }
+
+        .App-header {
+            background-color: #282c34;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: calc(10px + 2vmin);
+            color: #fff
+        }
+
+        .App-link {
+            color: #61dafb
+        }
+
+        @keyframes App-logo-spin {
+            0% {
+                transform: rotate(0)
+            }
+
+            to {
+                transform: rotate(360deg)
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/v1.LSf0spYX.css">
+    <style>
+        .sponsor-bar {
+            background: linear-gradient(180deg, #0f826b, #12846d 35%, #86efac);
+            padding: 36px 0;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            z-index: 10
+        }
+
+        .sponsor-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0a2540;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            margin-bottom: 28px;
+            padding: 0 20px
+        }
+
+        .logo-marquee {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            display: flex
+        }
+
+        .logo-marquee:before,
+        .logo-marquee:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 150px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none
+        }
+
+        .logo-marquee:before {
+            left: 0;
+            background: linear-gradient(90deg, #12846d, #12846d00)
+        }
+
+        .logo-marquee:after {
+            right: 0;
+            background: linear-gradient(270deg, #12846d, #12846d00)
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 24px;
+            width: max-content;
+            animation: marquee-scroll 24s linear infinite
+        }
+
+        .logo-marquee:hover .marquee-track {
+            animation-play-state: paused
+        }
+
+        .logo-card {
+            background: #fff;
+            border-radius: 16px;
+            width: 180px;
+            height: 108px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            box-shadow: 0 4px 12px #0a25400a;
+            transition: transform .3s ease, box-shadow .3s ease;
+            flex-shrink: 0
+        }
+
+        .logo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px #0a254014
+        }
+
+        .logo-card img {
+            max-height: 64px;
+            max-width: 140px;
+            object-fit: contain;
+            transition: transform .3s ease
+        }
+
+        .custom-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center
+        }
+
+        .custom-logo svg {
+            margin-bottom: 2px
+        }
+
+        .logo-text {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .08em
+        }
+
+        .eco-text,
+        .comoon-text {
+            color: #15803d
+        }
+
+        @keyframes marquee-scroll {
+            0% {
+                transform: translateZ(0)
+            }
+
+            to {
+                transform: translate3d(-50%, 0, 0)
+            }
+        }
+
+        /* Thêm CSS để đảm bảo hiển thị tốt */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+            padding-top: 72px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1450px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                padding: 0 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 0 3rem;
+            }
+        }
+
+        /* Fullscreen section */
+        .fullscreen-section {
+            min-height: calc(100vh - 72px);
+            display: flex;
+            align-items: center;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 64px;
+            }
+
+            .fullscreen-section {
+                min-height: auto;
+                padding: 4rem 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <style>
+        astro-island,
+        astro-slot,
+        astro-static-slot {
+            display: contents
+        }
+    </style>
+    <script>
+            (() => {
+                var e = async t => { await (await t())() };
+                (self.Astro || (self.Astro = {})).load = e;
+                window.dispatchEvent(new Event("astro:load"));
+            })();
+    </script>
+    <script>
+        (() => {
+            var A = Object.defineProperty;
+            var g = (i, o, a) => o in i ? A(i, o, { enumerable: !0, configurable: !0, writable: !0, value: a }) : i[o] = a;
+            var d = (i, o, a) => g(i, typeof o != "symbol" ? o + "" : o, a);
+            {
+                let i = {
+                    0: t => m(t),
+                    1: t => a(t),
+                    2: t => new RegExp(t),
+                    3: t => new Date(t),
+                    4: t => new Map(a(t)),
+                    5: t => new Set(a(t)),
+                    6: t => BigInt(t),
+                    7: t => new URL(t),
+                    8: t => new Uint8Array(t),
+                    9: t => new Uint16Array(t),
+                    10: t => new Uint32Array(t),
+                    11: t => 1 / 0 * t
+                },
+                    o = t => {
+                        let [l, e] = t;
+                        return l in i ? i[l](e) : void 0
+                    },
+                    a = t => t.map(o),
+                    m = t => typeof t != "object" || t === null ? t : Object.fromEntries(Object.entries(t).map(([l, e]) => [l,
+                        o(e)
+                    ]));
+                class y extends HTMLElement {
+                    constructor() {
+                        super(...arguments);
+                        d(this, "Component");
+                        d(this, "hydrator");
+                        d(this, "hydrate", async () => {
+                            var b;
+                            if (!this.hydrator || !this.isConnected) return;
+                            let e = (b = this.parentElement) == null ? void 0 : b.closest("astro-island[ssr]");
+                            if (e) {
+                                e.addEventListener("astro:hydrate", this.hydrate, { once: !0 });
+                                return
+                            }
+                            let c = this.querySelectorAll("astro-slot"),
+                                n = {},
+                                h = this.querySelectorAll("template[data-astro-template]");
+                            for (let r of h) {
+                                let s = r.closest(this.tagName);
+                                s != null && s.isSameNode(this) && (n[r.getAttribute("data-astro-template") ||
+                                    "default"] = r.innerHTML, r.remove())
+                            }
+                            for (let r of c) {
+                                let s = r.closest(this.tagName);
+                                s != null && s.isSameNode(this) && (n[r.getAttribute("name") || "default"] = r
+                                    .innerHTML)
+                            }
+                            let p;
+                            try {
+                                p = this.hasAttribute("props") ? m(JSON.parse(this.getAttribute("props"))) : {}
+                            } catch (r) {
+                                let s = this.getAttribute("component-url") || "<unknown>",
+                                    v = this.getAttribute("component-export");
+                                throw v && (s += ` (export ${v})`), console.error(
+                                    `[hydrate] Error parsing props for component ${s}`, this.getAttribute(
+                                        "props"), r), r
+                            }
+                            let u;
+                            await this.hydrator(this)(this.Component, p, n, { client: this.getAttribute("client") }),
+                                this.removeAttribute("ssr"), this.dispatchEvent(new CustomEvent("astro:hydrate"))
+                        });
+                        d(this, "unmount", () => {
+                            this.isConnected || this.dispatchEvent(new CustomEvent("astro:unmount"))
+                        })
+                    }
+                    disconnectedCallback() {
+                        document.removeEventListener("astro:after-swap", this.unmount),
+                            document.addEventListener("astro:after-swap", this.unmount, { once: !0 })
+                    }
+                    connectedCallback() {
+                        if (!this.hasAttribute("await-children") || document.readyState === "interactive" || document
+                            .readyState === "complete") this.childrenConnectedCallback();
+                        else {
+                            let e = () => {
+                                document.removeEventListener("DOMContentLoaded", e), c.disconnect(), this
+                                    .childrenConnectedCallback()
+                            },
+                                c = new MutationObserver(() => {
+                                    var n;
+                                    ((n = this.lastChild) == null ? void 0 : n.nodeType) === Node
+                                        .COMMENT_NODE && this.lastChild.nodeValue === "astro:end" && (this
+                                            .lastChild.remove(), e())
+                                });
+                            c.observe(this, { childList: !0 }), document.addEventListener("DOMContentLoaded", e)
+                        }
+                    }
+                    async childrenConnectedCallback() {
+                        let e = this.getAttribute("before-hydration-url");
+                        e && await import(e), this.start()
+                    }
+                    async start() {
+                        let e = JSON.parse(this.getAttribute("opts")),
+                            c = this.getAttribute("client");
+                        if (Astro[c] === void 0) {
+                            window.addEventListener(`astro:${c}`, () => this.start(), { once: !0 });
+                            return
+                        }
+                        try {
+                            await Astro[c](async () => {
+                                let n = this.getAttribute("renderer-url"),
+                                    [h, { default: p }] = await Promise.all([import(this.getAttribute(
+                                        "component-url")), n ? import(n) : () => () => { }]),
+                                    u = this.getAttribute("component-export") || "default";
+                                if (!u.includes(".")) this.Component = h[u];
+                                else {
+                                    this.Component = h;
+                                    for (let f of u.split(".")) this.Component = this.Component[f]
+                                }
+                                return this.hydrator = p, this.hydrate
+                            }, e, this)
+                        } catch (n) {
+                            console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`,
+                                n)
+                        }
+                    }
+                    attributeChangedCallback() {
+                        this.hydrate()
+                    }
+                }
+                d(y, "observedAttributes", ["props"]),
+                    customElements.get("astro-island") || customElements.define("astro-island", y)
+            }
+        })();
+    </script>
+
+    <!-- Header -->
+    <astro-island uid="ggJKX" prefix="r16" component-url="/assets/Header.BZfOR52I.js" component-export="default"
+        renderer-url="/assets/client.DeAwy1AW.js" props="{&quot;currentPage&quot;:[0,&quot;trang-chu&quot;]}" ssr
+        client="load" opts="{&quot;name&quot;:&quot;Header&quot;,&quot;value&quot;:true}" await-children>
+        <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#1A6B49]">
+            <nav class="mx-auto py-2 flex justify-between items-center" style="padding-inline:clamp(1.5rem, 5vw, 5rem)">
+                <div class="flex items-center space-x-2">
+                    <div class="w-16 h-16">
+                        <a href="/v2" class="block">
+                            <img src="Logo/logo-hhc.png" alt="Hexagon Logo" />
+                        </a>
+                    </div>
+                    <span class="text-xl font-bold text-white">HEXAGON</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/#trang-chu" class="text-gray-300 hover:text-gold-accent transition">Trang chủ</a>
+                    <a href="/#gioi-thieu" class="text-gray-300 hover:text-gold-accent transition">Giới thiệu</a>
+                    <a href="/#dich-vu" class="text-gray-300 hover:text-gold-accent transition">Dịch vụ</a>
+                    <a href="https://support.hexagon.xyz/" target="_blank" rel="noopener noreferrer"
+                        class="text-gray-300 hover:text-gold-accent transition">Hỗ trợ</a>
+                    <a href="/#lien-he" class="text-gray-300 hover:text-gold-accent transition">Liên hệ</a>
+                    <div class="lang-switcher flex items-center gap-2 ml-4">
+                        <button type="button" title="Tiếng Việt"
+                            style="opacity:1;transition:opacity 0.2s;cursor:pointer;background:none;border:none;padding:0">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                                class="w-6 h-4 object-cover rounded-sm">
+                                <defs>
+                                    <clipPath id="vn-a">
+                                        <path fill-opacity=".7" d="M-85.3 0h682.6v512H-85.3z"></path>
+                                    </clipPath>
+                                </defs>
+                                <g fill-rule="evenodd" clip-path="url(#vn-a)" transform="translate(80)scale(.9375)">
+                                    <path fill="#da251d" d="M-128 0h768v512h-768z"></path>
+                                    <path fill="#ff0"
+                                        d="M349.6 381 260 314.3l-89 67.3L204 272l-89-67.7 110.1-1 34.2-109.4L294 203l110.1.1-88.5 68.4 33.9 109.6z">
+                                    </path>
+                                </g>
+                            </svg>
+                        </button>
+                        <button type="button" title="English"
+                            style="opacity:0.45;transition:opacity 0.2s;cursor:pointer;background:none;border:none;padding:0">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                                class="w-6 h-4 object-cover rounded-sm">
+                                <path fill="#012169" d="M0 0h640v480H0z"></path>
+                                <path fill="#FFF"
+                                    d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0z">
+                                </path>
+                                <path fill="#C8102E"
+                                    d="m424 281 216 159v40L369 281zm-184 20 6 35L54 480H0zM640 0v3L391 191l2-44L590 0zM0 0l239 176h-60L0 42z">
+                                </path>
+                                <path fill="#FFF" d="M241 0v480h160V0zM0 160v160h640V160z"></path>
+                                <path fill="#C8102E" d="M0 193v96h640v-96zM273 0v480h96V0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-btn" class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+            <div id="mobile-menu"
+                class="hidden md:hidden fixed top-20 left-0 w-full bg-white shadow-2xl border-t border-gray-100 z-40 transition-all pb-4 py-2">
+                <a href="/#trang-chu"
+                    class="block py-3 px-6 text-base font-medium text-gray-800 hover:text-[#d97706] hover:bg-gray-50">Trang
+                    chủ</a>
+                <a href="/#gioi-thieu"
+                    class="block py-3 px-6 text-base font-medium text-gray-800 hover:text-[#d97706] hover:bg-gray-50">Giới
+                    thiệu</a>
+                <a href="/#dich-vu"
+                    class="block py-3 px-6 text-base font-medium text-gray-800 hover:text-[#d97706] hover:bg-gray-50">Dịch
+                    vụ</a>
+                <a href="https://support.hexagon.xyz/" target="_blank" rel="noopener noreferrer"
+                    class="block py-3 px-6 text-base font-medium text-gray-800 hover:text-[#d97706] hover:bg-gray-50">Hỗ
+                    trợ</a>
+                <a href="/#lien-he"
+                    class="block py-3 px-6 text-base font-medium text-gray-800 hover:text-[#d97706] hover:bg-gray-50">Liên
+                    hệ</a>
+                <div class="lang-switcher flex items-center gap-4 px-6 pt-4 mt-2 pb-2 border-t border-gray-100">
+                    <button type="button" title="Tiếng Việt"
+                        style="opacity:1;transition:opacity 0.2s;cursor:pointer;background:none;border:none;padding:0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                            class="w-6 h-4 object-cover rounded-sm">
+                            <defs>
+                                <clipPath id="vn-a-mobile">
+                                    <path fill-opacity=".7" d="M-85.3 0h682.6v512H-85.3z"></path>
+                                </clipPath>
+                            </defs>
+                            <g fill-rule="evenodd" clip-path="url(#vn-a-mobile)" transform="translate(80)scale(.9375)">
+                                <path fill="#da251d" d="M-128 0h768v512h-768z"></path>
+                                <path fill="#ff0"
+                                    d="M349.6 381 260 314.3l-89 67.3L204 272l-89-67.7 110.1-1 34.2-109.4L294 203l110.1.1-88.5 68.4 33.9 109.6z">
+                                </path>
+                            </g>
+                        </svg>
+                    </button>
+                    <button type="button" title="English"
+                        style="opacity:0.45;transition:opacity 0.2s;cursor:pointer;background:none;border:none;padding:0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                            class="w-6 h-4 object-cover rounded-sm">
+                            <path fill="#012169" d="M0 0h640v480H0z"></path>
+                            <path fill="#FFF"
+                                d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0z">
+                            </path>
+                            <path fill="#C8102E"
+                                d="m424 281 216 159v40L369 281zm-184 20 6 35L54 480H0zM640 0v3L391 191l2-44L590 0zM0 0l239 176h-60L0 42z">
+                            </path>
+                            <path fill="#FFF" d="M241 0v480h160V0zM0 160v160h640V160z"></path>
+                            <path fill="#C8102E" d="M0 193v96h640v-96zM273 0v480h96V0z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+    </astro-island>
+
+    <main>
+        <!-- Scroll to Top Button -->
+        <button id="backToTop" class="back-to-top" aria-label="Lên đầu trang">
+            <i class="fas fa-arrow-up text-lg"></i>
+        </button>
+
+        <!-- Trang chủ Section -->
+        <astro-island uid="2r9Clk" prefix="r10" component-url="/assets/Trangchu.BOWQjqUw.js" component-export="default"
+            renderer-url="/assets/client.DeAwy1AW.js" props="{}" ssr client="load"
+            opts="{&quot;name&quot;:&quot;Trangchu&quot;,&quot;value&quot;:true}" await-children>
+            <section id="trang-chu"
+                class="fullscreen-section relative flex items-center pt-24 pb-12 overflow-hidden bg-gradient-to-br from-[#135237] via-[#196B49] to-[#41b67d]"
+                style="background-color:#196849">
+                <div class="container relative z-10 w-full">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="flex flex-col items-start text-left space-y-6 lg:pr-8">
+                            <div
+                                class="inline-block px-4 py-1.5 rounded-full border border-yellow-500/50 bg-yellow-500/10 backdrop-blur-sm">
+                                <span class="text-yellow-500 text-sm font-bold tracking-wider uppercase">Công nghệ tương
+                                    lai</span>
+                            </div>
+                            <h1
+                                class="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-[1.15] tracking-tight">
+                                <span id="typed-text"></span><span aria-hidden="true"
+                                    class="inline-block w-[3px] h-[0.85em] ml-1 bg-current align-middle animate-pulse"></span>
+                                <br />
+                                <span class="inline-block mt-2"
+                                    style="background:linear-gradient(135deg, #ffffff 0%, #a8e6d8 55%, #F7931E 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent">HEXAGON
+                                    Solutions</span>
+                            </h1>
+                            <p class="text-gray-200 text-base sm:text-lg leading-relaxed max-w-xl">Hexagon kiến tạo các
+                                giải pháp chuyển đổi số toàn diện, từ phần mềm, AI đến an ninh mạng, giúp doanh nghiệp
+                                bứt phá trong kỷ nguyên số.</p>
+                            <div class="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto">
+                                <a href="#dich-vu"
+                                    class="px-8 py-3.5 bg-[linear-gradient(to_right,#ff9902,#f2d337)] hover:brightness-110 !text-white rounded-lg transition-all shadow-lg text-center shadow-yellow-500/30">Khám
+                                    phá Dịch vụ</a>
+                                <a href="#lien-he"
+                                    class="px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/20 !text-white rounded-lg transition-colors backdrop-blur-sm text-center">Liên
+                                    hệ Tư vấn</a>
+                            </div>
+                        </div>
+                        <div class="relative w-full flex justify-center">
+                            <div class="relative w-full max-w-none aspect-square">
+                                <img src="https://metik.vn/wp-content/uploads/2026/06/globalmyc.webp"
+                                    alt="Hexagon Global" class="w-full h-full object-contain" loading="lazy" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute inset-x-0 bottom-8 flex justify-center animate-bounce z-20">
+                    <a href="#gioi-thieu"
+                        class="text-gray-300 hover:text-white flex flex-col items-center gap-1 transition-colors">
+                        <span class="text-sm font-medium tracking-wide">Cuộn xuống để khám phá</span>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </a>
+                </div>
+            </section>
+        </astro-island>
+
+        <!-- Giới thiệu Section -->
+        <astro-island uid="Z10uWT9" prefix="r11" component-url="/assets/Gioithieu.7jYt3p6H.js"
+            component-export="default" renderer-url="/assets/client.DeAwy1AW.js" props="{}" ssr client="load"
+            opts="{&quot;name&quot;:&quot;Gioithieu&quot;,&quot;value&quot;:true}" await-children>
+            <section id="gioi-thieu" class="py-16 lg:py-24 bg-[#FFFFFF]">
+                <div class="container">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
+                        <div class="w-full h-full flex items-center justify-center order-2 md:order-1 relative">
+                            <div class="relative p-3 w-full">
+                                <div
+                                    class="absolute -inset-4 bg-gradient-to-r from-emerald-100 to-teal-100 rounded-2xl transform rotate-2">
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80"
+                                    alt="Văn phòng Hexagon"
+                                    class="relative rounded-lg shadow-2xl object-cover max-h-[300px] sm:max-h-[400px] md:max-h-[500px] w-full hover:scale-[1.02] transition-transform duration-500" />
+                            </div>
+                            <div
+                                class="absolute -bottom-4 right-4 md:bottom-8 md:-right-8 bg-white p-5 rounded-xl shadow-[0_10px_40px_rgba(217,119,6,0.3)] max-w-[280px] z-10 transition-transform hover:-translate-y-2 duration-300">
+                                <p class="text-sm md:text-base italic text-gray-900 font-medium leading-relaxed">"Làm
+                                    ngày, làm đêm, làm thêm ngày nghỉ ^_^"</p>
+                                <p class="text-yellow-500 text-xs mt-2 font-bold uppercase tracking-wider text-right">—
+                                    Hexagon Culture</p>
+                            </div>
+                        </div>
+                        <div class="text-left order-1 md:order-2">
+                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">Về
+                                Hexagon</h2>
+                            <p class="text-gray-700 mb-6 text-sm sm:text-base leading-relaxed">Hexagon Corporation –
+                                Công nghệ tiên phong, nơi chúng tôi không ngừng kiến tạo và đổi mới để mang đến những
+                                giá trị vượt trội trong kỷ nguyên số. Với tầm nhìn đa chiều và khát vọng vươn tầm,
+                                Hexagon tự hào là đối tác tin cậy, đồng hành cùng bạn trên hành trình chinh phục những
+                                đỉnh cao công nghệ.</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6">
+                                <div class="bg-slate-50 rounded-lg p-4">
+                                    <h3 class="font-semibold text-[#1D6A49] text-base sm:text-lg mb-2">Sứ mệnh</h3>
+                                    <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">Kiến tạo tương lai số
+                                        bằng các giải pháp tiên tiến.</p>
+                                </div>
+                                <div class="bg-slate-50 rounded-lg p-4">
+                                    <h3 class="font-semibold text-[#1D6A49] text-base sm:text-lg mb-2">Tầm nhìn</h3>
+                                    <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">Trở thành biểu tượng về
+                                        hệ sinh thái công nghệ đổi mới.</p>
+                                </div>
+                                <div class="bg-slate-50 rounded-lg p-4">
+                                    <h3 class="font-semibold text-[#1D6A49] text-base sm:text-lg mb-2">Giá trị cốt lõi
+                                    </h3>
+                                    <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">Đổi mới - Đồng hành -
+                                        Tiên phong - Minh bạch.</p>
+                                </div>
+                                <div class="bg-slate-50 rounded-lg p-4">
+                                    <h3 class="font-semibold text-[#1D6A49] text-base sm:text-lg mb-2">Nền tảng</h3>
+                                    <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">Hệ sinh thái đa ngành,
+                                        vững chắc và linh hoạt.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </astro-island>
+
+        <!-- Dịch vụ Section -->
+        <astro-island uid="nbn61" prefix="r12" component-url="/assets/Dichvu.Doe_OIDA.js" component-export="default"
+            renderer-url="/assets/client.DeAwy1AW.js" props="{}" ssr client="load"
+            opts="{&quot;name&quot;:&quot;Dichvu&quot;,&quot;value&quot;:true}" await-children>
+            <section id="dich-vu" class="py-20 bg-slate-50">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-16">
+                        <h2 class="font-bold text-gray-900 leading-tight" style="font-size: clamp(36px, 4vw, 52px);">
+                            Lĩnh vực hoạt động</h2>
+                        <p class="text-gray-600 mt-4 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">Tại
+                            Hexagon, chúng tôi tập trung phát triển hệ sinh thái công nghệ toàn diện, bao gồm:</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                        <!-- Card 1 -->
+                        <a href="./Lĩnh-vực-hoạt-động/Giải-Pháp-Công-Nghê.html"
+                            class="reveal-card relative overflow-hidden rounded-[20px] bg-gradient-to-b from-[#8de1a0] to-[#015222] p-6 pt-8 pb-4 flex flex-col justify-between shadow-[0_4px_15px_rgba(0,0,0,0.08)] hover:-translate-y-2 hover:shadow-[0_12px_30px_rgba(1,82,34,0.25)] transition-all duration-300 ease group h-[450px] border border-white/10"
+                            style="transition-delay: 0s;">
+                            <div>
+                                <h3 class="text-[20px] font-bold text-[#FFA800] leading-snug">Giải pháp công nghệ</h3>
+                            </div>
+                            <div class="mt-6 flex-1 flex items-end justify-center overflow-hidden">
+                                <img src="./assets/images/linh-vuc-1.png" alt="Giải pháp công nghệ"
+                                    class="max-w-full max-h-[300px] object-contain object-bottom group-hover:scale-[1.04] transition-transform duration-500" />
+                            </div>
+                        </a>
+
+                        <!-- Card 2 -->
+                        <a href="./Lĩnh-vực-hoạt-động/Giải-pháp-thi-công-&-lắp-đặt.html"
+                            class="reveal-card relative overflow-hidden rounded-[20px] bg-gradient-to-b from-[#8de1a0] to-[#015222] p-6 pt-8 pb-4 flex flex-col justify-between shadow-[0_4px_15px_rgba(0,0,0,0.08)] hover:-translate-y-2 hover:shadow-[0_12px_30px_rgba(1,82,34,0.25)] transition-all duration-300 ease group h-[450px] border border-white/10"
+                            style="transition-delay: 0.15s;">
+                            <div>
+                                <h3 class="text-[20px] font-bold text-[#FFA800] leading-snug">Giải pháp thi công & lắp
+                                    đặt</h3>
+                                <p class="text-white/70 text-xs mt-1.5 leading-normal"></p>
+                            </div>
+                            <div class="mt-6 flex-1 flex items-end justify-center overflow-hidden">
+                                <img src="./assets/images/linh-vuc-2.png" alt="Giải pháp thi công & lắp đặt"
+                                    class="max-w-full max-h-[300px] object-contain object-bottom group-hover:scale-[1.04] transition-transform duration-500" />
+                            </div>
+                        </a>
+
+                        <!-- Card 3 -->
+                        <a href="./Lĩnh-vực-hoạt-động/Cung-cấp-thiết-bị-CNTT.html"
+                            class="reveal-card relative overflow-hidden rounded-[20px] bg-gradient-to-b from-[#8de1a0] to-[#015222] p-6 pt-8 pb-4 flex flex-col justify-between shadow-[0_4px_15px_rgba(0,0,0,0.08)] hover:-translate-y-2 hover:shadow-[0_12px_30px_rgba(1,82,34,0.25)] transition-all duration-300 ease group h-[450px] border border-white/10"
+                            style="transition-delay: 0.3s;">
+                            <div>
+                                <h3 class="text-[20px] font-bold text-[#FFA800] leading-snug">Cung cấp thiết bị CNTT
+                                </h3>
+                            </div>
+                            <div class="mt-6 flex-1 flex items-end justify-center overflow-hidden">
+                                <img src="./assets/images/linh-vuc-3.png" alt="Cung cấp thiết bị CNTT"
+                                    class="max-w-full max-h-[300px] object-contain object-bottom group-hover:scale-[1.04] transition-transform duration-500" />
+                            </div>
+                        </a>
+
+                        <!-- Card 4 -->
+                        <a href="./Lĩnh-vực-hoạt-động/Dịch-vụ-Công-nghệ-thông-tin.html"
+                            class="reveal-card relative overflow-hidden rounded-[20px] bg-gradient-to-b from-[#8de1a0] to-[#015222] p-6 pt-8 pb-4 flex flex-col justify-between shadow-[0_4px_15px_rgba(0,0,0,0.08)] hover:-translate-y-2 hover:shadow-[0_12px_30px_rgba(1,82,34,0.25)] transition-all duration-300 ease group h-[450px] border border-white/10"
+                            style="transition-delay: 0.45s;">
+                            <div>
+                                <h3 class="text-[20px] font-bold text-[#FFA800] leading-snug">Dịch vụ Công nghệ thông
+                                    tin</h3>
+                            </div>
+                            <div class="mt-6 flex-1 flex items-end justify-center overflow-hidden">
+                                <img src="./assets/images/linh-vuc-4.png" alt="Dịch vụ Công nghệ thông tin"
+                                    class="max-w-full max-h-[300px] object-contain object-bottom group-hover:scale-[1.04] transition-transform duration-500" />
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </astro-island>
+
+        <!-- Tin tức Section -->
+        <astro-island uid="Z1q8i03" prefix="r13" component-url="/assets/TintucPreview.Bg5r_FfF.js"
+            component-export="default" renderer-url="/assets/client.DeAwy1AW.js" props="{}" ssr client="load"
+            opts="{&quot;name&quot;:&quot;TintucPreview&quot;,&quot;value&quot;:true}" await-children>
+            <section id="tin-tuc" class="py-16 bg-white">
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">Tin tức</h2>
+                        <p class="text-gray-600 mt-3 text-base max-w-2xl mx-auto">Cập nhật tin tức, sự kiện và thông tin
+                            mới nhất từ Hexagon Corporation.</p>
+                        <div class="w-16 h-1 bg-[#FFA800] mx-auto mt-4 rounded-full"></div>
+                    </div>
+
+                    <!-- Row 1: 2 Large Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <!-- Card 1 -->
+                        <article
+                            class="bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group">
+                            <a href="Tin-Tuc/Không-khí-tưng-bừng.html" class="h-64 overflow-hidden relative block">
+                                <img src="https://beta-api.hexagon.xyz/uploads/teambuilding-01-1774341835079-253071961.jpg"
+                                    alt="Teambuilding myH25"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    loading="lazy" />
+                            </a>
+                            <div class="p-6 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3
+                                        class="text-lg font-bold text-gray-900 mb-3 group-hover:text-[#196B49] transition-colors leading-snug">
+                                        <a href="Tin-Tuc/Không-khí-tưng-bừng.html">Không khí tưng bừng tại Chương trình
+                                            Teambuilding myH25 tại Ngôi nhà Hùng Hậu</a>
+                                    </h3>
+                                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Cùng nhìn lại những khoảnh
+                                        khắc đáng nhớ và đẹp nhất của đại gia đình HHC trong chương trình TEAMBUILDING
+                                        MYH25, diễn ra tại khu nghỉ dưỡng Vinpearl Nha Trang.</p>
+                                </div>
+                                <div>
+                                    <hr class="border-gray-100 my-4" />
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-gray-400 flex items-center">
+                                            <i class="far fa-calendar-alt text-amber-500 mr-2"></i> 26 tháng 6, 2026
+                                        </span>
+                                        <a href="Tin-Tuc/Không-khí-tưng-bừng.html"
+                                            class="text-amber-500 hover:text-amber-600 font-bold flex items-center gap-1 group/link">
+                                            Xem chi tiết <span
+                                                class="transition-transform group-hover/link:translate-x-1">→</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Card 2 -->
+                        <article
+                            class="bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group">
+                            <a href="Tin-Tuc/Đồng-hành-cùng-sinh-viên.html" class="h-64 overflow-hidden relative block">
+                                <img src="https://beta-api.hexagon.xyz/uploads/myc-dong-hanh-1-1774341526337-531129418.jpg"
+                                    alt="Ngày hội sinh viên"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    loading="lazy" />
+                            </a>
+                            <div class="p-6 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3
+                                        class="text-lg font-bold text-gray-900 mb-3 group-hover:text-[#196B49] transition-colors leading-snug">
+                                        <a href="Tin-Tuc/Đồng-hành-cùng-sinh-viên.html">Đồng hành cùng sinh viên Đại học
+                                            Văn Hiến tại Ngày hội sinh viên</a>
+                                    </h3>
+                                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Công ty Cổ phần Lục Giác hân
+                                        hạnh được đồng hành cùng các bạn sinh viên khoa Công nghệ Thông tin - Đại học
+                                        Văn Hiến trong chương trình "VHE Startup Devote".</p>
+                                </div>
+                                <div>
+                                    <hr class="border-gray-100 my-4" />
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-gray-400 flex items-center">
+                                            <i class="far fa-calendar-alt text-amber-500 mr-2"></i> 26 tháng 6, 2026
+                                        </span>
+                                        <a href="Tin-Tuc/Đồng-hành-cùng-sinh-viên.html"
+                                            class="text-amber-500 hover:text-amber-600 font-bold flex items-center gap-1 group/link">
+                                            Xem chi tiết <span
+                                                class="transition-transform group-hover/link:translate-x-1">→</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Row 2: 3 Smaller Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Card 3 -->
+                        <article
+                            class="bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group">
+                            <a href="Tin-Tuc/Sắm-tết-công-nghệ.html" class="h-48 overflow-hidden relative block">
+                                <img src="assets/images/news_tech_shopping.png" alt="Sắm tết công nghệ"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    loading="lazy" />
+                            </a>
+                            <div class="p-6 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3
+                                        class="text-lg font-bold text-gray-900 mb-3 group-hover:text-[#196B49] transition-colors leading-snug">
+                                        <a href="Tin-Tuc/Sắm-tết-công-nghệ.html">Sắm tết công nghệ - Nâng cấp thiết bị,
+                                            khởi đầu bứt phá</a>
+                                    </h3>
+                                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Năm mới, vận hội mới, thiết bị
+                                        cũng phải mới! Đầu tư cho công nghệ là đầu tư cho tương lai. Ghé 'Lục Giác' để
+                                        chọn cho mình những siêu phẩm hỗ trợ đắc lực.</p>
+                                </div>
+                                <div>
+                                    <hr class="border-gray-100 my-4" />
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-gray-400 flex items-center">
+                                            <i class="far fa-calendar-alt text-amber-500 mr-2"></i> 26 tháng 6, 2026
+                                        </span>
+                                        <a href="Tin-Tuc/Sắm-tết-công-nghệ.html"
+                                            class="text-amber-500 hover:text-amber-600 font-bold flex items-center gap-1 group/link">
+                                            Xem chi tiết <span
+                                                class="transition-transform group-hover/link:translate-x-1">→</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Card 4 -->
+                        <article
+                            class="bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group">
+                            <a href="Tin-Tuc/Bài-viết-4.html" class="h-48 overflow-hidden relative block">
+                                <img src="assets/images/news_software_dev.png" alt="Bài viết 4"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    loading="lazy" />
+                            </a>
+                            <div class="p-6 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3
+                                        class="text-lg font-bold text-gray-900 mb-3 group-hover:text-[#196B49] transition-colors leading-snug">
+                                        <a href="Tin-Tuc/Bài-viết-4.html">Bài viết 4</a>
+                                    </h3>
+                                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Bài viết 4</p>
+                                </div>
+                                <div>
+                                    <hr class="border-gray-100 my-4" />
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-gray-400 flex items-center">
+                                            <i class="far fa-calendar-alt text-amber-500 mr-2"></i> 25 tháng 6, 2026
+                                        </span>
+                                        <a href="Tin-Tuc/Bài-viết-4.html"
+                                            class="text-amber-500 hover:text-amber-600 font-bold flex items-center gap-1 group/link">
+                                            Xem chi tiết <span
+                                                class="transition-transform group-hover/link:translate-x-1">→</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Card 5 -->
+                        <article
+                            class="bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group">
+                            <a href="Tin-Tuc/Bài-viết-5.html" class="h-48 overflow-hidden relative block">
+                                <img src="assets/images/news_ai_data_analysis.png" alt="Bài viết 5"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    loading="lazy" />
+                            </a>
+                            <div class="p-6 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3
+                                        class="text-lg font-bold text-gray-900 mb-3 group-hover:text-[#196B49] transition-colors leading-snug">
+                                        <a href="Tin-Tuc/Bài-viết-5.html">Bài viết 5</a>
+                                    </h3>
+                                    <p class="text-gray-600 text-sm leading-relaxed mb-4">Bài viết 5</p>
+                                </div>
+                                <div>
+                                    <hr class="border-gray-100 my-4" />
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-gray-400 flex items-center">
+                                            <i class="far fa-calendar-alt text-amber-500 mr-2"></i> 25 tháng 6, 2026
+                                        </span>
+                                        <a href="Tin-Tuc/Bài-viết-5.html"
+                                            class="text-amber-500 hover:text-amber-600 font-bold flex items-center gap-1 group/link">
+                                            Xem chi tiết <span
+                                                class="transition-transform group-hover/link:translate-x-1">→</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Button Xem tất cả -->
+                    <div class="text-center mt-12">
+                        <a href="Tin-Tuc.html"
+                            class="inline-flex items-center gap-2 px-8 py-3 bg-[linear-gradient(to_right,#196B49,#41b67d)] hover:brightness-105 text-white font-bold rounded-lg transition-all duration-300 shadow-md">
+                            Xem tất cả bài viết <i class="fas fa-chevron-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </astro-island>
+
+        <!-- Đối tác Section -->
+        <astro-island uid="Z2oRfFN" prefix="r14" component-url="/assets/Member.0gymLPRh.js" component-export="default"
+            renderer-url="/assets/client.DeAwy1AW.js" props="{}" ssr client="load"
+            opts="{&quot;name&quot;:&quot;Member&quot;,&quot;value&quot;:true}" await-children>
+            <div class="sponsor-bar">
+                <div class="container">
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-black leading-tight mb-5">Các đối tác
+                        liên kết</h2>
+                    <div class="logo-marquee">
+                        <div class="marquee-track">
+                            <div class="logo-card"><img src="https://webdemo.hexagon.xyz/medias/Logo Khoi E.png"
+                                    alt="Logo Khối E" loading="lazy" /></div>
+                            <div class="logo-card"><img src="https://webdemo.hexagon.xyz/medias/Logo Khoi C.png"
+                                    alt="Logo Khối C" loading="lazy" /></div>
+                            <div class="logo-card"><img src="https://webdemo.hexagon.xyz/medias/Logo Khoi D.png"
+                                    alt="Logo Khối D" loading="lazy" /></div>
+                            <div class="logo-card"><img src="https://webdemo.hexagon.xyz/medias/Happy Food.png"
+                                    alt="Logo Happy Food" loading="lazy" /></div>
+                            <div class="logo-card">
+                                <div class="custom-logo eco-logo">
+                                    <svg viewBox="0 0 80 40" width="80" height="32"
+                                        style="display:block;margin:0 auto 4px">
+                                        <path
+                                            d="M 15 25 C 25 15, 38 15, 40 20 C 42 15, 55 15, 65 25 C 55 18, 42 18, 40 23 C 38 18, 25 18, 15 25 Z"
+                                            fill="#22c55e"></path>
+                                        <path
+                                            d="M 18 18 C 26 10, 38 10, 40 15 C 42 10, 54 10, 62 18 C 54 12, 42 12, 40 17 C 38 12, 26 12, 18 18 Z"
+                                            fill="#eab308"></path>
+                                        <path
+                                            d="M 22 11 C 28 5, 38 5, 40 10 C 42 5, 52 5, 58 11 C 52 7, 42 7, 40 12 C 38 7, 28 7, 22 11 Z"
+                                            fill="#22c55e"></path>
+                                    </svg>
+                                    <div class="logo-text eco-text">ECOBOOK</div>
+                                </div>
+                            </div>
+                            <div class="logo-card">
+                                <div class="custom-logo comoon-logo">
+                                    <svg viewBox="0 0 80 40" width="80" height="32"
+                                        style="display:block;margin:0 auto 4px">
+                                        <path
+                                            d="M 20 12 C 30 5, 50 5, 60 12 C 55 18, 45 18, 40 18 C 35 18, 25 18, 20 12 Z"
+                                            fill="#15803d"></path>
+                                        <path
+                                            d="M 22 17 C 30 11, 50 11, 58 17 C 53 23, 47 23, 40 23 C 33 23, 27 23, 22 17 Z"
+                                            fill="#eab308"></path>
+                                        <path
+                                            d="M 25 22 C 32 17, 48 17, 55 22 C 50 30, 45 32, 40 32 C 35 32, 30 30, 25 22 Z"
+                                            fill="#15803d"></path>
+                                    </svg>
+                                    <div class="logo-text comoon-text">COMOON</div>
+                                </div>
+                            </div>
+                            <div class="logo-card"><img src="https://webdemo.hexagon.xyz/medias/B.png" alt="Binh Minh"
+                                    loading="lazy" /></div>
+                            <div class="logo-card"><img src="https://webdemo.hexagon.xyz/medias/Logo Khoi F.png"
+                                    alt="Logo Khối F" loading="lazy" /></div>
+                            <!-- Duplicate for seamless loop -->
+                            <div class="logo-card"><img src="https://webdemo.hexagon.xyz/medias/Logo Khoi E.png"
+                                    alt="Logo Khối E" loading="lazy" /></div>
+                            <div class="logo-card"><img src="https://webdemo.hexagon.xyz/medias/Logo Khoi C.png"
+                                    alt="Logo Khối C" loading="lazy" /></div>
+                            <div class="logo-card"><img src="https://webdemo.hexagon.xyz/medias/Logo Khoi D.png"
+                                    alt="Logo Khối D" loading="lazy" /></div>
+                            <div class="logo-card"><img src="https://webdemo.hexagon.xyz/medias/Happy Food.png"
+                                    alt="Logo Happy Food" loading="lazy" /></div>
+                            <div class="logo-card">
+                                <div class="custom-logo eco-logo">
+                                    <svg viewBox="0 0 80 40" width="80" height="32"
+                                        style="display:block;margin:0 auto 4px">
+                                        <path
+                                            d="M 15 25 C 25 15, 38 15, 40 20 C 42 15, 55 15, 65 25 C 55 18, 42 18, 40 23 C 38 18, 25 18, 15 25 Z"
+                                            fill="#22c55e"></path>
+                                        <path
+                                            d="M 18 18 C 26 10, 38 10, 40 15 C 42 10, 54 10, 62 18 C 54 12, 42 12, 40 17 C 38 12, 26 12, 18 18 Z"
+                                            fill="#eab308"></path>
+                                        <path
+                                            d="M 22 11 C 28 5, 38 5, 40 10 C 42 5, 52 5, 58 11 C 52 7, 42 7, 40 12 C 38 7, 28 7, 22 11 Z"
+                                            fill="#22c55e"></path>
+                                    </svg>
+                                    <div class="logo-text eco-text">ECOBOOK</div>
+                                </div>
+                            </div>
+                            <div class="logo-card">
+                                <div class="custom-logo comoon-logo">
+                                    <svg viewBox="0 0 80 40" width="80" height="32"
+                                        style="display:block;margin:0 auto 4px">
+                                        <path
+                                            d="M 20 12 C 30 5, 50 5, 60 12 C 55 18, 45 18, 40 18 C 35 18, 25 18, 20 12 Z"
+                                            fill="#15803d"></path>
+                                        <path
+                                            d="M 22 17 C 30 11, 50 11, 58 17 C 53 23, 47 23, 40 23 C 33 23, 27 23, 22 17 Z"
+                                            fill="#eab308"></path>
+                                        <path
+                                            d="M 25 22 C 32 17, 48 17, 55 22 C 50 30, 45 32, 40 32 C 35 32, 30 30, 25 22 Z"
+                                            fill="#15803d"></path>
+                                    </svg>
+                                    <div class="logo-text comoon-text">COMOON</div>
+                                </div>
+                            </div>
+                            <div class="logo-card"><img src="https://webdemo.hexagon.xyz/medias/B.png" alt="Binh Minh"
+                                    loading="lazy" /></div>
+                            <div class="logo-card"><img src="https://webdemo.hexagon.xyz/medias/Logo Khoi F.png"
+                                    alt="Logo Khối F" loading="lazy" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </astro-island>
+
+        <!-- Liên hệ Section -->
+        <astro-island uid="14WzFt" prefix="r15" component-url="/assets/LienheMaps.je-DGuYG.js"
+            component-export="default" renderer-url="/assets/client.DeAwy1AW.js" props="{}" ssr client="load"
+            opts="{&quot;name&quot;:&quot;LienheMaps&quot;,&quot;value&quot;:true}" await-children>
+            <section id="lien-he" class="py-16 bg-slate-50" style="scroll-margin-top:72px">
+                <div class="container">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">Liên hệ với chúng tôi
+                        </h2>
+                        <p class="text-gray-600 mt-3 text-base max-w-2xl mx-auto">Đội ngũ chuyên gia của Hexagon luôn ở
+                            đây để lắng nghe và đưa ra giải pháp công nghệ tốt nhất cho bạn.</p>
+                        <div class="w-20 h-1 bg-[#1A6B49] mx-auto mt-4 rounded-full"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+                        <!-- Cột trái: Form gửi liên hệ -->
+                        <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100">
+                            <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                                <i class="fas fa-paper-plane text-[#1D6A49]"></i> Gửi yêu cầu tư vấn
+                            </h3>
+                            <form id="contactForm" class="flex flex-col gap-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-semibold mb-1" for="name">Họ và
+                                            tên *</label>
+                                        <input type="text" id="name" required
+                                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1D6A49] transition text-sm"
+                                            placeholder="Họ tên của bạn" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-semibold mb-1" for="phone">Số
+                                            điện thoại *</label>
+                                        <input type="tel" id="phone" required
+                                            class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1D6A49] transition text-sm"
+                                            placeholder="Số điện thoại" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-semibold mb-1" for="email">Địa chỉ
+                                        Email *</label>
+                                    <input type="email" id="email" required
+                                        class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1D6A49] transition text-sm"
+                                        placeholder="example@email.com" />
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-semibold mb-1" for="message">Nội dung
+                                        yêu cầu *</label>
+                                    <textarea id="message" rows="4" required
+                                        class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1D6A49] transition resize-none text-sm"
+                                        placeholder="Hãy viết nội dung yêu cầu tại đây..."></textarea>
+                                </div>
+                                <button type="submit"
+                                    class="w-full py-3 bg-[linear-gradient(to_right,#196B49,#41b67d)] hover:brightness-105 text-white font-bold rounded-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2">
+                                    Gửi Yêu Cầu <i class="fas fa-paper-plane text-xs"></i>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Cột phải: Thông tin & Bản đồ -->
+                        <div class="flex flex-col gap-6">
+                            <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-100">
+                                <h3 class="text-xl font-bold text-gray-900 mb-6">Thông tin liên hệ trực tiếp</h3>
+                                <div class="flex flex-col gap-5">
+                                    <div class="flex items-start gap-4">
+                                        <div
+                                            class="flex-shrink-0 w-10 h-10 rounded-full border border-emerald-500/40 flex items-center justify-center bg-emerald-500/10 text-[#1D6A49]">
+                                            <i class="fas fa-map-marker-alt text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-900 text-sm">Trụ sở chính</p>
+                                            <p class="text-gray-600 text-sm mt-0.5">615 Âu Cơ, Phường Tân Phú, TP. Hồ
+                                                Chí Minh</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-4">
+                                        <div
+                                            class="flex-shrink-0 w-10 h-10 rounded-full border border-emerald-500/40 flex items-center justify-center bg-emerald-500/10 text-[#1D6A49]">
+                                            <i class="fas fa-envelope text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-900 text-sm">Email liên hệ</p>
+                                            <p class="text-gray-600 text-sm mt-0.5"><a
+                                                    href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                                                    data-cfemail="670e090108270f021f06000809491f1e1d">[email&#160;protected]</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-4">
+                                        <div
+                                            class="flex-shrink-0 w-10 h-10 rounded-full border border-emerald-500/40 flex items-center justify-center bg-emerald-500/10 text-[#1D6A49]">
+                                            <i class="fas fa-phone-alt text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-900 text-sm">Hotline tư vấn</p>
+                                            <p class="text-gray-600 text-sm mt-0.5 font-semibold text-emerald-800">096
+                                                446 0333</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-3 border-t border-gray-100 pt-5 mt-6">
+                                    <a href="#" target="_blank" rel="noopener noreferrer"
+                                        class="px-4 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-[#1D6A49] font-bold rounded-lg transition-all duration-300 border border-emerald-500/30 hover:border-emerald-500/50 text-xs shadow-sm">Facebook</a>
+                                    <a href="#" target="_blank" rel="noopener noreferrer"
+                                        class="px-4 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-[#1D6A49] font-bold rounded-lg transition-all duration-300 border border-emerald-500/30 hover:border-emerald-500/50 text-xs shadow-sm">LinkedIn</a>
+                                    <a href="#" target="_blank" rel="noopener noreferrer"
+                                        class="px-4 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-[#1D6A49] font-bold rounded-lg transition-all duration-300 border border-emerald-500/30 hover:border-emerald-500/50 text-xs shadow-sm">YouTube</a>
+                                    <a href="#" target="_blank" rel="noopener noreferrer"
+                                        class="px-4 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-[#1D6A49] font-bold rounded-lg transition-all duration-300 border border-emerald-500/30 hover:border-emerald-500/50 text-xs shadow-sm">Zalo</a>
+                                </div>
+                            </div>
+
+                            <div class="w-full h-[300px] rounded-2xl overflow-hidden shadow-lg border border-slate-100">
+                                <iframe class="w-full h-full border-none"
+                                    src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=615%20%C3%82u%20C%C6%A1&amp;t=p&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                                    title="Hexagon Location" loading="lazy"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </astro-island>
+    </main>
+
+    <!-- Footer -->
+    <astro-island uid="Z1NE9jY" prefix="r17" component-url="/assets/Footer.DBm78MgK.js" component-export="default"
+        renderer-url="/assets/client.DeAwy1AW.js" props="{}" ssr client="load"
+        opts="{&quot;name&quot;:&quot;Footer&quot;,&quot;value&quot;:true}" await-children>
+        <footer class="w-full pb-3 bg-[#0D5939] border-t border-[#0D5939]">
+            <div class="mt-6 text-center">
+                <p class="text-gray-400 text-sm">Copyright 2026 © <span class="text-gray-300 font-medium">Hexagon
+                        Corporation</span>. All rights reserved. | <a href="admin/index.html"
+                        class="text-amber-500 hover:text-amber-400 transition ml-1 font-medium"><i
+                            class="fas fa-user-shield mr-1"></i>Quản trị hệ thống</a></p>
+            </div>
+        </footer>
+    </astro-island>
+    <style>
+        /* CSS bổ sung cho nút Lên đầu trang */
+        .back-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 99;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #d97706;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 14px rgba(217, 119, 6, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(15px);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: #196B49;
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(25, 107, 73, 0.4);
+        }
+
+        /* Hiệu ứng Reveal cho Lĩnh vực hoạt động */
+        .reveal-card {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            will-change: transform, opacity;
+        }
+
+        .reveal-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+    </style>
+
+    <!-- Scripts điều khiển tương tác và hiệu ứng -->
+    <script>
+        // ===== HIỆU ỨNG SCROLL REVEAL LĨNH VỰC HOẠT ĐỘNG =====
+        (function () {
+            document.addEventListener("DOMContentLoaded", function () {
+                const cards = document.querySelectorAll(".reveal-card");
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("revealed");
+                            observer.unobserve(entry.target); // Chỉ chạy một lần duy nhất
+                        }
+                    });
+                }, {
+                    threshold: 0.15 // Kích hoạt khi 15% phần tử xuất hiện trong khung nhìn
+                });
+
+                cards.forEach(card => observer.observe(card));
+            });
+        })();
+
+        // ===== HIỆU ỨNG GÕ CHỮ (TYPING EFFECT) =====
+        (function () {
+            const viWords = ["Công nghệ Tương lai", "Chuyển đổi Số Toàn diện", "Giải pháp AI Đột phá", "Hệ sinh thái Đổi mới"];
+            const enWords = ["Future Technology", "Comprehensive Digital Transformation", "Breakthrough AI Solutions", "Innovative Ecosystem"];
+
+            function getWords() {
+                try {
+                    return (localStorage.getItem('hhc_lang') === 'en') ? enWords : viWords;
+                } catch (e) {
+                    return viWords;
+                }
+            }
+
+            let wordIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            const typedTextSpan = document.getElementById('typed-text');
+
+            function type() {
+                const wordsList = getWords();
+                const currentWord = wordsList[wordIndex] || "";
+                if (isDeleting) {
+                    typedTextSpan.textContent = currentWord.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typedTextSpan.textContent = currentWord.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                let typeSpeed = isDeleting ? 40 : 80;
+
+                if (!isDeleting && charIndex === currentWord.length) {
+                    typeSpeed = 2200; // Dừng lại ở cuối từ
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex = (wordIndex + 1) % wordsList.length;
+                    typeSpeed = 400; // Nghỉ trước khi gõ từ mới
+                }
+
+                setTimeout(type, typeSpeed);
+            }
+
+            window.addEventListener('hhc-lang-changed', function () {
+                wordIndex = 0;
+                charIndex = 0;
+                isDeleting = false;
+                if (typedTextSpan) {
+                    typedTextSpan.textContent = '';
+                }
+            });
+
+            if (typedTextSpan) {
+                setTimeout(type, 1000);
+            }
+        })();
+
+        // ===== ĐIỀU KHIỂN MENU MOBILE =====
+        (function () {
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    mobileMenu.classList.toggle('hidden');
+                });
+
+                // Đóng menu khi click ra ngoài
+                document.addEventListener('click', (e) => {
+                    if (!mobileMenu.contains(e.target) && e.target !== menuBtn) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+
+                // Đóng menu khi click vào link điều hướng
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+        })();
+
+        // ===== NÚT QUAY LẠI ĐẦU TRANG (BACK TO TOP) =====
+        (function () {
+            const btn = document.getElementById('backToTop');
+            if (btn) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 300) {
+                        btn.classList.add('visible');
+                    } else {
+                        btn.classList.remove('visible');
+                    }
+                });
+                btn.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        })();
+
+        // ===== XỬ LÝ FORM LIÊN HỆ GỬI THỬ =====
+        (function () {
+            const form = document.getElementById('contactForm');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const name = document.getElementById('name').value;
+                    alert(`Cảm ơn ${name}! Yêu cầu tư vấn của bạn đã được gửi thành công. Chúng tôi sẽ phản hồi lại bạn qua email trong thời gian sớm nhất.`);
+                    form.reset();
+                });
+            }
+        })();
+
+        // ===== HIỆU ỨNG NAV BAR KHI CUỘN (SCROLL NAV EFFECT) =====
+        (function () {
+            const navbar = document.getElementById('navbar');
+            if (navbar) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        navbar.classList.add('shadow-lg', 'bg-opacity-95');
+                        navbar.classList.remove('bg-opacity-100');
+                    } else {
+                        navbar.classList.remove('shadow-lg');
+                    }
+                });
+            }
+        })();
+    </script>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script defer
+        src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496"
+        integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ=="
+        data-cf-beacon='{"version":"2024.11.0","token":"85d94b07f2cc4f968a68960ddba65309","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
+        crossorigin="anonymous">
+        </script>
+    <script src="translate.js"></script>
+</body>
+
+</html>

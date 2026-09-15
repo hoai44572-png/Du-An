@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thông Tin Giao Dịch - Nạp MYE Coin | MyE Game Portal</title>
+  <meta name="description"
+    content="Xem thông tin giao dịch nạp MYE Coin, xác nhận thanh toán và chọn gói nạp phù hợp với nhu cầu của bạn.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blue: '#2563eb',
+              orange: '#f97316',
+              gold: '#d97706',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- CSS chung (header/footer) -->
+  <link rel="stylesheet" href="../Nap-Game.css">
+
+  <style>
+    /* ================================================================
+       Stylesheet nội tuyến cho trang Thông Tin Giao Dịch
+       Tông màu: Xanh - Trắng - Cam theo hình mẫu
+       ================================================================ */
+
+    /* Font chính */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    /* CSS Variables - màu sắc nhất quán */
+    :root {
+      --blue: #2563eb;
+      --blue-lt: #dbeafe;
+      --orange: #f97316;
+      --orange-dk: #ea580c;
+      --gold: #d97706;
+      --bg: #eef4ff;
+      /* nền trang xanh nhạt như mẫu */
+      --card-bg: #ffffff;
+      --text-dark: #1e293b;
+      --text-mid: #475569;
+      --text-light: #94a3b8;
+      --border: #e2e8f0;
+      --radius: 16px;
+      --shadow: 0 4px 20px rgba(37, 99, 235, 0.10);
+      --shadow-h: 0 8px 32px rgba(37, 99, 235, 0.20);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Wrapper trang */
+    .ttgd-page {
+      flex: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 16px 48px;
+    }
+
+    /* ============================================================
+       BREADCRUMB
+       ============================================================ */
+    .ttgd-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 14px 0 10px;
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    .ttgd-breadcrumb a {
+      color: var(--text-mid);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color .18s;
+    }
+
+    .ttgd-breadcrumb a:hover {
+      color: var(--blue);
+    }
+
+    .ttgd-breadcrumb .current {
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    .ttgd-breadcrumb .sep {
+      color: var(--text-light);
+      font-size: 11px;
+    }
+
+    /* ============================================================
+       BANNER — Coin ảnh trái + Card giao dịch phải
+       ============================================================ */
+    .ttgd-banner {
+      position: relative;
+      width: 100%;
+      min-height: 270px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Ảnh nền banner */
+    .ttgd-banner__bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* Overlay xanh nhạt để đồng bộ tông màu */
+    .ttgd-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg,
+          rgba(210, 230, 255, 0.60) 0%,
+          rgba(186, 215, 253, 0.40) 50%,
+          rgba(255, 255, 255, 0.08) 100%);
+      z-index: 1;
+    }
+
+    /* Layout nội dung trên banner */
+    .ttgd-banner__inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 28px 36px 28px 28px;
+    }
+
+    /* Ảnh đồng coin bên trái */
+    .ttgd-banner__coin-wrap {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ttgd-banner__coin {
+      width: 240px;
+      max-width: 40vw;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 10px 28px rgba(37, 99, 235, 0.22));
+      animation: coinFloat 3.5s ease-in-out infinite;
+    }
+
+    @keyframes coinFloat {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    /* Card giao dịch bên phải */
+    .ttgd-txcard {
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: 430px;
+      margin-left: auto;
+      background: var(--card-bg);
+      border-radius: 18px;
+      box-shadow: 0 8px 40px rgba(37, 99, 235, 0.18);
+      padding: 26px 28px 24px;
+    }
+
+    /* Tiêu đề "Nạp MYE Coin" */
+    .ttgd-txcard__title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--blue);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    /* Grid 2 cột thông tin */
+    .ttgd-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    /* Mỗi ô thông tin */
+    .ttgd-info-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ttgd-info-item__icon {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .ttgd-info-item__texts {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .ttgd-info-item__label {
+      font-size: 10.5px;
+      color: var(--text-light);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .ttgd-info-item__value {
+      font-size: 15.5px;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.2;
+    }
+
+    /* Giá trị số coin nổi bật */
+    .ttgd-info-item__value--coin {
+      font-size: 24px;
+      color: var(--blue);
+    }
+
+    /* Logo MoMo */
+    .ttgd-momo-logo {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      flex-shrink: 0;
+      border-radius: 10px;
+    }
+
+    /* Nút đổi hình thức thanh toán */
+    .ttgd-change-method {
+      display: inline-block;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-mid);
+      cursor: pointer;
+      background: #fff;
+      transition: border-color .18s, color .18s;
+      margin-bottom: 16px;
+    }
+
+    .ttgd-change-method:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    /* Divider */
+    .ttgd-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 0 16px;
+    }
+
+    /* Hàng tổng tiền + nút THANH TOÁN */
+    .ttgd-pay-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .ttgd-pay-label {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-mid);
+      margin-bottom: 3px;
+    }
+
+    .ttgd-pay-amount {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--orange);
+      letter-spacing: -0.01em;
+    }
+
+    /* Nút THANH TOÁN */
+    .ttgd-btn-pay {
+      flex-shrink: 0;
+      padding: 13px 26px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(249, 115, 22, .38);
+      transition: transform .18s, box-shadow .18s, background .18s;
+    }
+
+    .ttgd-btn-pay:hover {
+      background: linear-gradient(135deg, #ea580c, #c2410c);
+      transform: scale(1.05) translateY(-2px);
+      box-shadow: 0 8px 30px rgba(249, 115, 22, .52);
+    }
+
+    .ttgd-btn-pay:active {
+      transform: scale(0.97);
+    }
+
+    /* ============================================================
+       CHỌN GÓI NẠP KHÁC
+       ============================================================ */
+    .ttgd-packages {
+      margin-bottom: 40px;
+    }
+
+    /* Tiêu đề section */
+    .ttgd-section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+    }
+
+    /* Grid 4 cột */
+    .ttgd-pkg-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    /* Card gói nạp */
+    .ttgd-pkg-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: border-color .22s, box-shadow .22s, transform .18s;
+    }
+
+    .ttgd-pkg-card:hover {
+      border-color: var(--blue);
+      box-shadow: var(--shadow-h);
+      transform: translateY(-4px);
+    }
+
+    .ttgd-pkg-card:focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    /* Vùng ảnh coin */
+    .ttgd-pkg-img-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ttgd-pkg-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .28s;
+    }
+
+    .ttgd-pkg-card:hover .ttgd-pkg-img {
+      transform: scale(1.05);
+    }
+
+    /* Label tên gói trên ảnh (góc dưới) */
+    .ttgd-pkg-badge {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(0deg, rgba(30, 64, 175, .70) 0%, transparent 100%);
+      padding: 9px 10px 7px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, .4);
+    }
+
+    /* Body card */
+    .ttgd-pkg-body {
+      padding: 11px 13px 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .ttgd-pkg-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.2;
+    }
+
+    .ttgd-pkg-price {
+      font-size: 11.5px;
+      color: var(--text-light);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* Nút MUA */
+    .ttgd-btn-buy {
+      flex-shrink: 0;
+      padding: 7px 18px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #fff;
+      font-size: 12.5px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(249, 115, 22, .28);
+      transition: transform .18s, box-shadow .18s, background .18s;
+    }
+
+    .ttgd-btn-buy:hover {
+      background: linear-gradient(135deg, #ea580c, #c2410c);
+      transform: scale(1.07) translateY(-1px);
+      box-shadow: 0 5px 18px rgba(249, 115, 22, .45);
+    }
+
+    .ttgd-btn-buy:active {
+      transform: scale(0.97);
+    }
+
+    /* ============================================================
+       BANNER HỖ TRỢ
+       ============================================================ */
+    .ttgd-support {
+      border-radius: var(--radius);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 22px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .ttgd-support__items {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .ttgd-support__item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .ttgd-support__icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ttgd-support__icon-wrap--shield {
+      background: #dbeafe;
+      color: var(--blue);
+    }
+
+    .ttgd-support__icon-wrap--clock {
+      background: #fed7aa;
+      color: #ea580c;
+    }
+
+    .ttgd-support__icon-wrap--phone {
+      background: #d1fae5;
+      color: #059669;
+    }
+
+    .ttgd-support__icon-wrap i {
+      font-size: 19px;
+    }
+
+    .ttgd-support__label {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+
+    .ttgd-support__sub {
+      font-size: 11.5px;
+      color: var(--text-mid);
+      margin-top: 2px;
+      line-height: 1.55;
+    }
+
+    .ttgd-support__girl {
+      height: 145px;
+      width: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, .15));
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    /* Tablet ≤ 1024px */
+    @media (max-width: 1024px) {
+      .ttgd-pkg-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Tablet nhỏ / Mobile ≤ 768px */
+    @media (max-width: 768px) {
+      .ttgd-banner__inner {
+        flex-direction: column;
+        padding: 20px 16px;
+        text-align: center;
+      }
+
+      .ttgd-banner__coin {
+        width: 160px;
+        max-width: 50vw;
+      }
+
+      .ttgd-txcard {
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .ttgd-pay-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .ttgd-btn-pay {
+        width: 100%;
+        text-align: center;
+      }
+
+      .ttgd-pkg-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .ttgd-support {
+        flex-direction: column;
+        padding: 20px 16px;
+      }
+
+      .ttgd-support__items {
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .ttgd-support__girl {
+        height: 110px;
+      }
+    }
+
+    /* Mobile nhỏ ≤ 480px */
+    @media (max-width: 480px) {
+      .ttgd-info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ttgd-pkg-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .ttgd-pay-amount {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ==================== HEADER PLACEHOLDER ==================== -->
+  <div id="header-placeholder"></div>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="ttgd-page">
+
+    <!-- Breadcrumb điều hướng -->
+    <nav class="ttgd-breadcrumb" aria-label="Breadcrumb">
+      <a href="../../Giao-Dien/Nap-Game.html">Nạp Game</a>
+      <span class="sep" aria-hidden="true">›</span>
+      <a href="MYE-COIN.html">MYE Coin</a>
+      <span class="sep" aria-hidden="true">›</span>
+      <span class="current">Thông tin giao dịch</span>
+    </nav>
+
+    <!-- ==============================================================
+         SECTION 1: BANNER — Coin bên trái + Card giao dịch bên phải
+         ============================================================== -->
+    <section class="ttgd-banner" aria-label="Thông tin giao dịch nạp MYE Coin">
+
+      <!-- Ảnh nền banner -->
+      <img class="ttgd-banner__bg" src="../../assets/images/thong_tin_giao_dich/bannerdaugame.png"
+        alt="Banner nền giao dịch" loading="eager">
+
+      <!-- Nội dung nằm trên banner -->
+      <div class="ttgd-banner__inner">
+
+        <!-- Bên phải: Card thông tin giao dịch (nền trắng, bo góc) -->
+        <div class="ttgd-txcard" role="region" aria-label="Thẻ thông tin giao dịch">
+
+          <!-- Tiêu đề -->
+          <h1 class="ttgd-txcard__title">Nạp MYE Coin</h1>
+
+          <!-- Grid 2×2: Tài khoản | MYE ID | Coin nhận | Phương thức -->
+          <div class="ttgd-info-grid">
+
+            <!-- Tài khoản -->
+            <div class="ttgd-info-item">
+              <img class="ttgd-info-item__icon" src="../../assets/images/thong_tin_giao_dich/boxicons_user.png"
+                alt="Icon tài khoản">
+              <div class="ttgd-info-item__texts">
+                <span class="ttgd-info-item__label">Tài khoản</span>
+                <span class="ttgd-info-item__value" id="ttgd-account">myepro123</span>
+              </div>
+            </div>
+
+            <!-- MYE ID -->
+            <div class="ttgd-info-item">
+              <img class="ttgd-info-item__icon" src="../../assets/images/thong_tin_giao_dich/teenyicons_id-outline.png"
+                alt="Icon MYE ID">
+              <div class="ttgd-info-item__texts">
+                <span class="ttgd-info-item__label">MYE ID</span>
+                <span class="ttgd-info-item__value" id="ttgd-myeid">12233548</span>
+              </div>
+            </div>
+
+            <!-- MYE Coin nhận được -->
+            <div class="ttgd-info-item">
+              <img class="ttgd-info-item__icon" src="../../assets/images/thong_tin_giao_dich/iconoir_coins.png"
+                alt="Icon coin nhận">
+              <div class="ttgd-info-item__texts">
+                <span class="ttgd-info-item__label">MYE Coin Nhận được</span>
+                <span class="ttgd-info-item__value ttgd-info-item__value--coin" id="ttgd-coin-amount">500</span>
+              </div>
+            </div>
+
+            <!-- Phương thức thanh toán (MoMo) -->
+            <div class="ttgd-info-item">
+              <img class="ttgd-momo-logo" src="../../assets/images/thong_tin_giao_dich/momo.png" alt="Logo MoMo">
+              <div class="ttgd-info-item__texts">
+                <span class="ttgd-info-item__label">Phương thức thanh toán</span>
+                <span class="ttgd-info-item__value" id="ttgd-payment-method">Momo</span>
+              </div>
+            </div>
+
+          </div><!-- /.ttgd-info-grid -->
+
+          <!-- Nút đổi hình thức thanh toán -->
+          <button type="button" class="ttgd-change-method" id="btn-change-method">
+            Đổi hình thức thanh toán khác
+          </button>
+
+          <!-- Divider -->
+          <div class="ttgd-divider" role="separator"></div>
+
+          <!-- Tổng tiền + Nút THANH TOÁN -->
+          <div class="ttgd-pay-row">
+            <div>
+              <p class="ttgd-pay-label">Số tiền thanh toán</p>
+              <p class="ttgd-pay-amount" id="ttgd-pay-amount">500.000 VNĐ</p>
+            </div>
+            <button type="button" class="ttgd-btn-pay" id="btn-thanh-toan">
+              THANH TOÁN
+            </button>
+          </div>
+
+        </div><!-- /.ttgd-txcard -->
+      </div><!-- /.ttgd-banner__inner -->
+    </section>
+
+    <!-- ==============================================================
+         SECTION 2: CHỌN GÓI NẠP KHÁC — Grid 4 cột
+         ============================================================== -->
+    <section class="ttgd-packages" aria-label="Chọn gói nạp khác">
+
+      <h2 class="ttgd-section-title">CHỌN GÓI NẠP KHÁC</h2>
+
+      <div class="ttgd-pkg-grid" id="ttgd-pkg-grid" role="list">
+
+        <!-- Gói 20 MYE Coin -->
+        <article class="ttgd-pkg-card" role="listitem" tabindex="0" data-coin="20" data-price="20000"
+          aria-label="Gói 20 MYE Coin - 20.000 VNĐ">
+          <div class="ttgd-pkg-img-wrap">
+            <img class="ttgd-pkg-img" src="../../assets/images/thong_tin_giao_dich/Chon_goi_nap/20_MYE_COIN.png"
+              alt="Gói 20 MYE Coin">
+            <div class="ttgd-pkg-badge">20 MYE Coin</div>
+          </div>
+          <div class="ttgd-pkg-body">
+            <div>
+              <p class="ttgd-pkg-name">20 MYE Coin</p>
+              <p class="ttgd-pkg-price">20.000 VNĐ</p>
+            </div>
+            <button type="button" class="ttgd-btn-buy">MUA</button>
+          </div>
+        </article>
+
+        <!-- Gói 50 MYE Coin -->
+        <article class="ttgd-pkg-card" role="listitem" tabindex="0" data-coin="50" data-price="50000"
+          aria-label="Gói 50 MYE Coin - 50.000 VNĐ">
+          <div class="ttgd-pkg-img-wrap">
+            <img class="ttgd-pkg-img" src="../../assets/images/thong_tin_giao_dich/Chon_goi_nap/50_MYE_COIN.png"
+              alt="Gói 50 MYE Coin">
+            <div class="ttgd-pkg-badge">50 MYE Coin</div>
+          </div>
+          <div class="ttgd-pkg-body">
+            <div>
+              <p class="ttgd-pkg-name">50 MYE Coin</p>
+              <p class="ttgd-pkg-price">50.000 VNĐ</p>
+            </div>
+            <button type="button" class="ttgd-btn-buy">MUA</button>
+          </div>
+        </article>
+
+        <!-- Gói 100 MYE Coin -->
+        <article class="ttgd-pkg-card" role="listitem" tabindex="0" data-coin="100" data-price="100000"
+          aria-label="Gói 100 MYE Coin - 100.000 VNĐ">
+          <div class="ttgd-pkg-img-wrap">
+            <img class="ttgd-pkg-img" src="../../assets/images/thong_tin_giao_dich/Chon_goi_nap/100_MYE_COIN.png"
+              alt="Gói 100 MYE Coin">
+            <div class="ttgd-pkg-badge">100 MYE Coin</div>
+          </div>
+          <div class="ttgd-pkg-body">
+            <div>
+              <p class="ttgd-pkg-name">100 MYE Coin</p>
+              <p class="ttgd-pkg-price">100.000 VNĐ</p>
+            </div>
+            <button type="button" class="ttgd-btn-buy">MUA</button>
+          </div>
+        </article>
+
+        <!-- Gói 500 MYE Coin -->
+        <article class="ttgd-pkg-card" role="listitem" tabindex="0" data-coin="500" data-price="500000"
+          aria-label="Gói 500 MYE Coin - 500.000 VNĐ">
+          <div class="ttgd-pkg-img-wrap">
+            <img class="ttgd-pkg-img" src="../../assets/images/thong_tin_giao_dich/Chon_goi_nap/500_MYE_COIN.png"
+              alt="Gói 500 MYE Coin">
+            <div class="ttgd-pkg-badge">500 MYE Coin</div>
+          </div>
+          <div class="ttgd-pkg-body">
+            <div>
+              <p class="ttgd-pkg-name">500 MYE Coin</p>
+              <p class="ttgd-pkg-price">500.000 VNĐ</p>
+            </div>
+            <button type="button" class="ttgd-btn-buy">MUA</button>
+          </div>
+        </article>
+
+        <!-- Gói 1.000 MYE Coin -->
+        <article class="ttgd-pkg-card" role="listitem" tabindex="0" data-coin="1000" data-price="1000000"
+          aria-label="Gói 1.000 MYE Coin - 1.000.000 VNĐ">
+          <div class="ttgd-pkg-img-wrap">
+            <img class="ttgd-pkg-img" src="../../assets/images/thong_tin_giao_dich/Chon_goi_nap/1000_MYE_COIN.png"
+              alt="Gói 1.000 MYE Coin">
+            <div class="ttgd-pkg-badge">1000 MYE Coin</div>
+          </div>
+          <div class="ttgd-pkg-body">
+            <div>
+              <p class="ttgd-pkg-name">1.000 MYE Coin</p>
+              <p class="ttgd-pkg-price">1.000.000 VNĐ</p>
+            </div>
+            <button type="button" class="ttgd-btn-buy">MUA</button>
+          </div>
+        </article>
+
+        <!-- Gói 2.000 MYE Coin -->
+        <article class="ttgd-pkg-card" role="listitem" tabindex="0" data-coin="2000" data-price="2000000"
+          aria-label="Gói 2.000 MYE Coin - 2.000.000 VNĐ">
+          <div class="ttgd-pkg-img-wrap">
+            <img class="ttgd-pkg-img" src="../../assets/images/thong_tin_giao_dich/Chon_goi_nap/2000_MYE_COIN.png"
+              alt="Gói 2.000 MYE Coin">
+            <div class="ttgd-pkg-badge">2000 MYE Coin</div>
+          </div>
+          <div class="ttgd-pkg-body">
+            <div>
+              <p class="ttgd-pkg-name">2.000 MYE Coin</p>
+              <p class="ttgd-pkg-price">2.000.000 VNĐ</p>
+            </div>
+            <button type="button" class="ttgd-btn-buy">MUA</button>
+          </div>
+        </article>
+
+        <!-- Gói 5.000 MYE Coin -->
+        <article class="ttgd-pkg-card" role="listitem" tabindex="0" data-coin="5000" data-price="5000000"
+          aria-label="Gói 5.000 MYE Coin - 5.000.000 VNĐ">
+          <div class="ttgd-pkg-img-wrap">
+            <img class="ttgd-pkg-img" src="../../assets/images/thong_tin_giao_dich/Chon_goi_nap/5000_MYE_COIN.png"
+              alt="Gói 5.000 MYE Coin">
+            <div class="ttgd-pkg-badge">5000 MYE Coin</div>
+          </div>
+          <div class="ttgd-pkg-body">
+            <div>
+              <p class="ttgd-pkg-name">5.000 MYE Coin</p>
+              <p class="ttgd-pkg-price">5.000.000 VNĐ</p>
+            </div>
+            <button type="button" class="ttgd-btn-buy">MUA</button>
+          </div>
+        </article>
+
+        <!-- Gói 10.000 MYE Coin -->
+        <article class="ttgd-pkg-card" role="listitem" tabindex="0" data-coin="10000" data-price="10000000"
+          aria-label="Gói 10.000 MYE Coin - 10.000.000 VNĐ">
+          <div class="ttgd-pkg-img-wrap">
+            <img class="ttgd-pkg-img" src="../../assets/images/thong_tin_giao_dich/Chon_goi_nap/10000_MYE_COIN.png"
+              alt="Gói 10.000 MYE Coin">
+            <div class="ttgd-pkg-badge">10000 MYE Coin</div>
+          </div>
+          <div class="ttgd-pkg-body">
+            <div>
+              <p class="ttgd-pkg-name">10.000 MYE Coin</p>
+              <p class="ttgd-pkg-price">10.000.000 VNĐ</p>
+            </div>
+            <button type="button" class="ttgd-btn-buy">MUA</button>
+          </div>
+        </article>
+
+      </div><!-- /.ttgd-pkg-grid -->
+    </section>
+
+    <!-- ==============================================================
+         SECTION 3: BANNER HỖ TRỢ
+         ============================================================== -->
+    <section class="ttgd-support" aria-label="Thông tin hỗ trợ">
+
+      <!-- 3 cột hỗ trợ -->
+      <div class="ttgd-support__items">
+
+        <!-- An toàn & Bảo mật -->
+        <div class="ttgd-support__item">
+          <div class="ttgd-support__icon-wrap ttgd-support__icon-wrap--shield" aria-hidden="true">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <p class="ttgd-support__label">An toàn &amp; Bảo mật</p>
+            <p class="ttgd-support__sub">
+              Giao dịch được mã hoá, thông tin<br>của bạn luôn được bảo vệ
+            </p>
+          </div>
+        </div>
+
+        <!-- Nạp tự động 24/7 -->
+        <div class="ttgd-support__item">
+          <div class="ttgd-support__icon-wrap ttgd-support__icon-wrap--clock" aria-hidden="true">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <div>
+            <p class="ttgd-support__label">Nạp tự động 24/7</p>
+            <p class="ttgd-support__sub">
+              Thanh toán thành công, MYE Coin<br>sẽ được cộng ngay vào tài khoản.
+            </p>
+          </div>
+        </div>
+
+        <!-- Hỗ trợ nhanh chóng -->
+        <div class="ttgd-support__item">
+          <div class="ttgd-support__icon-wrap ttgd-support__icon-wrap--phone" aria-hidden="true">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <div>
+            <p class="ttgd-support__label">Hỗ trợ nhanh chóng</p>
+            <p class="ttgd-support__sub">
+              Email: hotro@mye.vn<br>Hotline: 0902 500 198
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Nhân vật anime góc phải -->
+      <img class="ttgd-support__girl" src="../../assets/images/MyE_Coin/girlMye.png" alt="Nhân vật hỗ trợ MyE"
+        aria-hidden="true">
+
+    </section>
+
+  </main>
+
+  <!-- Nút cuộn lên đầu trang -->
+  <button id="scroll-top-btn" type="button"
+    class="fixed bottom-6 right-6 z-40 w-11 h-11 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 pointer-events-none"
+    aria-label="Cuộn lên đầu trang">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- ==================== FOOTER PLACEHOLDER ==================== -->
+  <div id="footer-placeholder"></div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+      /**
+       * Thong-Tin-Giao-Dich — Logic trang
+       *
+       * 1. Load Header / Footer fragment
+       * 2. Cuộn lên đầu trang
+       * 3. Click gói nạp → cập nhật card giao dịch phía trên
+       * 4. Nút THANH TOÁN
+       * 5. Nút Đổi hình thức thanh toán
+       */
+      (function () {
+        'use strict';
+
+        /* ── Tiện ích: inject CSS ────────────────────────────────── */
+        function injectCSS(href) {
+          if (document.querySelector(`link[href="${href}"]`)) return;
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = href;
+          document.head.appendChild(link);
+        }
+
+        /* ── Tiện ích: load HTML fragment ───────────────────────── */
+        async function loadFragment(url, placeholderId) {
+          const el = document.getElementById(placeholderId);
+          if (!el) return;
+          try {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            el.outerHTML = await res.text();
+          } catch (err) {
+            console.warn('[Loader] Không thể tải:', url, err);
+          }
+        }
+
+        /* ── Cuộn lên đầu trang ─────────────────────────────────── */
+        function initScrollTop() {
+          const btn = document.getElementById('scroll-top-btn');
+          if (!btn) return;
+          window.addEventListener('scroll', () => {
+            const visible = window.scrollY > 280;
+            btn.classList.toggle('opacity-0', !visible);
+            btn.classList.toggle('pointer-events-none', !visible);
+          }, { passive: true });
+          btn.addEventListener('click', () =>
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+          );
+        }
+
+        /* ── Định dạng số tiền VNĐ ──────────────────────────────── */
+        function fmtPrice(val) {
+          return Number(val).toLocaleString('vi-VN') + ' VNĐ';
+        }
+
+        /* ── Click card gói nạp → cập nhật thông tin giao dịch ─── */
+        function initPackageSelection() {
+          const cards = document.querySelectorAll('.ttgd-pkg-card');
+          const coinEl = document.getElementById('ttgd-coin-amount');
+          const priceEl = document.getElementById('ttgd-pay-amount');
+
+          /* Hàm chọn gói */
+          function selectCard(card) {
+            /* Reset border tất cả card */
+            cards.forEach(c => {
+              c.style.borderColor = '';
+              c.style.boxShadow = '';
+            });
+            /* Highlight card được chọn */
+            card.style.borderColor = 'var(--blue)';
+            card.style.boxShadow = '0 8px 32px rgba(37,99,235,0.22)';
+
+            /* Cập nhật thông tin trên card giao dịch */
+            const coin = parseInt(card.dataset.coin, 10) || 0;
+            const price = parseInt(card.dataset.price, 10) || 0;
+            if (coinEl) coinEl.textContent = coin.toLocaleString('vi-VN');
+            if (priceEl) priceEl.textContent = fmtPrice(price);
+          }
+
+          cards.forEach(card => {
+            /* Click chuột */
+            card.addEventListener('click', () => selectCard(card));
+
+            /* Click nút MUA bên trong (ngăn bubble) */
+            const buyBtn = card.querySelector('.ttgd-btn-buy');
+            if (buyBtn) {
+              buyBtn.addEventListener('click', e => {
+                e.stopPropagation();
+                selectCard(card);
+                /* Scroll lên card giao dịch để người dùng thấy */
+                document.querySelector('.ttgd-txcard')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              });
+            }
+
+            /* Hỗ trợ bàn phím: Enter / Space */
+            card.addEventListener('keydown', e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                selectCard(card);
+              }
+            });
+          });
+        }
+
+        /* ── Nút THANH TOÁN ─────────────────────────────────────── */
+        function initPayButton() {
+          const btn = document.getElementById('btn-thanh-toan');
+          if (!btn) return;
+          btn.addEventListener('click', () => {
+            const amount = document.getElementById('ttgd-pay-amount')?.textContent || '—';
+            alert(`Xác nhận thanh toán: ${amount}\nVui lòng hoàn tất giao dịch trên ứng dụng MoMo.`);
+          });
+        }
+
+        /* ── Nút Đổi hình thức thanh toán ──────────────────────── */
+        function initChangeMethod() {
+          const btn = document.getElementById('btn-change-method');
+          if (!btn) return;
+          btn.addEventListener('click', () => {
+            window.location.href = 'MYE-COIN.html';
+          });
+        }
+
+        /* ── KHỞI CHẠY ─────────────────────────────────────────── */
+        async function init() {
+          /* Inject CSS header/footer (đường dẫn từ HTML/) */
+          injectCSS('../Header-Footer/Header.css');
+          injectCSS('../Header-Footer/Footer.css');
+
+          /* Load header & footer song song */
+          await Promise.all([
+            loadFragment('../Header-Footer/Header.html', 'header-placeholder'),
+            loadFragment('../Header-Footer/Footer.html', 'footer-placeholder'),
+          ]);
+
+          /* Khởi tạo tính năng trang */
+          initScrollTop();
+          initPackageSelection();
+          initPayButton();
+          initChangeMethod();
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+      })();
+  </script>
+
+</body>
+
+</html>

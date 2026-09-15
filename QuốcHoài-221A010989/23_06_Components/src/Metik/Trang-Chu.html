@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METIK - Chạm mê tít</title>
+    <meta name="description" content="METIK - Thương hiệu snack với hương vị giòn ngon, trẻ trung và đầy cảm hứng" />
+    <link rel="icon" href="https://metik.vn/wp-content/uploads/2026/06/cropped-faviconmetik-32x32.png" sizes="32x32" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+
+    <style>
+        * {
+            font-family: 'Lato', sans-serif;
+        }
+
+        /* Gradient background cho trang chủ */
+        .bg-metik-gradient {
+            background: radial-gradient(circle at top right, rgba(255, 153, 0, .22), transparent 32%),
+                radial-gradient(circle at bottom left, rgba(255, 193, 7, .16), transparent 36%),
+                linear-gradient(180deg, #ffffff 0%, #f7f7f7 35%, #fff6e8 70%, #ffe2b8 100%);
+        }
+
+        /* Màu chủ đạo */
+        .text-primary {
+            color: #f4851a;
+        }
+
+        .text-secondary {
+            color: #48a842;
+        }
+
+        .bg-primary {
+            background-color: #f4851a;
+        }
+
+        .bg-secondary {
+            background-color: #48a842;
+        }
+
+        .bg-gold {
+            background-color: #f2bf09;
+        }
+
+        .bg-orange-light {
+            background-color: #f3a508;
+        }
+
+        .border-primary {
+            border-color: #f4851a;
+        }
+
+        /* Hiệu ứng hover */
+        .hover-shadow-lg:hover {
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+
+        /* Border radius tùy chỉnh */
+        .rounded-br-3xl {
+            border-radius: 0 30px;
+        }
+
+        .rounded-tl-3xl {
+            border-radius: 30px 0;
+        }
+
+        /* ===== SCROLL ANIMATION ===== */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Delay cho từng phần tử con */
+        .scroll-animate.delay-1 {
+            transition-delay: 0.1s;
+        }
+
+        .scroll-animate.delay-2 {
+            transition-delay: 0.2s;
+        }
+
+        .scroll-animate.delay-3 {
+            transition-delay: 0.3s;
+        }
+
+        .scroll-animate.delay-4 {
+            transition-delay: 0.4s;
+        }
+
+        .scroll-animate.delay-5 {
+            transition-delay: 0.5s;
+        }
+
+        /* Hiệu ứng đặc biệt cho banner */
+        .scroll-animate.slide-up {
+            transform: translateY(60px) scale(0.95);
+        }
+
+        .scroll-animate.slide-up.visible {
+            transform: translateY(0) scale(1);
+        }
+
+        /* Hiệu ứng cho từng item trong grid */
+        .scroll-animate.stagger-item {
+            transition-delay: calc(var(--index, 0) * 0.1s);
+        }
+
+        /* Slider styles */
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slider-slide {
+            flex: 0 0 100%;
+        }
+
+        /* Product card */
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-image {
+            transition: transform 0.3s ease;
+        }
+
+        /* Star rating */
+        .star-rating {
+            color: #ffdd00;
+        }
+
+        /* Title underline */
+        .title-underline {
+            position: relative;
+            display: inline-block;
+        }
+
+        .title-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: #ffd000;
+            border-radius: 2px;
+        }
+
+        /* Section title với gạch vàng */
+        .section-title-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title-wrapper .yellow-bar {
+            position: absolute;
+            bottom: 8px;
+            right: -60px;
+            width: 60px;
+            height: 4px;
+            background: #ffd000;
+            border-radius: 2px;
+        }
+
+        /* Responsive video */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 0 30px;
+        }
+
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Back to top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #f4851a;
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(244, 133, 26, 0.4);
+            transition: all 0.3s ease;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(244, 133, 26, 0.6);
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+
+        /* Cookie box */
+        .cookie-box {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+
+        .cookie-box.show {
+            transform: translateY(0);
+        }
+
+        /* Mobile menu overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            padding: 30px 20px;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        /* Scrollbar tùy chỉnh */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #f4851a;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d9700e;
+        }
+    </style>
+</head>
+
+<body class="bg-metik-gradient">
+
+    <!-- Skip link -->
+    <a href="#main"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:p-4 focus:rounded-lg">Bỏ
+        qua nội dung</a>
+
+    <!-- ===== HEADER ===== -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-24 md:h-28">
+                <!-- Logo -->
+                <a href="/" class="flex-shrink-0">
+                    <img src="https://metik.vn/wp-content/uploads/2026/06/logometik.png.webp" alt="METIK"
+                        class="h-16 md:h-20 w-auto" />
+                </a>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden lg:flex items-center space-x-8">
+                    <a href="Trang-Chu.html" class="text-secondary font-bold border-b-2 border-primary pb-1">Trang
+                        chủ</a>
+                    <a href="GioiThieu.html" class="text-gray-700 font-bold hover:text-primary transition-colors">Giới
+                        thiệu</a>
+                    <a href="San-Pham.html" class="text-gray-700 font-bold hover:text-primary transition-colors">Sản
+                        phẩm</a>
+                    <a href="/category/tin-tuc/"
+                        class="text-gray-700 font-bold hover:text-primary transition-colors">Tin tức</a>
+                    <a href="/lien-he/" class="text-gray-700 font-bold hover:text-primary transition-colors">Liên hệ</a>
+                </nav>
+
+                <!-- Social Icons Desktop -->
+                <div class="hidden lg:flex items-center space-x-3">
+                    <a href="https://www.facebook.com/banhmetik" target="_blank"
+                        class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-orange-600 transition-colors">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@metik_333" target="_blank"
+                        class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-orange-600 transition-colors">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/112466083/" target="_blank"
+                        class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-orange-600 transition-colors">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="menuToggle" class="lg:hidden text-2xl text-gray-700 hover:text-primary">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== MOBILE MENU ===== -->
+    <div id="mobileOverlay" class="mobile-menu-overlay"></div>
+    <div id="mobileMenu" class="mobile-menu">
+        <button id="menuClose" class="absolute top-4 right-4 text-2xl text-gray-700 hover:text-primary">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="mt-12">
+            <form action="/" method="get" class="mb-6">
+                <div class="relative">
+                    <input type="search" name="s" placeholder="Tìm kiếm..."
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-primary" />
+                    <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+            <nav class="flex flex-col space-y-4">
+                <a href="Trang-Chu.html" class="text-secondary font-bold text-lg">Trang chủ</a>
+                <a href="Gioi-Thieu.html" class="text-gray-700 font-bold text-lg hover:text-primary">Giới thiệu</a>
+                <a href="San-Pham.html" class="text-gray-700 font-bold text-lg hover:text-primary">Sản phẩm</a>
+                <a href="/category/tin-tuc/" class="text-gray-700 font-bold text-lg hover:text-primary">Tin tức</a>
+                <a href="/lien-he/" class="text-gray-700 font-bold text-lg hover:text-primary">Liên hệ</a>
+            </nav>
+            <div class="mt-8 flex space-x-4">
+                <a href="https://www.facebook.com/banhmetik" target="_blank"
+                    class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-orange-600">
+                    <i class="fab fa-facebook-f text-xl"></i>
+                </a>
+                <a href="https://www.tiktok.com/@metik_333" target="_blank"
+                    class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-orange-600">
+                    <i class="fab fa-tiktok text-xl"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/112466083/" target="_blank"
+                    class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-orange-600">
+                    <i class="fab fa-linkedin-in text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main id="main">
+
+        <!-- ===== SLIDER BANNER ===== -->
+        <section class="slider-container scroll-animate slide-up" id="bannerSection">
+            <div class="slider-track" id="sliderTrack">
+                <div class="slider-slide">
+                    <img src="https://metik.vn/wp-content/uploads/2021/05/banner-metik.webp" alt="Banner Metik"
+                        class="w-full h-auto" />
+                </div>
+                <div class="slider-slide">
+                    <img src="https://metik.vn/wp-content/uploads/2021/05/banner-metik-2-1-scaled.webp"
+                        alt="Banner Metik 2" class="w-full h-auto" />
+                </div>
+            </div>
+            <!-- Slider Controls -->
+            <button id="prevSlide"
+                class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/80 hover:bg-white text-gray-700 shadow-lg flex items-center justify-center transition-all">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button id="nextSlide"
+                class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/80 hover:bg-white text-gray-700 shadow-lg flex items-center justify-center transition-all">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <!-- Dots -->
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex space-x-2">
+                <span class="dot w-3 h-3 rounded-full bg-white/60 cursor-pointer transition-all" data-index="0"></span>
+                <span class="dot w-3 h-3 rounded-full bg-white/60 cursor-pointer transition-all" data-index="1"></span>
+            </div>
+        </section>
+
+        <!-- ===== SẢN PHẨM MỚI ===== -->
+        <section class="py-12 px-4">
+            <div class="container mx-auto">
+                <!-- Title -->
+                <div class="mb-8 scroll-animate">
+                    <div class="section-title-wrapper">
+                        <h2 class="text-3xl font-bold text-secondary">SẢN PHẨM MỚI</h2>
+                        <span class="yellow-bar"></span>
+                    </div>
+                </div>
+
+                <!-- Product Slider -->
+                <div class="relative">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6" id="productGrid">
+                        <!-- Product 1 -->
+                        <a href="./San-Pham/Snack-Vị-Tảo-Biển.html"
+                            class="product-card bg-white rounded-xl shadow-md hover-shadow-lg transition-all overflow-hidden group scroll-animate stagger-item"
+                            style="--index: 0;">
+                            <div class="overflow-hidden">
+                                <img src="https://metik.vn/wp-content/uploads/2026/06/snack-vi-tao-bien.jpg.webp"
+                                    alt="Snack vị Tảo biển"
+                                    class="product-image w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
+                                    loading="lazy" />
+                            </div>
+                            <div class="p-4 text-center">
+                                <h3 class="text-primary font-bold text-sm md:text-base">Snack vị Tảo biển</h3>
+                            </div>
+                        </a>
+
+                        <!-- Product 2 -->
+                        <a href="./San-Pham/Snack-Vị-BBQ.html"
+                            class="product-card bg-white rounded-xl shadow-md hover-shadow-lg transition-all overflow-hidden group scroll-animate stagger-item"
+                            style="--index: 1;">
+                            <div class="overflow-hidden">
+                                <img src="https://metik.vn/wp-content/uploads/2026/06/snack-vi-bbq.jpg.webp"
+                                    alt="Snack vị BBQ"
+                                    class="product-image w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
+                                    loading="lazy" />
+                            </div>
+                            <div class="p-4 text-center">
+                                <h3 class="text-primary font-bold text-sm md:text-base">Snack vị BBQ</h3>
+                            </div>
+                        </a>
+
+                        <!-- Product 3 -->
+                        <a href="./San-Pham/Snack-Vị-Bắp.html"
+                            class="product-card bg-white rounded-xl shadow-md hover-shadow-lg transition-all overflow-hidden group scroll-animate stagger-item"
+                            style="--index: 2;">
+                            <div class="overflow-hidden">
+                                <img src="https://metik.vn/wp-content/uploads/2026/06/snack-vi-bap.jpg.webp"
+                                    alt="Snack vị Bắp"
+                                    class="product-image w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
+                                    loading="lazy" />
+                            </div>
+                            <div class="p-4 text-center">
+                                <h3 class="text-primary font-bold text-sm md:text-base">Snack vị Bắp</h3>
+                            </div>
+                        </a>
+
+                        <!-- Product 4 -->
+                        <a href="./San-Pham/Snack-Vị-Phô-Mai.html"
+                            class="product-card bg-white rounded-xl shadow-md hover-shadow-lg transition-all overflow-hidden group scroll-animate stagger-item"
+                            style="--index: 3;">
+                            <div class="overflow-hidden">
+                                <img src="https://metik.vn/wp-content/uploads/2026/06/snack-vi-pho-mai.webp"
+                                    alt="Snack vị Phô mai"
+                                    class="product-image w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
+                                    loading="lazy" />
+                            </div>
+                            <div class="p-4 text-center">
+                                <h3 class="text-primary font-bold text-sm md:text-base">Snack vị Phô mai</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Giới thiệu METIK -->
+                <div class="mt-12 scroll-animate">
+                    <div class="section-title-wrapper">
+                        <h2 class="text-3xl font-bold text-secondary">GIỚI THIỆU VỀ METIK</h2>
+                        <span class="yellow-bar"></span>
+                    </div>
+                    <p class="text-lg text-gray-700 mt-4 max-w-4xl">
+                        metik là thương hiệu snack thuộc OCHAO, được phát triển trong hệ sinh thái HUNGHAU Holdings với
+                        định hướng mang đến những sản phẩm ăn vặt thơm ngon, vui tươi và phù hợp với nhịp sống hiện đại.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CHI TIẾT VỀ METIK ===== -->
+        <section class="py-12 px-4" id="aboutSection">
+            <div class="container mx-auto">
+                <!-- Row 1: Hình + Text -->
+                <div class="grid md:grid-cols-2 gap-8 items-center mb-12">
+                    <div class="scroll-animate">
+                        <img src="https://metik.vn/wp-content/uploads/2021/05/hinh3.webp" alt="METIK"
+                            class="rounded-br-3xl w-full shadow-lg" loading="lazy" />
+                    </div>
+                    <div class="scroll-animate delay-2">
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            Ra đời từ nền tảng sản xuất bánh kẹo của OCHAO, METIK kế thừa hệ thống nhà máy hiện đại, quy
+                            trình sản xuất khép kín và tiêu chuẩn kiểm soát chất lượng nghiêm ngặt. METIK tập trung phát
+                            triển các dòng snack giòn, nhẹ, dễ ăn và phù hợp với nhiều nhóm khách hàng. Sản phẩm được
+                            nghiên cứu với nhiều hương vị hấp dẫn như rong biển, bắp, phô mai, BBQ và các hương vị đặc
+                            trưng khác.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Row 2: List + Hình -->
+                <div class="grid md:grid-cols-2 gap-8 items-center mb-12">
+                    <div class="scroll-animate order-2 md:order-1">
+                        <ul class="space-y-3 text-lg text-gray-700">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-secondary mt-1"></i>
+                                <span>Sử dụng nguyên liệu có nguồn gốc rõ ràng, phù hợp với tiêu chuẩn sản xuất thực
+                                    phẩm.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-secondary mt-1"></i>
+                                <span>Quy trình sản xuất hiện đại, khép kín và đảm bảo vệ sinh an toàn thực phẩm.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-secondary mt-1"></i>
+                                <span>Kiểm soát chất lượng chặt chẽ trong từng công đoạn, từ nguyên liệu đầu vào đến
+                                    thành phẩm.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="scroll-animate delay-2 order-1 md:order-2">
+                        <img src="https://metik.vn/wp-content/uploads/2021/05/hinh0003.webp" alt="METIK Quality"
+                            class="rounded-br-3xl w-full shadow-lg" loading="lazy" />
+                    </div>
+                </div>
+
+                <!-- Row 3: Hình + Text -->
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="scroll-animate">
+                        <img src="https://metik.vn/wp-content/uploads/2021/05/hinh2.jpg.webp" alt="METIK Style"
+                            class="rounded-br-3xl w-full shadow-lg" loading="lazy" />
+                    </div>
+                    <div class="scroll-animate delay-2">
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            Với hương vị hấp dẫn, phong cách trẻ trung và tinh thần vui nhộn, METIK hướng đến hình ảnh
+                            một thương hiệu snack năng động, gần gũi và dễ tạo thiện cảm với người tiêu dùng Việt Nam.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== VỀ CHÚNG TÔI ===== -->
+        <section class="py-12 px-4" id="aboutUsSection">
+            <div class="container mx-auto">
+                <div class="section-title-wrapper mb-8 scroll-animate">
+                    <h2 class="text-3xl font-bold text-secondary">VỀ CHÚNG TÔI</h2>
+                    <span class="yellow-bar"></span>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="scroll-animate">
+                        <div class="text-lg text-gray-700 leading-relaxed space-y-4">
+                            <p>Với tinh thần <strong>"Chạm mê tít – Snap into Joy"</strong>, <strong>metik</strong> mong
+                                muốn trở thành người bạn đồng hành trong những khoảnh khắc vui vẻ hằng ngày. Từ những
+                                buổi gặp gỡ bạn bè, giờ giải lao, chuyến đi chơi đến những phút thư giãn tại nhà,
+                                <strong>metik</strong> mang đến trải nghiệm ăn vặt giòn ngon, trẻ trung và đầy cảm hứng.
+                            </p>
+                            <p><strong>metik</strong> không chỉ là một sản phẩm snack. <strong>metik</strong> là cảm
+                                giác giòn vui khi mở gói, là hương vị dễ mê trong từng miếng bánh và là nguồn năng lượng
+                                tích cực cho những khoảnh khắc thường ngày.</p>
+                        </div>
+                    </div>
+                    <div class="scroll-animate delay-2">
+                        <div class="video-wrapper shadow-xl">
+                            <video controls preload="metadata" class="w-full h-full object-cover">
+                                <source src="https://metik.vn/wp-content/uploads/2026/06/METIK-ChamMeTit.mp4"
+                                    type="video/mp4" />
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== KHÁCH HÀNG NÓI GÌ ===== -->
+        <section class="py-12 px-4" id="testimonialsSection">
+            <div class="container mx-auto">
+                <div class="section-title-wrapper mb-8 scroll-animate">
+                    <h2 class="text-3xl font-bold text-secondary">KHÁCH HÀNG NÓI GÌ?</h2>
+                    <span class="yellow-bar"></span>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6 hover-shadow-lg transition-all scroll-animate">
+                        <div class="flex items-start gap-4">
+                            <img src="https://metik.vn/wp-content/uploads/2021/05/huynhvinh.webp" alt="Huỳnh Vĩnh"
+                                class="w-20 h-20 rounded-full object-cover" loading="lazy" />
+                            <div class="flex-1">
+                                <div class="star-rating text-xl">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-gray-700 italic mt-2">"Snack metik ăn vừa giòn, vừa ngon vừa cuốn miệng.
+                                    Em thường lựa chọn để mang theo tới trường"</p>
+                                <p class="font-bold text-secondary mt-3">Sinh viên Huỳnh Vĩnh, TP.HCM</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div
+                        class="bg-white rounded-2xl shadow-lg p-6 hover-shadow-lg transition-all scroll-animate delay-2">
+                        <div class="flex items-start gap-4">
+                            <img src="https://metik.vn/wp-content/uploads/2021/05/myduyen.webp" alt="Mỹ Duyên"
+                                class="w-20 h-20 rounded-full object-cover" loading="lazy" />
+                            <div class="flex-1">
+                                <div class="star-rating text-xl">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-gray-700 italic mt-2">"metik gợi nhớ cho em rất nhiều kỉ niệm thời thơ
+                                    ấu. Hy vọng nhãn hàng trong tương lai sẽ ra nhiều sản phẩm độc đáo hơn nữa."</p>
+                                <p class="font-bold text-secondary mt-3">Bạn Mỹ Duyên, Đồng Tháp</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-gold" id="footerSection">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Left -->
+                <div class="scroll-animate">
+                    <img src="https://metik.vn/wp-content/uploads/2026/06/logometik.png.webp" alt="METIK"
+                        class="h-16 w-auto mb-4" />
+                    <p class="text-gray-800 text-lg max-w-md">
+                        METIK - một thế giới snack dành cho những ai yêu sự giòn giòn ngất ngây, hương vị trẻ trung, đầy
+                        cảm hứng để mỗi ngày đều căng tràn sức sống.
+                    </p>
+                </div>
+
+                <!-- Right -->
+                <div class="scroll-animate delay-2">
+                    <h3 class="text-xl font-bold text-[#0b7f3e] mb-4">Thông tin liên hệ</h3>
+                    <div class="space-y-2 text-gray-800">
+                        <p><i class="fas fa-phone text-primary w-6"></i> <a href="tel:0797213333"
+                                class="hover:text-primary">(+84) 79 721 3333</a></p>
+                        <p><i class="fas fa-envelope text-primary w-6"></i> <a
+                                href="/cdn-cgi/l/email-protection#5b283a373e1b3438373e30"
+                                class="hover:text-primary">info@metik.vn</a></p>
+                        <p><i class="fas fa-map-marker-alt text-primary w-6"></i> Lô C3-1, Đường D2-N7, KCN Tân Phú
+                            Trung, Xã Củ Chi, TP.HCM.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-gray-300 mt-6 pt-6 text-center text-gray-700 scroll-animate">
+                Copyright 2026 © <strong>METIK</strong>. All rights reserved
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== BACK TO TOP ===== -->
+    <button id="backToTop" class="back-to-top" aria-label="Lên đầu trang">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ===== COOKIE BOX ===== -->
+    <div id="cookieBox" class="cookie-box">
+        <div class="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-gray-600 text-sm sm:text-base text-center sm:text-left">
+                Trang web này sử dụng cookies để cải thiện trải nghiệm trực tuyến của bạn.
+            </p>
+            <button id="acceptCookie"
+                class="bg-[#1e58b1] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors whitespace-nowrap">
+                Đồng ý Cookies
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // ===== SCROLL ANIMATION - INTERSECTION OBSERVER =====
+        (function () {
+            // Cấu hình Intersection Observer
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -50px 0px', // Kích hoạt khi phần tử cách viewport 50px
+                threshold: 0.1 // Kích hoạt khi 10% phần tử hiển thị
+            };
+
+            // Tạo observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Thêm class visible để kích hoạt animation
+                        entry.target.classList.add('visible');
+
+                        // Nếu phần tử có class stagger-item, thêm delay dựa trên index
+                        if (entry.target.classList.contains('stagger-item')) {
+                            const delay = parseFloat(entry.target.style.getPropertyValue('--index') || 0) * 0.1;
+                            entry.target.style.transitionDelay = delay + 's';
+                        }
+
+                        // Dừng observe sau khi đã hiển thị
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Lấy tất cả các phần tử cần animate
+            const animateElements = document.querySelectorAll('.scroll-animate');
+
+            // Bắt đầu observe từng phần tử
+            animateElements.forEach((el) => {
+                observer.observe(el);
+            });
+
+            // ===== XỬ LÝ ĐẶC BIỆT CHO BANNER =====
+            // Banner sẽ xuất hiện ngay khi tải trang
+            const banner = document.getElementById('bannerSection');
+            if (banner) {
+                setTimeout(() => {
+                    banner.classList.add('visible');
+                }, 300);
+            }
+
+            // ===== HỖ TRỢ CHO CÁC PHẦN TỬ ĐƯỢC THÊM SAU =====
+            // MutationObserver để theo dõi các phần tử mới được thêm vào DOM
+            const mutationObserver = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.nodeType === 1 && node.classList && node.classList.contains('scroll-animate')) {
+                            observer.observe(node);
+                        }
+                        // Kiểm tra các phần tử con
+                        if (node.nodeType === 1 && node.querySelectorAll) {
+                            node.querySelectorAll('.scroll-animate').forEach((el) => {
+                                observer.observe(el);
+                            });
+                        }
+                    });
+                });
+            });
+
+            // Bắt đầu theo dõi thay đổi trong DOM
+            mutationObserver.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+
+            console.log('✅ Scroll Animation đã được kích hoạt với Intersection Observer');
+        })();
+
+        // ===== SLIDER =====
+        (function () {
+            const track = document.getElementById('sliderTrack');
+            const slides = track.querySelectorAll('.slider-slide');
+            const dots = document.querySelectorAll('.dot');
+            let current = 0;
+            let interval;
+
+            function goTo(index) {
+                if (index < 0) index = slides.length - 1;
+                if (index >= slides.length) index = 0;
+                current = index;
+                track.style.transform = `translateX(-${current * 100}%)`;
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('bg-white', i === current);
+                    dot.classList.toggle('bg-white/60', i !== current);
+                });
+            }
+
+            function next() { goTo(current + 1); }
+            function prev() { goTo(current - 1); }
+
+            // Controls
+            document.getElementById('nextSlide').addEventListener('click', () => { clearInterval(interval); next(); resetInterval(); });
+            document.getElementById('prevSlide').addEventListener('click', () => { clearInterval(interval); prev(); resetInterval(); });
+
+            // Dots
+            dots.forEach((dot, i) => {
+                dot.addEventListener('click', () => { clearInterval(interval); goTo(i); resetInterval(); });
+            });
+
+            function resetInterval() {
+                clearInterval(interval);
+                interval = setInterval(next, 4000);
+            }
+
+            // Start
+            goTo(0);
+            resetInterval();
+
+            // Pause on hover
+            const container = document.querySelector('.slider-container');
+            if (container) {
+                container.addEventListener('mouseenter', () => clearInterval(interval));
+                container.addEventListener('mouseleave', resetInterval);
+            }
+        })();
+
+        // ===== MOBILE MENU =====
+        (function () {
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileOverlay');
+            const openBtn = document.getElementById('menuToggle');
+            const closeBtn = document.getElementById('menuClose');
+
+            function openMenu() {
+                menu.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMenu() {
+                menu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            if (openBtn) openBtn.addEventListener('click', openMenu);
+            if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+            if (overlay) overlay.addEventListener('click', closeMenu);
+
+            // Close on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeMenu();
+            });
+        })();
+
+        // ===== BACK TO TOP =====
+        (function () {
+            const btn = document.getElementById('backToTop');
+
+            // Sử dụng Intersection Observer để hiển thị nút khi cuộn xuống
+            const showButton = () => {
+                btn.classList.add('show');
+            };
+
+            const hideButton = () => {
+                btn.classList.remove('show');
+            };
+
+            // Tạo một phần tử giả để theo dõi vị trí cuộn
+            const sentinel = document.createElement('div');
+            sentinel.style.position = 'absolute';
+            sentinel.style.top = '300px';
+            sentinel.style.height = '1px';
+            sentinel.style.width = '1px';
+            sentinel.style.pointerEvents = 'none';
+            document.body.prepend(sentinel);
+
+            const sentinelObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        showButton();
+                    } else {
+                        hideButton();
+                    }
+                });
+            }, { threshold: 0 });
+
+            sentinelObserver.observe(sentinel);
+
+            // Click để lên đầu trang
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        })();
+
+        // ===== COOKIE =====
+        (function () {
+            const box = document.getElementById('cookieBox');
+            const acceptBtn = document.getElementById('acceptCookie');
+
+            if (!localStorage.getItem('cookieAccepted')) {
+                setTimeout(() => {
+                    if (box) box.classList.add('show');
+                }, 1000);
+            }
+
+            if (acceptBtn) {
+                acceptBtn.addEventListener('click', () => {
+                    if (box) box.classList.remove('show');
+                    localStorage.setItem('cookieAccepted', 'true');
+                });
+            }
+        })();
+    </script>
+
+</body>
+
+</html>

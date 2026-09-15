@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài Khoản - MyE Game Portal</title>
+    <meta name="description" content="Quản lý thông tin tài khoản, bảo mật và lịch sử giao dịch trên cổng game MyE.">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS chung dự án (header-glass, btn-nap, nav-link …) -->
+    <link rel="stylesheet" href="../Nap-Game.css">
+
+    <!-- CSS Header / Footer (inject thủ công vì không dùng JS loader) -->
+    <link rel="stylesheet" href="../Header-Footer/Header.css">
+    <link rel="stylesheet" href="../Header-Footer/Footer.css">
+
+    <style>
+        /* ================================================================
+       Tài-Khoản.css — Stylesheet nội tuyến
+       Tông màu: Xanh #2563eb, Cam #f97316, Trắng, Xám nhạt
+       ================================================================ */
+
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        /* ── Variables ──────────────────────────────────────────────── */
+        :root {
+            --tk-blue: #2563eb;
+            --tk-blue-dk: #1d4ed8;
+            --tk-blue-lt: #dbeafe;
+            --tk-orange: #f97316;
+            --tk-green: #16a34a;
+            --tk-pink: #f43f5e;
+            --tk-bg: #f0f4f8;
+            --tk-card: #ffffff;
+            --tk-border: #e2e8f0;
+            --tk-dark: #1e293b;
+            --tk-mid: #475569;
+            --tk-light: #94a3b8;
+            --tk-radius: 14px;
+            --tk-shadow: 0 2px 16px rgba(37, 99, 235, 0.08);
+            --tk-shadow-h: 0 6px 28px rgba(37, 99, 235, 0.16);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--tk-bg);
+            color: var(--tk-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── Page wrapper ───────────────────────────────────────────── */
+        .tk-page {
+            flex: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 16px 48px;
+        }
+
+        /* ================================================================
+       HEADER (standalone — không dùng fragment loader)
+       ================================================================ */
+        .tk-header {
+            background: #fff;
+            border-bottom: 3px solid var(--tk-blue);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 12px rgba(37, 99, 235, 0.10);
+        }
+
+        .tk-header__inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        /* Logo */
+        .tk-header__logo {
+            height: 36px;
+            width: auto;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        /* Nav */
+        .tk-header__nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .tk-header__nav-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--tk-mid);
+            text-decoration: none;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: color .18s, border-color .18s;
+            white-space: nowrap;
+        }
+
+        .tk-header__nav-link:hover,
+        .tk-header__nav-link--active {
+            color: var(--tk-blue);
+            border-bottom-color: var(--tk-blue);
+        }
+
+        /* User info bên phải */
+        .tk-header__user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .tk-header__avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--tk-blue-lt);
+        }
+
+        .tk-header__user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .tk-header__username {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--tk-dark);
+            line-height: 1;
+        }
+
+        .tk-header__coin {
+            font-size: 11px;
+            color: var(--tk-orange);
+            font-weight: 600;
+        }
+
+        .tk-header__id {
+            font-size: 11px;
+            color: var(--tk-light);
+            font-weight: 500;
+        }
+
+        /* Mobile menu toggle */
+        .tk-header__mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--tk-dark);
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .tk-header__mobile-nav {
+            display: none;
+            flex-direction: column;
+            background: #fff;
+            border-top: 1px solid var(--tk-border);
+            padding: 12px 24px 16px;
+            gap: 8px;
+        }
+
+        .tk-header__mobile-nav.open {
+            display: flex;
+        }
+
+        .tk-header__mobile-nav a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--tk-mid);
+            text-decoration: none;
+            padding: 8px 4px;
+            border-radius: 8px;
+            transition: color .18s, background .18s;
+        }
+
+        .tk-header__mobile-nav a:hover {
+            color: var(--tk-blue);
+            background: var(--tk-blue-lt);
+        }
+
+        /* ================================================================
+       BANNER PROFILE
+       ================================================================ */
+        .tk-banner {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 28px;
+        }
+
+        .tk-banner__bg {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+            object-position: center 30%;
+            display: block;
+        }
+
+        /* Overlay gradient xanh đậm giống ảnh mẫu */
+        .tk-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(105deg,
+                    rgba(5, 15, 60, 0.90) 0%,
+                    rgba(10, 40, 160, 0.78) 45%,
+                    rgba(5, 20, 80, 0.72) 100%);
+            pointer-events: none;
+        }
+
+        /* Content trên banner — 3 cột: avatar | info | tabs */
+        .tk-banner__content {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            /* căn giữa theo layout trang, padding ngang đồng bộ với tk-page */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+            width: 100%;
+            /* trick: absolute nên cần đặt left/right */
+            left: 0;
+            right: 0;
+        }
+
+        /* Cột thông tin (giữa, co giãn) */
+        .tk-banner__info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .tk-banner__name {
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .tk-banner__meta {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .tk-banner__meta-row {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .tk-banner__meta-row i {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.65);
+            width: 14px;
+            text-align: center;
+        }
+
+        /* Cột tabs (phải, không co) */
+        .tk-banner__tabs {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+            align-items: center;
+        }
+
+        .tk-banner__tab {
+            padding: 7px 18px;
+            border-radius: 20px;
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            background: transparent;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .18s, border-color .18s, color .18s;
+            white-space: nowrap;
+        }
+
+        .tk-banner__tab:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .tk-banner__tab--active {
+            background: var(--tk-blue);
+            border-color: var(--tk-blue);
+            color: #fff;
+        }
+
+        /* ================================================================
+       MỨC ĐỘ BẢO MẬT
+       ================================================================ */
+        .tk-security {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            padding: 20px 0 16px;
+            margin-bottom: 4px;
+        }
+
+        /* Vòng tròn tiến trình */
+        .tk-security__ring {
+            flex-shrink: 0;
+            position: relative;
+            width: 90px;
+            height: 90px;
+        }
+
+        .tk-security__ring svg {
+            transform: rotate(-90deg);
+            width: 90px;
+            height: 90px;
+        }
+
+        .tk-security__ring-bg {
+            fill: none;
+            stroke: #e2e8f0;
+            stroke-width: 9;
+        }
+
+        .tk-security__ring-fill {
+            fill: none;
+            stroke: var(--tk-orange);
+            stroke-width: 9;
+            stroke-linecap: round;
+            /* 20% của circumference(2π×36 ≈ 226.2) = 45.24 */
+            stroke-dasharray: 45.24 180.96;
+            transition: stroke-dasharray .5s ease;
+        }
+
+        .tk-security__pct {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--tk-orange);
+        }
+
+        .tk-security__text {}
+
+        .tk-security__title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--tk-dark);
+            margin-bottom: 6px;
+        }
+
+        .tk-security__desc {
+            font-size: 13px;
+            color: var(--tk-mid);
+            line-height: 1.6;
+            max-width: 520px;
+        }
+
+        /* ================================================================
+       THÔNG TIN TÀI KHOẢN — section title
+       ================================================================ */
+        .tk-section-title {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--tk-dark);
+            margin-bottom: 4px;
+        }
+
+        .tk-section-desc {
+            font-size: 13px;
+            color: var(--tk-mid);
+            line-height: 1.6;
+            margin-bottom: 16px;
+            max-width: 700px;
+        }
+
+        /* ================================================================
+       CARD chung
+       ================================================================ */
+        .tk-card {
+            background: var(--tk-card);
+            border-radius: var(--tk-radius);
+            border: 1px solid var(--tk-border);
+            box-shadow: var(--tk-shadow);
+            margin-bottom: 18px;
+            transition: box-shadow .22s, transform .18s;
+            overflow: hidden;
+        }
+
+        .tk-card:hover {
+            box-shadow: var(--tk-shadow-h);
+            transform: translateY(-2px);
+        }
+
+        /* ── Card header (dòng tiêu đề card) ─────────────────────── */
+        .tk-card__head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 18px 22px 14px;
+            border-bottom: 1px solid var(--tk-border);
+        }
+
+        .tk-card__head-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tk-card__icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .tk-card__title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--tk-dark);
+            line-height: 1.2;
+        }
+
+        .tk-card__subtitle {
+            font-size: 12px;
+            color: var(--tk-light);
+            margin-top: 1px;
+        }
+
+        .tk-card__head-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Badge "Chưa hoàn thiện" */
+        .tk-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11.5px;
+            font-weight: 700;
+        }
+
+        .tk-badge--warn {
+            background: #fff7ed;
+            color: #ea580c;
+            border: 1px solid #fed7aa;
+        }
+
+        .tk-badge--pink {
+            background: #fff1f2;
+            color: var(--tk-pink);
+            border: 1px solid #fecdd3;
+        }
+
+        /* Nút Chỉnh sửa */
+        .tk-btn-edit {
+            padding: 6px 16px;
+            border-radius: 8px;
+            border: 1.5px solid var(--tk-blue);
+            background: #fff;
+            color: var(--tk-blue);
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background .18s, color .18s;
+            white-space: nowrap;
+        }
+
+        .tk-btn-edit:hover {
+            background: var(--tk-blue);
+            color: #fff;
+        }
+
+        /* Nút mũi tên góc phải card */
+        .tk-btn-arrow {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1.5px solid var(--tk-border);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--tk-mid);
+            cursor: pointer;
+            font-size: 14px;
+            transition: background .18s, color .18s, border-color .18s;
+        }
+
+        .tk-btn-arrow:hover {
+            background: var(--tk-blue);
+            color: #fff;
+            border-color: var(--tk-blue);
+        }
+
+        /* ── Danh sách thông tin cá nhân ─────────────────────────── */
+        .tk-info-list {
+            padding: 0 22px 8px;
+        }
+
+        .tk-info-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .tk-info-row:last-child {
+            border-bottom: none;
+        }
+
+        .tk-info-row__icon {
+            width: 18px;
+            text-align: center;
+            color: var(--tk-blue);
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .tk-info-row__label {
+            width: 130px;
+            flex-shrink: 0;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--tk-blue);
+        }
+
+        .tk-info-row__value {
+            flex: 1;
+            font-size: 13.5px;
+            color: var(--tk-dark);
+            font-weight: 500;
+        }
+
+        .tk-info-row__value--empty {
+            color: var(--tk-light);
+            font-style: italic;
+        }
+
+        .tk-info-row__value--email {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tk-info-row__email-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--tk-green);
+            flex-shrink: 0;
+        }
+
+        .tk-info-row__action {
+            flex-shrink: 0;
+        }
+
+        /* Nút "Liên kết xác thực" */
+        .tk-btn-link {
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, var(--tk-orange), #ea580c);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: opacity .18s, transform .15s;
+        }
+
+        .tk-btn-link:hover {
+            opacity: 0.88;
+            transform: scale(1.04);
+        }
+
+        /* ================================================================
+       ĐỒNG BỘ TÀI KHOẢN
+       ================================================================ */
+        .tk-sync {
+            padding: 18px 22px 20px;
+        }
+
+        .tk-sync__label {
+            font-size: 12px;
+            color: var(--tk-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 12px;
+        }
+
+        .tk-sync__row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Card tài khoản Facebook */
+        .tk-sync__fb-card {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f0f4ff;
+            border-radius: 12px;
+            padding: 12px 16px;
+            border: 1px solid #c7d7fd;
+        }
+
+        .tk-sync__fb-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #1877f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .tk-sync__fb-name {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--tk-dark);
+        }
+
+        .tk-sync__fb-id {
+            font-size: 11.5px;
+            color: var(--tk-light);
+        }
+
+        /* Icon liên kết ở giữa */
+        .tk-sync__link-icon {
+            flex-shrink: 0;
+            color: var(--tk-light);
+            font-size: 18px;
+        }
+
+        /* Card MYE (chưa có) */
+        .tk-sync__mye-card {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 12px 16px;
+            border: 1px dashed var(--tk-border);
+        }
+
+        .tk-sync__mye-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--tk-light);
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+
+        .tk-sync__mye-label {
+            font-size: 13px;
+            color: var(--tk-mid);
+            font-weight: 500;
+        }
+
+        .tk-sync__status-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        /* ================================================================
+       FORM ĐỒNG BỘ TÀI KHOẢN (collapsible)
+       ================================================================ */
+        /* Panel wrapper — chiều cao 0 khi đóng */
+        .tk-sync-panel {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height .4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity .3s ease,
+                padding .3s ease;
+            opacity: 0;
+            padding: 0 22px;
+        }
+
+        .tk-sync-panel.open {
+            max-height: 600px;
+            opacity: 1;
+            padding: 0 22px 22px;
+        }
+
+        /* Đường kẻ phân cách */
+        .tk-sync-panel__divider {
+            height: 1px;
+            background: var(--tk-border);
+            margin-bottom: 20px;
+        }
+
+        /* Tiêu đề + mô tả form */
+        .tk-sync-panel__title {
+            font-size: 14.5px;
+            font-weight: 800;
+            color: var(--tk-dark);
+            margin-bottom: 5px;
+        }
+
+        .tk-sync-panel__desc {
+            font-size: 12.5px;
+            color: var(--tk-mid);
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        /* Nhóm field */
+        .tk-sync-field {
+            margin-bottom: 14px;
+        }
+
+        .tk-sync-field__label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--tk-dark);
+            margin-bottom: 6px;
+        }
+
+        .tk-sync-field__input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--tk-border);
+            border-radius: 10px;
+            font-size: 13px;
+            color: var(--tk-dark);
+            background: #fff;
+            outline: none;
+            transition: border-color .18s, box-shadow .18s;
+            font-family: inherit;
+        }
+
+        .tk-sync-field__input::placeholder {
+            color: var(--tk-light);
+        }
+
+        .tk-sync-field__input:focus {
+            border-color: var(--tk-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        /* Nút xác nhận đồng bộ */
+        .tk-sync-panel__btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 6px;
+            letter-spacing: 0.03em;
+            transition: opacity .18s, transform .15s, box-shadow .18s;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.30);
+        }
+
+        .tk-sync-panel__btn:hover {
+            opacity: 0.90;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.40);
+        }
+
+        .tk-sync-panel__btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Mũi tên xoay khi mở */
+        .tk-btn-arrow .fa-chevron-right {
+            transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tk-btn-arrow.open .fa-chevron-right {
+            transform: rotate(90deg);
+        }
+
+        /* Facebook row trong form */
+        .tk-sync-fb-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: #f8fafc;
+            border: 1.5px solid var(--tk-border);
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin-bottom: 18px;
+        }
+
+        .tk-sync-fb-row__logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #1877f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .tk-sync-fb-row__name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--tk-dark);
+            flex: 1;
+        }
+
+        .tk-sync-fb-row__id {
+            font-size: 12px;
+            color: var(--tk-light);
+        }
+
+        /* ================================================================
+       LỊCH SỬ HOẠT ĐỘNG
+       ================================================================ */
+        .tk-history {
+            padding: 18px 22px;
+        }
+
+        .tk-history__empty {
+            font-size: 13px;
+            color: var(--tk-light);
+            text-align: center;
+            padding: 12px 0;
+        }
+
+        /* Panel lịch sử (collapsible, giống sync-panel) */
+        .tk-history-panel {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            padding: 0 22px;
+            transition: max-height .45s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity .3s ease,
+                padding .3s ease;
+        }
+
+        .tk-history-panel.open {
+            max-height: 900px;
+            opacity: 1;
+            padding: 0 22px 22px;
+        }
+
+        .tk-history-panel__divider {
+            height: 1px;
+            background: var(--tk-border);
+            margin-bottom: 18px;
+        }
+
+        /* Heading + sub */
+        .tk-history-panel__heading {
+            font-size: 14.5px;
+            font-weight: 800;
+            color: var(--tk-dark);
+            margin-bottom: 4px;
+        }
+
+        .tk-history-panel__sub {
+            font-size: 12.5px;
+            color: var(--tk-mid);
+            margin-bottom: 16px;
+        }
+
+        /* Hộp cảnh báo */
+        .tk-history-warn {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            background: #f8fafc;
+            border: 1.5px solid var(--tk-border);
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-bottom: 22px;
+        }
+
+        .tk-history-warn__body {
+            flex: 1;
+        }
+
+        .tk-history-warn__main {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--tk-dark);
+            line-height: 1.55;
+            margin-bottom: 8px;
+        }
+
+        .tk-history-warn__note {
+            font-size: 12px;
+            color: var(--tk-mid);
+            line-height: 1.6;
+        }
+
+        /* Nút "Gỡ tất cả" */
+        .tk-btn-logout-all {
+            flex-shrink: 0;
+            padding: 8px 18px;
+            border-radius: 8px;
+            border: 1.5px solid var(--tk-orange);
+            background: #fff;
+            color: var(--tk-orange);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            align-self: center;
+            transition: background .18s, color .18s;
+        }
+
+        .tk-btn-logout-all:hover {
+            background: var(--tk-orange);
+            color: #fff;
+        }
+
+        /* Bảng lịch sử */
+        .tk-history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tk-history-table thead th {
+            text-align: left;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--tk-dark);
+            padding: 10px 12px;
+            border-bottom: 2px solid var(--tk-orange);
+        }
+
+        .tk-history-table tbody td {
+            padding: 14px 12px;
+            font-size: 13px;
+            color: var(--tk-mid);
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+        }
+
+        .tk-history-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Cột Thời gian */
+        .tk-history-table .col-time {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            white-space: nowrap;
+            color: var(--tk-mid);
+        }
+
+        .tk-history-table .col-time i {
+            color: var(--tk-light);
+            font-size: 13px;
+        }
+
+        /* Cột Thiết bị */
+        .tk-history-device {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tk-history-device__icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+
+        .tk-history-device__icon--chrome {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .tk-history-device__icon--safari {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .tk-history-device__name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--tk-dark);
+            line-height: 1.2;
+        }
+
+        .tk-history-device__type {
+            font-size: 11px;
+            color: var(--tk-light);
+        }
+
+        /* ================================================================
+       TIN TỨC (bài viết)
+       ================================================================ */
+        .tk-news-card {
+            background: var(--tk-card);
+            border-radius: var(--tk-radius);
+            border: 1px solid var(--tk-border);
+            box-shadow: var(--tk-shadow);
+            margin-bottom: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow .22s, transform .18s;
+        }
+
+        .tk-news-card:hover {
+            box-shadow: var(--tk-shadow-h);
+            transform: translateY(-2px);
+        }
+
+        .tk-news-card__img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .tk-news-card__body {
+            padding: 16px 20px;
+        }
+
+        .tk-news-card__title {
+            font-size: 14.5px;
+            font-weight: 800;
+            color: var(--tk-dark);
+            line-height: 1.45;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .tk-news-card__desc {
+            font-size: 13px;
+            color: var(--tk-mid);
+            line-height: 1.65;
+            margin-bottom: 14px;
+        }
+
+        .tk-news-card__footer {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--tk-light);
+        }
+
+        .tk-news-card__cat {
+            font-weight: 700;
+            color: var(--tk-blue);
+        }
+
+        /* ================================================================
+       RESPONSIVE
+       ================================================================ */
+        @media (max-width: 768px) {
+            .tk-header__nav {
+                display: none;
+            }
+
+            .tk-header__user-info {
+                display: none;
+            }
+
+            .tk-header__mobile-toggle {
+                display: block;
+            }
+
+            .tk-banner__content {
+                padding: 16px;
+                gap: 14px;
+            }
+
+            .tk-banner__avatar {
+                width: 60px;
+                height: 60px;
+            }
+
+            .tk-banner__name {
+                font-size: 17px;
+            }
+
+            .tk-security {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+            }
+
+            .tk-info-row__label {
+                width: 100px;
+            }
+
+            .tk-sync__row {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .tk-sync__link-icon {
+                transform: rotate(90deg);
+            }
+
+            .tk-sync__status-wrap {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tk-banner__tabs {
+                gap: 6px;
+            }
+
+            .tk-banner__tab {
+                padding: 5px 13px;
+                font-size: 12px;
+            }
+
+            .tk-card__head {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .tk-info-row {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .tk-info-row__label {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================================================================
+       HEADER (standalone, không dùng fragment loader)
+       ================================================================ -->
+    <header class="tk-header" role="banner">
+        <div class="tk-header__inner">
+
+            <!-- Logo -->
+            <a href="#" aria-label="Trang chủ MyE">
+                <img class="tk-header__logo" src="../../assets/images/logo.png" alt="Logo MyE">
+            </a>
+
+            <!-- Nav Desktop -->
+            <nav class="tk-header__nav" aria-label="Menu chính">
+                <a href="#" class="tk-header__nav-link">Trang Chủ</a>
+                <a href="#" class="tk-header__nav-link">Trò Chơi</a>
+                <a href="../Nap-Game.html" class="tk-header__nav-link">Nạp Game</a>
+                <a href="#" class="tk-header__nav-link">Tin Tức</a>
+                <a href="#" class="tk-header__nav-link">Hỗ Trợ</a>
+            </nav>
+
+            <!-- User info -->
+            <div class="tk-header__user">
+                <!-- Avatar người dùng (dùng emoji icon vì không có ảnh user trong assets) -->
+                <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f97316);
+                    display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"
+                    aria-hidden="true">😁</div>
+                <div class="tk-header__user-info">
+                    <span class="tk-header__username">myepro01</span>
+                    <span class="tk-header__coin">1000 Coin</span>
+                    <span class="tk-header__id">MyE ID: 00123</span>
+                </div>
+            </div>
+
+            <!-- Mobile toggle -->
+            <button class="tk-header__mobile-toggle" id="tk-mobile-btn" aria-label="Mở menu" type="button">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+        </div>
+
+        <!-- Mobile Nav -->
+        <nav class="tk-header__mobile-nav" id="tk-mobile-nav" aria-label="Menu di động">
+            <a href="#">Trang Chủ</a>
+            <a href="#">Trò Chơi</a>
+            <a href="../Nạp-Game.html">Nạp Game</a>
+            <a href="#">Tin Tức</a>
+            <a href="#">Hỗ Trợ</a>
+        </nav>
+    </header>
+
+    <!-- ================================================================
+       BANNER PROFILE — full-width, nằm ngay dưới header
+       ================================================================ -->
+    <section class="tk-banner" aria-label="Thông tin hồ sơ">
+
+        <!-- Ảnh nền banner -->
+        <img class="tk-banner__bg" src="../../assets/images/tai_khoan/bannerdautrang.png" alt="Banner trang tài khoản"
+            loading="eager">
+
+        <!-- Nội dung: avatar | thông tin | tabs -->
+        <div class="tk-banner__content">
+
+            <!-- Avatar emoji mặt cười -->
+            <div style="width:72px;height:72px;border-radius:50%;
+                  background:linear-gradient(135deg,#38bdf8,#2563eb);
+                  display:flex;align-items:center;justify-content:center;
+                  font-size:40px;border:3px solid rgba(255,255,255,0.5);
+                  flex-shrink:0;box-shadow:0 0 0 4px rgba(255,255,255,0.15);" aria-label="Avatar người dùng">😁</div>
+
+            <!-- Thông tin người dùng (giữa) -->
+            <div class="tk-banner__info">
+                <h1 class="tk-banner__name">Dương Quốc Hoài </h1>
+                <div class="tk-banner__meta" aria-label="Thông tin tài khoản">
+                    <div class="tk-banner__meta-row">
+                        <i class="fa-solid fa-user" aria-hidden="true"></i>
+                        <span>Tài khoản: fb.112314335</span>
+                    </div>
+                    <div class="tk-banner__meta-row">
+                        <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                        <span>MYE ID: 1123123214</span>
+                    </div>
+                    <div class="tk-banner__meta-row">
+                        <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                        <span>Ngày tạo tài khoản: 19/06/2026</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs điều hướng (bên phải) -->
+            <div class="tk-banner__tabs" role="tablist">
+                <button class="tk-banner__tab tk-banner__tab--active" role="tab" aria-selected="true" type="button">
+                    Tài khoản
+                </button>
+                <button class="tk-banner__tab" role="tab" aria-selected="false" type="button">
+                    Bảo mật
+                </button>
+                <button class="tk-banner__tab" role="tab" aria-selected="false" type="button">
+                    Lịch sử giao dịch
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================================================================
+       MAIN CONTENT
+       ================================================================ -->
+    <main class="tk-page" role="main">
+
+        <!-- ==============================================================
+         SECTION 2: MỨC ĐỘ BẢO MẬT
+         ============================================================== -->
+        <section class="tk-security" aria-label="Mức độ bảo mật tài khoản">
+
+            <!-- Vòng tròn tiến trình 20% -->
+            <div class="tk-security__ring" role="img" aria-label="Mức độ bảo mật 20%">
+                <svg viewBox="0 0 90 90" aria-hidden="true">
+                    <circle class="tk-security__ring-bg" cx="45" cy="45" r="36" />
+                    <circle class="tk-security__ring-fill" cx="45" cy="45" r="36" />
+                </svg>
+                <div class="tk-security__pct">20%</div>
+            </div>
+
+            <!-- Văn bản -->
+            <div class="tk-security__text">
+                <h2 class="tk-security__title">Mức độ bảo mật</h2>
+                <p class="tk-security__desc">
+                    Tài khoản của bạn hiện tại có thể bị đe dọa bảo mật.
+                    Hãy hoàn thiện các thông tin bên dưới.
+                </p>
+            </div>
+        </section>
+
+        <!-- ==============================================================
+         SECTION 3: THÔNG TIN TÀI KHOẢN
+         ============================================================== -->
+        <section aria-label="Thông tin tài khoản">
+
+            <h2 class="tk-section-title">Thông tin tài khoản</h2>
+            <p class="tk-section-desc">
+                Bạn có thể cập nhật Hồ sơ Công khai của mình tại đây và thông tin sẽ tự động đồng bộ
+                tới tất cả các tài khoản Game đã được kết nối.
+            </p>
+
+            <!-- Card thông tin cá nhân -->
+            <div class="tk-card" role="region" aria-label="Thông tin cá nhân">
+
+                <!-- Header card -->
+                <div class="tk-card__head">
+                    <div class="tk-card__head-left">
+                        <!-- Icon avatar emoji -->
+                        <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f97316);
+                        display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;"
+                            aria-hidden="true">😁</div>
+                        <div>
+                            <p class="tk-card__title">Thông tin cá nhân</p>
+                            <p class="tk-card__subtitle">Chưa hoàn thiện</p>
+                        </div>
+                    </div>
+                    <div class="tk-card__head-right">
+                        <span class="tk-badge tk-badge--warn">Chưa hoàn thiện</span>
+                        <button type="button" class="tk-btn-edit" aria-label="Chỉnh sửa thông tin cá nhân">
+                            Chỉnh sửa
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Danh sách thông tin -->
+                <dl class="tk-info-list">
+
+                    <!-- Họ và tên -->
+                    <div class="tk-info-row">
+                        <div class="tk-info-row__icon" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
+                        <dt class="tk-info-row__label">Họ và tên</dt>
+                        <dd class="tk-info-row__value">Dương Quốc Hoài</dd>
+                    </div>
+
+                    <!-- Giới tính -->
+                    <div class="tk-info-row">
+                        <div class="tk-info-row__icon" aria-hidden="true"><i class="fa-solid fa-venus-mars"></i></div>
+                        <dt class="tk-info-row__label">Giới tính</dt>
+                        <dd class="tk-info-row__value">Nam</dd>
+                    </div>
+
+                    <!-- Ngày sinh -->
+                    <div class="tk-info-row">
+                        <div class="tk-info-row__icon" aria-hidden="true"><i class="fa-solid fa-calendar"></i></div>
+                        <dt class="tk-info-row__label">Ngày sinh</dt>
+                        <dd class="tk-info-row__value">01/01/1999</dd>
+                    </div>
+
+                    <!-- Địa chỉ -->
+                    <div class="tk-info-row">
+                        <div class="tk-info-row__icon" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></div>
+                        <dt class="tk-info-row__label">Địa chỉ</dt>
+                        <dd class="tk-info-row__value">TP.Hồ Chí Minh</dd>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="tk-info-row">
+                        <div class="tk-info-row__icon" aria-hidden="true"><i class="fa-solid fa-envelope"></i></div>
+                        <dt class="tk-info-row__label">Email</dt>
+                        <dd class="tk-info-row__value tk-info-row__value--email">
+                            <span>Gameee@gmail.com</span>
+                            <span class="tk-info-row__email-dot" aria-label="Đã xác thực"></span>
+                        </dd>
+                    </div>
+
+                    <!-- Số điện thoại -->
+                    <div class="tk-info-row">
+                        <div class="tk-info-row__icon" aria-hidden="true"><i class="fa-solid fa-phone"></i></div>
+                        <dt class="tk-info-row__label">Số điện thoại</dt>
+                        <dd class="tk-info-row__value tk-info-row__value--empty" style="flex:1;">
+                            Chưa có số điện thoại
+                        </dd>
+                        <div class="tk-info-row__action">
+                            <button type="button" class="tk-btn-link" aria-label="Liên kết xác thực số điện thoại">
+                                Liên kết xác thực
+                            </button>
+                        </div>
+                    </div>
+
+                </dl>
+            </div><!-- /.tk-card -->
+        </section>
+
+        <!-- ==============================================================
+         SECTION 4: ĐỒNG BỘ TÀI KHOẢN
+         ============================================================== -->
+        <section aria-label="Đồng bộ tài khoản">
+            <div class="tk-card" role="region" aria-label="Đồng bộ tài khoản">
+
+                <!-- Header card -->
+                <div class="tk-card__head">
+                    <div class="tk-card__head-left">
+                        <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f97316);
+                        display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;"
+                            aria-hidden="true">😁</div>
+                        <p class="tk-card__title">Đồng bộ tài khoản</p>
+                    </div>
+                    <!-- Nút mũi tên toggle form -->
+                    <button type="button" class="tk-btn-arrow" id="btn-sync-toggle"
+                        aria-label="Mở form đồng bộ tài khoản" aria-expanded="false" aria-controls="sync-form-panel">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- ── Phần "Tài khoản hiện tại" — luôn hiển thị ── -->
+                <div class="tk-sync">
+                    <p class="tk-sync__label">Tài khoản hiện tại</p>
+
+                    <div class="tk-sync__row">
+
+                        <!-- Card Facebook -->
+                        <div class="tk-sync__fb-card">
+                            <div class="tk-sync__fb-logo" aria-hidden="true">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </div>
+                            <div>
+                                <p class="tk-sync__fb-name">Nguyễn Văn A</p>
+                                <p class="tk-sync__fb-id">fb.231244</p>
+                            </div>
+                        </div>
+
+                        <!-- Icon liên kết giữa -->
+                        <div class="tk-sync__link-icon" aria-hidden="true">
+                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                        </div>
+
+                        <!-- Card MYE (chưa có) -->
+                        <div class="tk-sync__mye-card">
+                            <div class="tk-sync__mye-avatar" aria-hidden="true">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <p class="tk-sync__mye-label">Chưa có tài khoản MYE</p>
+                        </div>
+
+                        <!-- Badge trạng thái -->
+                        <div class="tk-sync__status-wrap">
+                            <span class="tk-badge tk-badge--pink">Chưa đồng bộ</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ── Form đồng bộ (ẩn/hiện khi bấm mũi tên) ── -->
+                <div class="tk-sync-panel" id="sync-form-panel" role="region" aria-label="Form đồng bộ tài khoản MYE">
+
+                    <!-- Đường kẻ phân cách -->
+                    <div class="tk-sync-panel__divider"></div>
+
+                    <!-- Tiêu đề + mô tả -->
+                    <p class="tk-sync-panel__title">Đồng bộ tài khoản MYE</p>
+                    <p class="tk-sync-panel__desc">
+                        Chỉ đồng bộ được tài khoản MYE chưa có đủ dữ liệu trong Game.
+                        Sau khi đồng bộ, bạn có thể đăng nhập bằng Facebook hoặc tài khoản MYE.
+                    </p>
+
+                    <!-- Facebook row (đơn giản, giống hình) -->
+                    <div class="tk-sync-fb-row">
+                        <div class="tk-sync-fb-row__logo" aria-hidden="true">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </div>
+                        <span class="tk-sync-fb-row__name">Nguyễn Văn A</span>
+                        <span class="tk-sync-fb-row__id">fb.01020</span>
+                    </div>
+
+                    <!-- Form nhập liệu -->
+                    <form id="sync-form" novalidate>
+
+                        <!-- Tên đăng nhập -->
+                        <div class="tk-sync-field">
+                            <label class="tk-sync-field__label" for="sync-username">
+                                Tạo tên đăng nhập MYE
+                            </label>
+                            <input class="tk-sync-field__input" type="text" id="sync-username" name="sync-username"
+                                placeholder="Tôi thiếu 6 kí tự" minlength="6" autocomplete="username">
+                        </div>
+
+                        <!-- Mật khẩu -->
+                        <div class="tk-sync-field">
+                            <label class="tk-sync-field__label" for="sync-password">
+                                Tạo mật khẩu
+                            </label>
+                            <input class="tk-sync-field__input" type="password" id="sync-password" name="sync-password"
+                                placeholder="Tôi thiếu 8 kí tự" minlength="8" autocomplete="new-password">
+                        </div>
+
+                        <!-- Xác nhận mật khẩu -->
+                        <div class="tk-sync-field">
+                            <label class="tk-sync-field__label" for="sync-password-confirm">
+                                Xác nhận lặp lại mật khẩu
+                            </label>
+                            <input class="tk-sync-field__input" type="password" id="sync-password-confirm"
+                                name="sync-password-confirm" placeholder="Tôi thiếu 8 kí tự" minlength="8"
+                                autocomplete="new-password">
+                        </div>
+
+                        <!-- Nút xác nhận -->
+                        <button type="submit" class="tk-sync-panel__btn">
+                            Xác nhận đồng bộ
+                        </button>
+
+                    </form>
+                </div><!-- /.tk-sync-panel -->
+
+            </div><!-- /.tk-card -->
+        </section>
+
+        <!-- ==============================================================
+         SECTION 5: LỊCH SỬ HOẠT ĐỘNG
+         ============================================================== -->
+        <section aria-label="Lịch sử hoạt động">
+            <div class="tk-card" role="region" aria-label="Lịch sử hoạt động">
+
+                <!-- Header card -->
+                <div class="tk-card__head">
+                    <div class="tk-card__head-left">
+                        <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f97316);
+                        display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;"
+                            aria-hidden="true">😁</div>
+                        <p class="tk-card__title">Lịch sử hoạt động</p>
+                    </div>
+                    <button type="button" class="tk-btn-arrow" id="btn-history-toggle" aria-label="Mở lịch sử hoạt động"
+                        aria-expanded="false" aria-controls="history-panel">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- Panel nội dung (collapsible) -->
+                <div class="tk-history-panel" id="history-panel" role="region" aria-label="Nội dung lịch sử hoạt động">
+
+                    <div class="tk-history-panel__divider"></div>
+
+                    <!-- Heading -->
+                    <p class="tk-history-panel__heading">Gỡ tất cả các phiên đăng nhập đã lưu</p>
+                    <p class="tk-history-panel__sub">Tăng cường kiểm soát và bảo vệ tài khoản của bạn</p>
+
+                    <!-- Hộp cảnh báo + nút Gỡ tất cả -->
+                    <div class="tk-history-warn">
+                        <div class="tk-history-warn__body">
+                            <p class="tk-history-warn__main">
+                                Khi thực hiện thao tác này, các thiết bị đang đăng nhập sẽ bị đăng xuất.
+                                Bạn sẽ cần phải đăng nhập lại.
+                            </p>
+                            <p class="tk-history-warn__note">
+                                Lưu ý: Để đảm bảo an toàn tài khoản, vui lòng thay đổi mật khẩu trước khi tiến hành
+                                gỡ toàn bộ các phiên bản đăng nhập trên mọi thiết bị.
+                            </p>
+                        </div>
+                        <button type="button" class="tk-btn-logout-all" id="btn-logout-all">
+                            Gỡ tất cả
+                        </button>
+                    </div>
+
+                    <!-- Bảng lịch sử -->
+                    <table class="tk-history-table" aria-label="Bảng lịch sử hoạt động">
+                        <thead>
+                            <tr>
+                                <th>Thời gian</th>
+                                <th>Hoạt động</th>
+                                <th>Thiết bị</th>
+                                <th>IP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Hàng 1 -->
+                            <tr>
+                                <td>
+                                    <div class="col-time">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span>02/06/2026 08:53:18</span>
+                                    </div>
+                                </td>
+                                <td>Kích hoạt tài khoản</td>
+                                <td>
+                                    <div class="tk-history-device">
+                                        <div class="tk-history-device__icon tk-history-device__icon--chrome">
+                                            <i class="fa-brands fa-chrome"></i>
+                                        </div>
+                                        <div>
+                                            <p class="tk-history-device__name">Chrome Mobile</p>
+                                            <p class="tk-history-device__type">Mobile</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>210.86.237.19</td>
+                            </tr>
+                            <!-- Hàng 2 -->
+                            <tr>
+                                <td>
+                                    <div class="col-time">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span>02/06/2026 08:52:18</span>
+                                    </div>
+                                </td>
+                                <td>Cập nhật thông tin tài khoản</td>
+                                <td>
+                                    <div class="tk-history-device">
+                                        <div class="tk-history-device__icon tk-history-device__icon--safari">
+                                            <i class="fa-brands fa-safari"></i>
+                                        </div>
+                                        <div>
+                                            <p class="tk-history-device__name">Safari</p>
+                                            <p class="tk-history-device__type">Macbook</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>210.86.237.19</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div><!-- /.tk-history-panel -->
+
+            </div><!-- /.tk-card -->
+        </section>
+
+
+
+    </main>
+
+    <!-- ================================================================
+       FOOTER (inline, giống Footer.html)
+       ================================================================ -->
+    <footer class="mye-footer" role="contentinfo">
+        <div class="mye-footer__inner">
+
+            <!-- Logo -->
+            <div class="mye-footer__logo-wrap">
+                <img class="mye-footer__logo" src="../../assets/images/logo.png" alt="MyE Logo">
+            </div>
+
+            <!-- Thông tin liên hệ -->
+            <p class="mye-footer__line">Email: <a href="mailto:hotro@mye.vn" class="mye-footer__link">hotro@mye.vn</a>
+            </p>
+            <p class="mye-footer__line">Hotline: <a href="tel:0902500198" class="mye-footer__link">0902 500 198</a></p>
+
+            <!-- Tên công ty -->
+            <p class="mye-footer__company">CÔNG TY CỔ PHẦN MYE</p>
+
+            <!-- Thông tin pháp lý -->
+            <p class="mye-footer__line">Chịu trách nhiệm quản lý nội dung: Ông Lâm Trung Hiệp</p>
+            <p class="mye-footer__line">Địa chỉ: 477/22 Âu Cơ, Phường Phú Trung, Quận Tân Phú, Thành phố Hồ Chí Minh,
+                Việt Nam</p>
+            <p class="mye-footer__line">Giấy phép G1 số: Số 297/GP-BTTTT, ngày cấp 14/07/2020, nơi cấp Bộ Thông Tin và
+                Truyền Thông</p>
+
+            <!-- Điều khoản & Bảo mật -->
+            <p class="mye-footer__policy">
+                <a href="#" class="mye-footer__policy-link">Điều khoản dịch vụ</a>
+                <span class="mye-footer__separator">|</span>
+                <a href="#" class="mye-footer__policy-link">Chính sách bảo mật</a>
+            </p>
+
+            <!-- Copyright -->
+            <p class="mye-footer__copyright">©Copyright © 2026 MYE. All Rights Reserved.</p>
+
+        </div>
+    </footer>
+
+    <!-- ================================================================
+       JAVASCRIPT
+       ================================================================ -->
+    <script>
+        'use strict';
+
+        /* ── Mobile menu toggle ──────────────────────────────────────── */
+        const mobileBtn = document.getElementById('tk-mobile-btn');
+        const mobileNav = document.getElementById('tk-mobile-nav');
+        if (mobileBtn && mobileNav) {
+            mobileBtn.addEventListener('click', () => {
+                const isOpen = mobileNav.classList.toggle('open');
+                mobileBtn.setAttribute('aria-expanded', isOpen);
+                mobileBtn.querySelector('i').className = isOpen
+                    ? 'fa-solid fa-xmark'
+                    : 'fa-solid fa-bars';
+            });
+        }
+
+        /* ── Tab banner (Tài khoản / Bảo mật / Lịch sử) ─────────────── */
+        document.querySelectorAll('.tk-banner__tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tk-banner__tab').forEach(b => {
+                    b.classList.remove('tk-banner__tab--active');
+                    b.setAttribute('aria-selected', 'false');
+                });
+                btn.classList.add('tk-banner__tab--active');
+                btn.setAttribute('aria-selected', 'true');
+            });
+        });
+
+        /* ── Toggle form đồng bộ tài khoản ──────────────────────────── */
+        (function () {
+            const toggleBtn = document.getElementById('btn-sync-toggle');
+            const panel = document.getElementById('sync-form-panel');
+            if (!toggleBtn || !panel) return;
+
+            toggleBtn.addEventListener('click', () => {
+                const isOpen = panel.classList.toggle('open');
+                toggleBtn.classList.toggle('open', isOpen);
+                toggleBtn.setAttribute('aria-expanded', isOpen);
+                toggleBtn.setAttribute('aria-label',
+                    isOpen ? 'Đóng form đồng bộ tài khoản' : 'Mở form đồng bộ tài khoản'
+                );
+            });
+
+            /* Xử lý submit form đồng bộ */
+            const form = document.getElementById('sync-form');
+            if (form) {
+                form.addEventListener('submit', e => {
+                    e.preventDefault();
+                    const username = document.getElementById('sync-username').value.trim();
+                    const pw = document.getElementById('sync-password').value;
+                    const pwc = document.getElementById('sync-password-confirm').value;
+
+                    if (username.length < 6) {
+                        alert('Tên đăng nhập phải có ít nhất 6 kí tự.');
+                        document.getElementById('sync-username').focus();
+                        return;
+                    }
+                    if (pw.length < 8) {
+                        alert('Mật khẩu phải có ít nhất 8 kí tự.');
+                        document.getElementById('sync-password').focus();
+                        return;
+                    }
+                    if (pw !== pwc) {
+                        alert('Mật khẩu xác nhận không khớp.');
+                        document.getElementById('sync-password-confirm').focus();
+                        return;
+                    }
+                    alert(`Đồng bộ tài khoản MYE "${username}" thành công!`);
+                    form.reset();
+                    // Đóng form sau khi submit thành công
+                    panel.classList.remove('open');
+                    toggleBtn.classList.remove('open');
+                    toggleBtn.setAttribute('aria-expanded', 'false');
+                    toggleBtn.setAttribute('aria-label', 'Mở form đồng bộ tài khoản');
+                });
+            }
+        })();
+
+        /* ── Toggle lịch sử hoạt động ──────────────────────────────── */
+        (function () {
+            const histBtn = document.getElementById('btn-history-toggle');
+            const histPanel = document.getElementById('history-panel');
+            if (!histBtn || !histPanel) return;
+
+            histBtn.addEventListener('click', () => {
+                const isOpen = histPanel.classList.toggle('open');
+                histBtn.classList.toggle('open', isOpen);
+                histBtn.setAttribute('aria-expanded', isOpen);
+                histBtn.setAttribute('aria-label',
+                    isOpen ? 'Đóng lịch sử hoạt động' : 'Mở lịch sử hoạt động'
+                );
+            });
+
+            // Nút Gỡ tất cả
+            const logoutBtn = document.getElementById('btn-logout-all');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    if (confirm('Bạn có chắc muốn gỡ tất cả các phiên đăng nhập? Bạn sẽ bị đăng xuất trên mọi thiết bị.')) {
+                        alert('Đã gỡ tất cả phiên đăng nhập thành công.');
+                    }
+                });
+            }
+        })();
+
+        /* ── Scroll-to-top button ────────────────────────────────────── */
+        const scrollBtn = document.createElement('button');
+        scrollBtn.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+        scrollBtn.setAttribute('aria-label', 'Cuộn lên đầu trang');
+        scrollBtn.style.cssText = [
+            'position:fixed', 'bottom:24px', 'right:24px', 'z-index:40',
+            'width:44px', 'height:44px', 'border-radius:50%',
+            'background:#2563eb', 'color:#fff', 'border:none',
+            'box-shadow:0 4px 16px rgba(37,99,235,.35)',
+            'cursor:pointer', 'display:flex', 'align-items:center',
+            'justify-content:center', 'font-size:16px',
+            'opacity:0', 'pointer-events:none',
+            'transition:opacity .3s, transform .2s'
+        ].join(';');
+        document.body.appendChild(scrollBtn);
+        window.addEventListener('scroll', () => {
+            const show = window.scrollY > 280;
+            scrollBtn.style.opacity = show ? '1' : '0';
+            scrollBtn.style.pointerEvents = show ? 'auto' : 'none';
+        }, { passive: true });
+        scrollBtn.addEventListener('click', () =>
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        );
+    </script>
+
+</body>
+
+</html>

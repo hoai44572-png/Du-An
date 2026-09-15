@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nạp MyE Coin - Cổng Nạp Game Chính Thức</title>
+    <meta name="description"
+        content="Nạp MyE Coin nhanh chóng, an toàn với chiết khấu ưu đãi. Hỗ trợ ZaloPay, MoMo, ATM, Visa/Master và nhiều phương thức thanh toán khác.">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            500: '#2563eb',
+                            600: '#1d4ed8',
+                            purple: '#7c3aed',
+                            gold: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Header / Footer / Page CSS sẽ được inject bởi loader -->
+    <!-- Nap-Game.css chứa header-glass, nav-link, btn-nap dùng chung -->
+    <link rel="stylesheet" href="../Nap-Game.css">
+    <!-- Stylesheet riêng của trang MYE-COIN -->
+    <link rel="stylesheet" href="MYE-COIN.css">
+</head>
+
+<body class="bg-[#f5f7fa] text-slate-800 min-h-screen flex flex-col">
+
+    <!-- ==================== HEADER PLACEHOLDER ==================== -->
+    <div id="header-placeholder"></div>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="mc-page">
+
+        <!-- ── 1. HERO BANNER ─────────────────────────────────────── -->
+        <section class="mc-banner" aria-label="Banner Cổng Nạp Chính Thức">
+            <img src="../../assets/images/MyE_Coin/Hero-banner.png" alt="Cổng Nạp Chính Thức - Nạp Cực Đã Quà Cực Cháy"
+                loading="eager">
+        </section>
+
+        <!-- ── 2. THÔNG TIN TÀI KHOẢN ─────────────────────────────── -->
+        <section class="mc-account" aria-label="Thông tin tài khoản">
+
+            <!-- Tài khoản -->
+            <div class="mc-account__card">
+                <span class="mc-account__label">
+                    <i class="fa-solid fa-user mr-1.5 text-blue-500"></i>Tài khoản
+                </span>
+                <span class="mc-account__value" id="account-name">Chưa đăng nhập</span>
+            </div>
+
+            <!-- MyE ID -->
+            <div class="mc-account__card">
+                <span class="mc-account__label">
+                    <i class="fa-solid fa-fingerprint mr-1.5 text-purple-500"></i>MyE ID
+                </span>
+                <span class="mc-account__value" id="account-id">—</span>
+            </div>
+
+            <!-- Số dư -->
+            <div class="mc-account__card">
+                <span class="mc-account__label">
+                    <i class="fa-solid fa-coins mr-1.5 text-amber-500"></i>Số dư
+                </span>
+                <span class="mc-account__value mc-account__value--coin" id="account-balance">
+                    <img class="mc-account__coin-icon" src="../../assets/images/MyE_Coin/coin_M.png"
+                        alt="MyE Coin icon">
+                    <span>0 MyE Coin</span>
+                </span>
+            </div>
+
+        </section>
+
+        <!-- ── 3. CHỌN HÌNH THỨC NẠP ──────────────────────────────── -->
+        <section class="mc-payment" aria-label="Chọn hình thức nạp">
+            <div class="mc-section-title">
+                <div class="mc-section-title__bar"></div>
+                <h2 class="mc-section-title__text">Chọn Hình Thức Nạp</h2>
+            </div>
+
+            <div class="mc-payment__grid" role="list">
+
+                <!-- Thanh toán trực tiếp -->
+                <div class="mc-payment__card active" role="listitem" tabindex="0" aria-label="Thanh toán trực tiếp">
+                    <img class="mc-payment__icon"
+                        src="../../assets/images/MyE_Coin/Hinh_thuc_nap/Thanh_toan_truc_tiep.png"
+                        alt="Thanh toán trực tiếp">
+                    <span class="mc-payment__name">Thanh toán<br>trực tiếp</span>
+                </div>
+
+                <!-- ZaloPay -->
+                <div class="mc-payment__card" role="listitem" tabindex="0" aria-label="ZaloPay">
+                    <img class="mc-payment__icon" src="../../assets/images/MyE_Coin/Hinh_thuc_nap/ZaloPay.png"
+                        alt="ZaloPay">
+                    <span class="mc-payment__name">ZaloPay</span>
+                </div>
+
+                <!-- Ví MoMo -->
+                <div class="mc-payment__card" role="listitem" tabindex="0" aria-label="Ví MoMo">
+                    <img class="mc-payment__icon" src="../../assets/images/MyE_Coin/Hinh_thuc_nap/MOMO.png"
+                        alt="Ví MoMo">
+                    <span class="mc-payment__name">Ví MoMo</span>
+                </div>
+
+                <!-- ATM/Banking -->
+                <div class="mc-payment__card" role="listitem" tabindex="0" aria-label="ATM/Banking">
+                    <img class="mc-payment__icon" src="../../assets/images/MyE_Coin/Hinh_thuc_nap/ATM.png"
+                        alt="ATM/Banking">
+                    <span class="mc-payment__name">ATM/<br>Banking</span>
+                </div>
+
+                <!-- Visa/Master -->
+                <div class="mc-payment__card" role="listitem" tabindex="0" aria-label="Visa/Master">
+                    <img class="mc-payment__icon" src="../../assets/images/MyE_Coin/Hinh_thuc_nap/Visa.png"
+                        alt="Visa/Master">
+                    <span class="mc-payment__name">Visa/<br>Master</span>
+                </div>
+
+                <!-- Tài khoản định danh -->
+                <div class="mc-payment__card" role="listitem" tabindex="0" aria-label="Tài khoản định danh (Bank VA)">
+                    <img class="mc-payment__icon"
+                        src="../../assets/images/MyE_Coin/Hinh_thuc_nap/Tai_khoan_dinh_danh.png"
+                        alt="Tài khoản định danh">
+                    <span class="mc-payment__name">Tài khoản<br>định danh</span>
+                </div>
+
+                <!-- QR Code -->
+                <div class="mc-payment__card" role="listitem" tabindex="0" aria-label="QR Code">
+                    <img class="mc-payment__icon" src="../../assets/images/MyE_Coin/Hinh_thuc_nap/icon_qr.png"
+                        alt="QR Code">
+                    <span class="mc-payment__name">QR Code</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ── 4. CHỌN GÓI NẠP ────────────────────────────────────── -->
+        <section class="mc-packages" aria-label="Chọn gói nạp MyE Coin">
+            <div class="mc-section-title">
+                <div class="mc-section-title__bar"></div>
+                <h2 class="mc-section-title__text">Chọn Gói Nạp</h2>
+            </div>
+
+            <div class="mc-packages__grid">
+
+                <!-- Gói 20 Coin -->
+                <div class="mc-package__card" data-coin="20" tabindex="0" aria-label="Gói 20 MyE Coin">
+                    <div class="mc-package__img-wrap">
+                        <img class="mc-package__img" src="../../assets/images/MyE_Coin/Chon_goi_nap/20_MYE_COIN.png"
+                            alt="20 MyE Coin">
+                    </div>
+                    <div class="mc-package__body">
+                        <p class="mc-package__coin">20 MyE Coin</p>
+                        <p class="mc-package__price">20.000 đ</p>
+                        <button type="button" class="mc-package__btn">MUA</button>
+                    </div>
+                </div>
+
+                <!-- Gói 50 Coin -->
+                <div class="mc-package__card selected" data-coin="50" tabindex="0" aria-label="Gói 50 MyE Coin">
+                    <div class="mc-package__img-wrap">
+                        <img class="mc-package__img" src="../../assets/images/MyE_Coin/Chon_goi_nap/50_MYE_COIN.png"
+                            alt="50 MyE Coin">
+                    </div>
+                    <div class="mc-package__body">
+                        <p class="mc-package__coin">50 MyE Coin</p>
+                        <p class="mc-package__price">50.000 đ</p>
+                        <button type="button" class="mc-package__btn"><a
+                                href="Thong-Tin-Giao-Dich.html">MUA</a></button>
+                    </div>
+                </div>
+
+                <!-- Gói 100 Coin -->
+                <div class="mc-package__card" data-coin="100" tabindex="0" aria-label="Gói 100 MyE Coin">
+                    <div class="mc-package__img-wrap">
+                        <img class="mc-package__img" src="../../assets/images/MyE_Coin/Chon_goi_nap/100_MYE_COIN.png"
+                            alt="100 MyE Coin">
+                    </div>
+                    <div class="mc-package__body">
+                        <p class="mc-package__coin">100 MyE Coin</p>
+                        <p class="mc-package__price">100.000 đ</p>
+                        <button type="button" class="mc-package__btn">MUA</button>
+                    </div>
+                </div>
+
+                <!-- Gói 500 Coin -->
+                <div class="mc-package__card" data-coin="500" tabindex="0" aria-label="Gói 500 MyE Coin">
+                    <div class="mc-package__img-wrap">
+                        <img class="mc-package__img" src="../../assets/images/MyE_Coin/Chon_goi_nap/500_MYE_COIN.png"
+                            alt="500 MyE Coin">
+                    </div>
+                    <div class="mc-package__body">
+                        <p class="mc-package__coin">500 MyE Coin</p>
+                        <p class="mc-package__price">500.000 đ</p>
+                        <button type="button" class="mc-package__btn">MUA</button>
+                    </div>
+                </div>
+
+                <!-- Gói 1000 Coin -->
+                <div class="mc-package__card" data-coin="1000" tabindex="0" aria-label="Gói 1000 MyE Coin">
+                    <div class="mc-package__img-wrap">
+                        <img class="mc-package__img" src="../../assets/images/MyE_Coin/Chon_goi_nap/1000_MYE_COIN.png"
+                            alt="1000 MyE Coin">
+                    </div>
+                    <div class="mc-package__body">
+                        <p class="mc-package__coin">1.000 MyE Coin</p>
+                        <p class="mc-package__price">1.000.000 đ</p>
+                        <button type="button" class="mc-package__btn">MUA</button>
+                    </div>
+                </div>
+
+                <!-- Gói 2000 Coin -->
+                <div class="mc-package__card" data-coin="2000" tabindex="0" aria-label="Gói 2000 MyE Coin">
+                    <div class="mc-package__img-wrap">
+                        <img class="mc-package__img" src="../../assets/images/MyE_Coin/Chon_goi_nap/2000_MYE_COIN.png"
+                            alt="2000 MyE Coin">
+                    </div>
+                    <div class="mc-package__body">
+                        <p class="mc-package__coin">2.000 MyE Coin</p>
+                        <p class="mc-package__price">2.000.000 đ</p>
+                        <button type="button" class="mc-package__btn">MUA</button>
+                    </div>
+                </div>
+
+                <!-- Gói 5000 Coin -->
+                <div class="mc-package__card" data-coin="5000" tabindex="0" aria-label="Gói 5000 MyE Coin">
+                    <div class="mc-package__img-wrap">
+                        <img class="mc-package__img" src="../../assets/images/MyE_Coin/Chon_goi_nap/5000_MYE_COIN.png"
+                            alt="5000 MyE Coin">
+                    </div>
+                    <div class="mc-package__body">
+                        <p class="mc-package__coin">5.000 MyE Coin</p>
+                        <p class="mc-package__price">5.000.000 đ</p>
+                        <button type="button" class="mc-package__btn">MUA</button>
+                    </div>
+                </div>
+
+                <!-- Gói 10000 Coin -->
+                <div class="mc-package__card" data-coin="10000" tabindex="0" aria-label="Gói 10000 MyE Coin">
+                    <div class="mc-package__img-wrap">
+                        <img class="mc-package__img" src="../../assets/images/MyE_Coin/Chon_goi_nap/10000_MYE_COIN.png"
+                            alt="10000 MyE Coin">
+                    </div>
+                    <div class="mc-package__body">
+                        <p class="mc-package__coin">10.000 MyE Coin</p>
+                        <p class="mc-package__price">10.000.000 đ</p>
+                        <button type="button" class="mc-package__btn">MUA</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ── 5. HƯỚNG DẪN NẠP GAME ──────────────────────────────── -->
+        <section class="mc-guide" aria-label="Hướng dẫn nạp game">
+            <div class="mc-section-title">
+                <div class="mc-section-title__bar"></div>
+                <h2 class="mc-section-title__text">Hướng Dẫn Nạp Game</h2>
+            </div>
+
+            <ol class="mc-guide__list" aria-label="Các bước nạp game">
+                <li class="mc-guide__item">
+                    <span class="mc-guide__num" aria-hidden="true">1</span>
+                    <p class="mc-guide__text">
+                        <strong>Đăng nhập tài khoản MyE</strong> — Truy cập website và đăng nhập bằng tài khoản MyE Game
+                        Portal của bạn để xem số dư và thực hiện giao dịch.
+                    </p>
+                </li>
+                <li class="mc-guide__item">
+                    <span class="mc-guide__num" aria-hidden="true">2</span>
+                    <p class="mc-guide__text">
+                        <strong>Chọn hình thức thanh toán</strong> — Lựa chọn phương thức thanh toán phù hợp: Thanh toán
+                        trực tiếp, ZaloPay, Ví MoMo, ATM/Banking, Visa/Master, Tài khoản định danh hoặc QR Code.
+                    </p>
+                </li>
+                <li class="mc-guide__item">
+                    <span class="mc-guide__num" aria-hidden="true">3</span>
+                    <p class="mc-guide__text">
+                        <strong>Chọn gói nạp MyE Coin</strong> — Chọn gói Coin phù hợp với nhu cầu của bạn. Gói càng
+                        lớn, chiết khấu càng ưu đãi và nhận thêm nhiều quà tặng hấp dẫn.
+                    </p>
+                </li>
+                <li class="mc-guide__item">
+                    <span class="mc-guide__num" aria-hidden="true">4</span>
+                    <p class="mc-guide__text">
+                        <strong>Xác nhận và thanh toán</strong> — Kiểm tra thông tin đơn hàng, nhấn nút
+                        <strong>MUA</strong> và hoàn tất thanh toán theo hướng dẫn của cổng thanh toán bạn chọn.
+                    </p>
+                </li>
+                <li class="mc-guide__item">
+                    <span class="mc-guide__num" aria-hidden="true">5</span>
+                    <p class="mc-guide__text">
+                        <strong>Nhận MyE Coin vào tài khoản</strong> — Sau khi thanh toán thành công, MyE Coin sẽ được
+                        cộng vào tài khoản của bạn ngay lập tức. Kiểm tra số dư tại mục "Số dư" phía trên.
+                    </p>
+                </li>
+            </ol>
+        </section>
+
+        <!-- ── 6. BANNER HỖ TRỢ ───────────────────────────────────── -->
+        <section class="mc-support" aria-label="Dịch vụ hỗ trợ khách hàng">
+            <div class="mc-support__content">
+
+                <!-- An toàn & bảo mật -->
+                <div class="mc-support__item">
+                    <div class="mc-support__icon-wrap">
+                        <i class="fa-solid fa-shield-halved mc-support__icon"></i>
+                    </div>
+                    <p class="mc-support__label">An toàn &amp; bảo mật</p>
+                    <p class="mc-support__sub">Giao dịch được mã hoá SSL</p>
+                </div>
+
+                <!-- Hỗ trợ 24/7 -->
+                <div class="mc-support__item">
+                    <div class="mc-support__icon-wrap">
+                        <i class="fa-solid fa-headset mc-support__icon"></i>
+                    </div>
+                    <p class="mc-support__label">Hỗ trợ 24/7</p>
+                    <p class="mc-support__sub">Luôn sẵn sàng giải đáp</p>
+                </div>
+
+                <!-- Dịch vụ khách hàng -->
+                <div class="mc-support__item">
+                    <div class="mc-support__icon-wrap">
+                        <i class="fa-solid fa-star mc-support__icon"></i>
+                    </div>
+                    <p class="mc-support__label">Dịch vụ khách hàng</p>
+                    <p class="mc-support__sub">Tận tâm &amp; chuyên nghiệp</p>
+                </div>
+
+            </div>
+
+            <!-- Nhân vật anime bên phải -->
+            <img class="mc-support__girl" src="../../assets/images/MyE_Coin/girlMye.png" alt="Nhân viên hỗ trợ MyE">
+        </section>
+
+    </main>
+
+    <!-- Nút cuộn lên đầu trang -->
+    <button id="scroll-top-btn" type="button"
+        class="fixed bottom-6 right-6 z-40 w-11 h-11 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 pointer-events-none"
+        aria-label="Cuộn lên đầu trang">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- ==================== FOOTER PLACEHOLDER ==================== -->
+    <div id="footer-placeholder"></div>
+
+    <!--
+    Thứ tự load scripts:
+    1. MYE-COIN.js  — định nghĩa initMYECoinPage()
+    2. Loader inline — fetch header/footer rồi gọi initMYECoinPage()
+  -->
+    <script src="MYE-COIN.js"></script>
+    <script>
+            /**
+             * Loader Header-Footer (inline) cho trang HTML/MYE-COIN.html
+             * Đường dẫn relative tính từ thư mục HTML/
+             */
+            (function () {
+                function injectCSS(href) {
+                    if (document.querySelector(`link[href="${href}"]`)) return;
+                    const link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = href;
+                    document.head.appendChild(link);
+                }
+
+                async function loadFragment(url, placeholderId) {
+                    const el = document.getElementById(placeholderId);
+                    if (!el) return;
+                    try {
+                        const res = await fetch(url);
+                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                        el.outerHTML = await res.text();
+                    } catch (err) {
+                        console.error(`[Loader] Không thể tải ${url}:`, err);
+                    }
+                }
+
+                async function init() {
+                    // CSS cho header/footer (đường dẫn từ HTML/)
+                    injectCSS('../Header-Footer/Header.css');
+                    injectCSS('../Header-Footer/Footer.css');
+
+                    // Load fragments song song
+                    await Promise.all([
+                        loadFragment('../Header-Footer/Header.html', 'header-placeholder'),
+                        loadFragment('../Header-Footer/Footer.html', 'footer-placeholder'),
+                    ]);
+
+                    // Khởi chạy logic trang sau khi DOM hoàn chỉnh
+                    if (typeof initMYECoinPage === 'function') {
+                        initMYECoinPage();
+                    }
+                }
+
+                document.addEventListener('DOMContentLoaded', init);
+            })();
+    </script>
+</body>
+
+</html>

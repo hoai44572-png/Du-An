@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Dịch vụ Section -->
+
+    <astro-island uid="nbn61" prefix="r12" component-url="/assets/Dichvu.Doe_OIDA.js" component-export="default"
+        renderer-url="/assets/client.DeAwy1AW.js" props="{}" ssr client="load"
+        opts="{&quot;name&quot;:&quot;Dichvu&quot;,&quot;value&quot;:true}" await-children>
+
+        <section id="dich-vu" style="padding: 80px 0; background-color: #f8fafc;">
+            <style>
+                /* Reset và cấu hình grid 4 cột cố định */
+                .service-grid {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 20px;
+                    max-width: 1280px;
+                    margin: 0 auto;
+                    padding: 0 16px;
+                }
+
+                /* Hiệu ứng card với gradient cam và nội dung mới */
+                .service-card {
+                    position: relative;
+                    overflow: hidden;
+                    border-radius: 16px;
+                    background: linear-gradient(to bottom, #8de1a0, #015222);
+                    padding: 20px 20px 14px 20px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+                    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                    height: 360px;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    cursor: pointer;
+                    text-decoration: none;
+                    width: 100%;
+                }
+
+                /* Lớp phủ gradient cam - ẩn ban đầu */
+                .service-card .overlay {
+                    position: absolute;
+                    bottom: -100%;
+                    left: 0;
+                    right: 0;
+                    height: 100%;
+                    background: linear-gradient(135deg, #FF6B00, #FF8C00, #FFA500);
+                    opacity: 0;
+                    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                    border-radius: 20px;
+                    z-index: 1;
+                }
+
+                /* Nội dung chính - mặc định */
+                .service-card .content-default {
+                    position: relative;
+                    z-index: 2;
+                    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+
+                /* Nội dung mới - ẩn ban đầu */
+                .service-card .content-hover {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    z-index: 3;
+                    opacity: 0;
+                    transform: translateY(20px);
+                    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                    padding: 20px 20px 14px 20px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    color: white;
+                    pointer-events: none;
+                }
+
+                /* Icon xoay và phóng to */
+                .service-card .hover-icon {
+                    display: inline-block;
+                    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                    font-size: 48px;
+                    margin-bottom: 16px;
+                }
+
+                .service-card .hover-title {
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin-bottom: 8px;
+                    color: white;
+                }
+
+                .service-card .hover-desc {
+                    font-size: 14px;
+                    opacity: 0.9;
+                    line-height: 1.6;
+                    max-width: 280px;
+                }
+
+                /* Đảm bảo ảnh không bị tràn */
+                .service-card img {
+                    max-width: 100%;
+                    max-height: 300px;
+                    width: auto;
+                    height: auto;
+                    object-fit: contain;
+                    object-position: bottom;
+                    transition: transform 0.5s ease;
+                }
+
+                /* Style cho tiêu đề card - giống trong hình */
+                .service-card .card-title {
+                    font-size: 20px;
+                    font-weight: bold;
+                    color: #FFA800;
+                    line-height: 1.3;
+                    margin-bottom: 4px;
+                }
+
+                .service-card .card-subtitle {
+                    font-size: 14px;
+                    color: rgba(255, 255, 255, 0.8);
+                    line-height: 1.4;
+                }
+
+                .service-card .card-subtitle-sm {
+                    font-size: 12px;
+                    color: rgba(255, 255, 255, 0.7);
+                    line-height: 1.3;
+                    margin-top: 2px;
+                }
+
+                /* Hover states */
+                .service-card:hover {
+                    transform: translateY(-8px);
+                    box-shadow: 0 12px 30px rgba(1, 82, 34, 0.25);
+                }
+
+                .service-card:hover .overlay {
+                    bottom: 0;
+                    opacity: 1;
+                }
+
+                /* Nội dung cũ mờ dần và trượt lên */
+                .service-card:hover .content-default {
+                    opacity: 0;
+                    transform: translateY(-30px);
+                }
+
+                /* Nội dung mới xuất hiện */
+                .service-card:hover .content-hover {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                /* Icon xoay và phóng to */
+                .service-card:hover .hover-icon {
+                    transform: rotate(360deg) scale(1.2);
+                }
+
+                .service-card:hover img {
+                    transform: scale(1.04);
+                }
+
+                /* Delay cho từng card */
+                .service-card:nth-child(1) .overlay {
+                    transition-delay: 0s;
+                }
+
+                .service-card:nth-child(1) .content-default {
+                    transition-delay: 0s;
+                }
+
+                .service-card:nth-child(1) .content-hover {
+                    transition-delay: 0.05s;
+                }
+
+                .service-card:nth-child(1):hover .content-hover {
+                    transition-delay: 0.05s;
+                }
+
+                .service-card:nth-child(2) .overlay {
+                    transition-delay: 0.15s;
+                }
+
+                .service-card:nth-child(2) .content-default {
+                    transition-delay: 0.15s;
+                }
+
+                .service-card:nth-child(2) .content-hover {
+                    transition-delay: 0.2s;
+                }
+
+                .service-card:nth-child(2):hover .content-hover {
+                    transition-delay: 0.2s;
+                }
+
+                .service-card:nth-child(3) .overlay {
+                    transition-delay: 0.3s;
+                }
+
+                .service-card:nth-child(3) .content-default {
+                    transition-delay: 0.3s;
+                }
+
+                .service-card:nth-child(3) .content-hover {
+                    transition-delay: 0.35s;
+                }
+
+                .service-card:nth-child(3):hover .content-hover {
+                    transition-delay: 0.35s;
+                }
+
+                .service-card:nth-child(4) .overlay {
+                    transition-delay: 0.45s;
+                }
+
+                .service-card:nth-child(4) .content-default {
+                    transition-delay: 0.45s;
+                }
+
+                .service-card:nth-child(4) .content-hover {
+                    transition-delay: 0.5s;
+                }
+
+                .service-card:nth-child(4):hover .content-hover {
+                    transition-delay: 0.5s;
+                }
+
+                /* Responsive */
+                @media (max-width: 1024px) {
+                    .service-grid {
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 16px;
+                    }
+
+                    .service-card {
+                        height: 300px;
+                    }
+                }
+
+                @media (max-width: 640px) {
+                    .service-grid {
+                        grid-template-columns: 1fr;
+                        gap: 14px;
+                    }
+
+                    .service-card {
+                        height: 280px;
+                        padding: 16px 14px 10px 14px;
+                    }
+
+                    .service-card .hover-icon {
+                        font-size: 30px;
+                    }
+
+                    .service-card .hover-title {
+                        font-size: 15px;
+                    }
+
+                    .service-card .hover-desc {
+                        font-size: 12px;
+                    }
+
+                    .service-card .card-title {
+                        font-size: 15px;
+                    }
+                }
+
+                /* ========================================
+                   [MỚI] Hiệu ứng shimmer/shine khi hover
+                   ======================================== */
+
+                /* Tạo lớp shine bằng pseudo-element ::before */
+                .service-card::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -75%;
+                    width: 50%;
+                    height: 100%;
+                    background: linear-gradient(
+                        120deg,
+                        rgba(255, 255, 255, 0) 0%,
+                        rgba(255, 255, 255, 0.35) 50%,
+                        rgba(255, 255, 255, 0) 100%
+                    );
+                    transform: skewX(-20deg);
+                    z-index: 10;
+                    pointer-events: none;
+                    /* Ẩn shine khi không hover */
+                    opacity: 0;
+                    transition: none;
+                }
+
+                /* Kích hoạt animation shine khi hover */
+                .service-card:hover::before {
+                    animation: shimmer-sweep 0.65s ease forwards;
+                }
+
+                /* Keyframes: shine chạy từ trái sang phải */
+                @keyframes shimmer-sweep {
+                    0% {
+                        left: -75%;
+                        opacity: 1;
+                    }
+                    100% {
+                        left: 130%;
+                        opacity: 1;
+                    }
+                }
+            </style>
+
+            <div style="max-width: 1280px; margin: 0 auto; padding: 0 16px;">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h2 style="font-size: clamp(36px, 4vw, 52px); font-weight: bold; color: #111827; line-height: 1.2; margin: 0 0 12px 0;">
+                        Lĩnh vực hoạt động</h2>
+                    <p style="color: #4b5563; font-size: 16px; max-width: 700px; margin: 0 auto; line-height: 1.6;">Tại
+                        Hexagon, chúng tôi tập trung phát triển hệ sinh thái công nghệ toàn diện, bao gồm:</p>
+                </div>
+
+                <div class="service-grid">
+                    <!-- Card 1: Chính phủ, công nghiệp -->
+                    <a href="./Lĩnh-vực-hoạt-động/Chinh-phu-cong-nghiep.html" class="service-card">
+                        <div class="overlay"></div>
+
+                        <div class="content-default">
+                            <div>
+                                <div class="card-title">Chính phủ, công nghiệp</div>
+                            </div>
+                            <div class="flex-1 flex items-end justify-center overflow-hidden">
+                                <img src="./assets/images/linh-vuc-1.png" alt="Chính phủ, công nghiệp" />
+                            </div>
+                        </div>
+
+                        <div class="content-hover">
+                            <div class="hover-icon">🏛️</div>
+                            <div class="hover-title">Chính phủ & Công nghiệp</div>
+                            <div class="hover-desc">Giải pháp công nghệ cho khu vực chính phủ và công nghiệp</div>
+                        </div>
+                    </a>
+
+                    <!-- Card 2: Chính phủ, công nghiệp thị trường & tập đoàn -->
+                    <a href="./Lĩnh-vực-hoạt-động/Chinh-phu-cong-nghiep-thi-truong-tap-doan.html" class="service-card">
+                        <div class="overlay"></div>
+
+                        <div class="content-default">
+                            <div>
+                                <div class="card-title">Chính phủ, công nghiệp</div>
+                                <div class="card-subtitle">thị trường & tập đoàn</div>
+                            </div>
+                            <div class="flex-1 flex items-end justify-center overflow-hidden">
+                                <img src="./assets/images/linh-vuc-2.png"
+                                    alt="Chính phủ, công nghiệp thị trường & tập đoàn" />
+                            </div>
+                        </div>
+
+                        <div class="content-hover">
+                            <div class="hover-icon">🏢</div>
+                            <div class="hover-title">Thị trường & Tập đoàn</div>
+                            <div class="hover-desc">Giải pháp cho thị trường và các tập đoàn lớn</div>
+                        </div>
+                    </a>
+
+                    <!-- Card 3: Cung cấp thiết bị CNTT -->
+                    <a href="./Lĩnh-vực-hoạt-động/Cung-cap-thiet-bi-CNTT.html" class="service-card">
+                        <div class="overlay"></div>
+
+                        <div class="content-default">
+                            <div>
+                                <div class="card-title">Cung cấp thiết bị CNTT</div>
+                            </div>
+                            <div class="flex-1 flex items-end justify-center overflow-hidden">
+                                <img src="./assets/images/linh-vuc-3.png" alt="Cung cấp thiết bị CNTT" />
+                            </div>
+                        </div>
+
+                        <div class="content-hover">
+                            <div class="hover-icon">💻</div>
+                            <div class="hover-title">Thiết bị CNTT</div>
+                            <div class="hover-desc">Cung cấp thiết bị công nghệ thông tin chính hãng</div>
+                        </div>
+                    </a>
+
+                    <!-- Card 4: Dịch vụ Công nghiệp thông tin -->
+                    <a href="./Lĩnh-vực-hoạt-động/Dich-vu-Cong-nghiep-thong-tin.html" class="service-card">
+                        <div class="overlay"></div>
+
+                        <div class="content-default">
+                            <div>
+                                <div class="card-title">Dịch vụ Công nghiệp thông tin</div>
+                                <div class="card-subtitle-sm">Công ty Cổ phần Công nghiệp thông tin</div>
+                            </div>
+                            <div class="flex-1 flex items-end justify-center overflow-hidden">
+                                <img src="./assets/images/linh-vuc-4.png" alt="Dịch vụ Công nghiệp thông tin" />
+                            </div>
+                        </div>
+
+                        <div class="content-hover">
+                            <div class="hover-icon">🛠️</div>
+                            <div class="hover-title">Dịch vụ CNTT</div>
+                            <div class="hover-desc">Dịch vụ công nghệ thông tin chuyên nghiệp</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </astro-island>
+</body>
+
+</html>

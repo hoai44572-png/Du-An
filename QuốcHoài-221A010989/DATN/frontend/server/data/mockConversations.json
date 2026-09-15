@@ -1,0 +1,40 @@
+[
+  {
+    "id": "conv-101",
+    "userId": "user-01",
+    "userName": "Nguyễn Văn An",
+    "userEmail": "an.nguyen@gmail.com",
+    "userPhone": "0988 123 456",
+    "userAvatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200&auto=format&fit=crop",
+    "assignedStaffId": "staff-01",
+    "assignedStaffName": "Swift Coffee Support",
+    "assignedStaffAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop",
+    "lastMessage": "Dạ Swift Coffee xin chào anh An! Anh đang quan tâm sản phẩm cà phê nào ạ?",
+    "lastMessageTime": "2026-07-26T14:20:00Z",
+    "unreadCountUser": 0,
+    "unreadCountAdmin": 1,
+    "isOnline": true,
+    "isTyping": false,
+    "status": "open",
+    "createdAt": "2026-07-26T14:00:00Z"
+  },
+  {
+    "id": "conv-102",
+    "userId": "user-02",
+    "userName": "Trần Thị Mai",
+    "userEmail": "mai.tran@gmail.com",
+    "userPhone": "0912 345 678",
+    "userAvatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
+    "assignedStaffId": "staff-01",
+    "assignedStaffName": "Swift Coffee Support",
+    "assignedStaffAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop",
+    "lastMessage": "Em đã gửi lại mã giảm giá FREESHIP30K vào tài khoản của chị rồi ạ!",
+    "lastMessageTime": "2026-07-26T13:45:00Z",
+    "unreadCountUser": 0,
+    "unreadCountAdmin": 0,
+    "isOnline": false,
+    "isTyping": false,
+    "status": "completed",
+    "createdAt": "2026-07-26T13:00:00Z"
+  }
+]

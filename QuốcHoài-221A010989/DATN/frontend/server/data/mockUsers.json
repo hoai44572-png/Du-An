@@ -1,0 +1,16 @@
+[
+  {
+    "id": "user-01",
+    "name": "Nguyễn Văn An",
+    "email": "an.nguyen@gmail.com",
+    "role": "USER",
+    "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200&auto=format&fit=crop"
+  },
+  {
+    "id": "staff-01",
+    "name": "Swift Coffee Support",
+    "email": "admin@swiftcoffee.com",
+    "role": "ADMIN",
+    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop"
+  }
+]

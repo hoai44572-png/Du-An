@@ -1,0 +1,86 @@
+/* ===== HoiVien.css - Bổ sung animation và styles không có trong Tailwind ===== */
+
+/* Font family */
+.font-primary {
+  font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Header transition */
+header {
+  transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Lang toggle */
+.lang-toggle {
+  transition: box-shadow 0.3s, filter 0.3s;
+}
+.lang-toggle:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Footer links */
+.footer-link {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.footer-link:hover {
+  color: #FFD700 !important;
+  transform: translateX(4px);
+}
+
+/* Social icons */
+.social-icon {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.social-icon:hover {
+  transform: translateY(-3px) scale(1.1);
+  filter: brightness(1.2);
+}
+
+/* Benefits list items */
+.benefits ul li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+.benefits ul li:last-child {
+  border-bottom: none;
+}
+.benefits ul li::before {
+  content: "✓";
+  color: #F7931E;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* Responsive overrides */
+@media (max-width: 768px) {
+  body {
+    padding-top: 72px;
+  }
+  .member-wrapper {
+    grid-template-columns: 1fr !important;
+  }
+  .member-stats {
+    grid-template-columns: 1fr !important;
+  }
+  .section-header h1 {
+    font-size: 30px !important;
+  }
+  #footer-main-grid {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+  #footer-bottom-line {
+    flex-direction: column !important;
+    text-align: center !important;
+  }
+  .social-icons {
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  #footer-main-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}

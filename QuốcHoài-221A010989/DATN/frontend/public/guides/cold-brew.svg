@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#162840;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="glass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3d1a08;stop-opacity:0.9" />
+      <stop offset="30%" style="stop-color:#5c2d0a;stop-opacity:0.8" />
+      <stop offset="60%" style="stop-color:#c8a882;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#e8d5c0;stop-opacity:0.6" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <!-- Glass cup for cold brew -->
+  <rect x="310" y="120" width="180" height="260" rx="12" fill="url(#glass)" opacity="0.9"/>
+  <!-- Glass rim highlight -->
+  <ellipse cx="400" cy="120" rx="90" ry="12" fill="#8bafc8" opacity="0.5"/>
+  <!-- Ice cubes -->
+  <rect x="330" y="300" width="45" height="45" rx="6" fill="#a8d4f0" opacity="0.7"/>
+  <rect x="385" y="295" width="50" height="50" rx="6" fill="#b8ddf8" opacity="0.6"/>
+  <rect x="440" y="305" width="40" height="40" rx="6" fill="#a0ccec" opacity="0.7"/>
+  <!-- Straw -->
+  <rect x="420" y="80" width="10" height="220" rx="5" fill="#c8a882" opacity="0.9"/>
+  <!-- Condensation drops -->
+  <circle cx="325" cy="200" r="3" fill="#6baed6" opacity="0.5"/>
+  <circle cx="322" cy="220" r="2" fill="#6baed6" opacity="0.4"/>
+  <circle cx="475" cy="180" r="3" fill="#6baed6" opacity="0.5"/>
+  <circle cx="478" cy="205" r="2" fill="#6baed6" opacity="0.4"/>
+  <!-- Text -->
+  <text x="400" y="435" text-anchor="middle" font-family="Georgia, serif" font-size="28" font-weight="bold" fill="#8bafc8">COLD BREW</text>
+  <text x="400" y="463" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#8bafc8" opacity="0.7">Smooth &amp; Refreshing</text>
+</svg>

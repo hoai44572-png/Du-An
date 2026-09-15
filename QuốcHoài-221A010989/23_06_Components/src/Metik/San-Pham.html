@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>METIK - Sản phẩm</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* Hiệu ứng hover ảnh sản phẩm — giống Trang-Chu.html */
+    .product-card:hover .product-image {
+      transform: scale(1.05);
+    }
+
+    .product-image {
+      transition: transform 0.3s ease;
+    }
+
+    /* Màu nền vàng footer — giống Trang-Chu.html */
+    .bg-gold {
+      background-color: #f2bf09;
+    }
+
+    .text-primary {
+      color: #f4851a;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+
+  <!-- Header -->
+  <header class="bg-white dark:bg-gray-800 shadow sticky top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center py-4 px-6">
+      <a href="#">
+        <img src="IMG/Screenshot 2026-07-01 124146.png" alt="METIK Logo"
+          class="h-12 md:h-14 w-auto hover:scale-105 transition" />
+      </a>
+      <nav class="space-x-6">
+        <a href="#" class="hover:text-green-600 transition">Trang chủ</a>
+        <a href="#" class="hover:text-green-600 transition">Giới thiệu</a>
+        <a href="#" class="text-green-600 font-semibold">Sản phẩm</a>
+        <a href="#" class="hover:text-green-600 transition">Tin tức</a>
+        <a href="#" class="hover:text-green-600 transition">Liên hệ</a>
+      </nav>
+      <!-- Social Icons — giống Trang-Chu.html -->
+      <div class="flex items-center space-x-3">
+        <a href="https://www.facebook.com/banhmetik" target="_blank"
+          class="w-9 h-9 rounded-full text-white flex items-center justify-center transition-colors hover:opacity-80"
+          style="background-color: #f4851a;">
+          <i class="fab fa-facebook-f text-sm"></i>
+        </a>
+        <a href="https://www.tiktok.com/@metik_333" target="_blank"
+          class="w-9 h-9 rounded-full text-white flex items-center justify-center transition-colors hover:opacity-80"
+          style="background-color: #f4851a;">
+          <i class="fab fa-tiktok text-sm"></i>
+        </a>
+        <a href="https://www.linkedin.com/company/112466083/" target="_blank"
+          class="w-9 h-9 rounded-full text-white flex items-center justify-center transition-colors hover:opacity-80"
+          style="background-color: #f4851a;">
+          <i class="fab fa-linkedin-in text-sm"></i>
+        </a>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <section>
+    <img src="https://metik.vn/wp-content/uploads/2021/05/banner-metik.webp" alt="Banner METIK - Thế giới Snack"
+      class="w-full h-auto block" />
+  </section>
+
+  <!-- Danh sách sản phẩm — layout grid giống Trang-Chu.html -->
+  <section class="container mx-auto py-12 px-6">
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+
+      <!-- Card 1: Snack vị Tảo biển -->
+      <div
+        class="product-card bg-white dark:bg-gray-800 shadow-md rounded-xl overflow-hidden text-center transition-all duration-300 hover:shadow-xl">
+        <div class="overflow-hidden">
+          <img src="https://metik.vn/wp-content/uploads/2026/06/snack-vi-tao-bien.jpg.webp" alt="Snack vị Tảo biển"
+            class="product-image w-full aspect-square object-cover" loading="lazy" />
+        </div>
+        <div class="p-4">
+          <h3 class="font-bold text-sm md:text-base mb-3" style="color: #f4851a;">Snack vị Tảo biển</h3>
+          <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition text-sm">Xem chi
+            tiết</button>
+        </div>
+      </div>
+
+      <!-- Card 2: Snack vị BBQ -->
+      <div
+        class="product-card bg-white dark:bg-gray-800 shadow-md rounded-xl overflow-hidden text-center transition-all duration-300 hover:shadow-xl">
+        <div class="overflow-hidden">
+          <img src="https://metik.vn/wp-content/uploads/2026/06/snack-vi-bbq.jpg.webp" alt="Snack vị BBQ"
+            class="product-image w-full aspect-square object-cover" loading="lazy" />
+        </div>
+        <div class="p-4">
+          <h3 class="font-bold text-sm md:text-base mb-3" style="color: #f4851a;">Snack vị BBQ</h3>
+          <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition text-sm">Xem chi
+            tiết</button>
+        </div>
+      </div>
+
+      <!-- Card 3: Snack vị Bắp -->
+      <div
+        class="product-card bg-white dark:bg-gray-800 shadow-md rounded-xl overflow-hidden text-center transition-all duration-300 hover:shadow-xl">
+        <div class="overflow-hidden">
+          <img src="https://metik.vn/wp-content/uploads/2026/06/snack-vi-bap.jpg.webp" alt="Snack vị Bắp"
+            class="product-image w-full aspect-square object-cover" loading="lazy" />
+        </div>
+        <div class="p-4">
+          <h3 class="font-bold text-sm md:text-base mb-3" style="color: #f4851a;">Snack vị Bắp</h3>
+          <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition text-sm">Xem chi
+            tiết</button>
+        </div>
+      </div>
+
+      <!-- Card 4: Snack vị Phô mai -->
+      <div
+        class="product-card bg-white dark:bg-gray-800 shadow-md rounded-xl overflow-hidden text-center transition-all duration-300 hover:shadow-xl">
+        <div class="overflow-hidden">
+          <img src="https://metik.vn/wp-content/uploads/2026/06/snack-vi-pho-mai.webp" alt="Snack vị Phô mai"
+            class="product-image w-full aspect-square object-cover" loading="lazy" />
+        </div>
+        <div class="p-4">
+          <h3 class="font-bold text-sm md:text-base mb-3" style="color: #f4851a;">Snack vị Phô mai</h3>
+          <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition text-sm">Xem chi
+            tiết</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer — giống Trang-Chu.html -->
+  <footer class="bg-gold">
+    <div class="container mx-auto px-4 py-8">
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- Cột trái: Logo + mô tả -->
+        <div>
+          <img src="IMG/367d8823-08ba-4067-b776-f3a4fafb6475.png" alt="METIK" class="h-16 w-auto mb-4" />
+          <p class="text-gray-800 text-lg max-w-md">
+            METIK - một thế giới snack dành cho những ai yêu sự giòn giòn ngất ngây, hương vị trẻ trung, đầy cảm hứng để
+            mỗi ngày đều căng tràn sức sống.
+          </p>
+        </div>
+
+        <!-- Cột phải: Thông tin liên hệ -->
+        <div>
+          <h3 class="text-xl font-bold mb-4" style="color: #0b7f3e;">Thông tin liên hệ</h3>
+          <div class="space-y-2 text-gray-800">
+            <p>
+              <i class="fas fa-phone text-primary w-6"></i>
+              <a href="tel:0797213333" class="hover:text-orange-600">(+84) 79 721 3333</a>
+            </p>
+            <p>
+              <i class="fas fa-envelope text-primary w-6"></i>
+              <a href="mailto:sale@ochao.vn" class="hover:text-orange-600">sale@ochao.vn</a>
+            </p>
+            <p>
+              <i class="fas fa-map-marker-alt text-primary w-6"></i>
+              Lô C3-1, Đường D2-N7, KCN Tân Phú Trung, Xã Củ Chi, TP.HCM.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Copyright -->
+      <div class="border-t border-gray-300 mt-6 pt-6 text-center text-gray-700">
+        Copyright 2026 © <strong>METIK</strong>. All rights reserved
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script toggle dark mode -->
+  <script>
+    const btn = document.getElementById('toggleDark');
+    btn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+  </script>
+
+</body>
+
+</html>

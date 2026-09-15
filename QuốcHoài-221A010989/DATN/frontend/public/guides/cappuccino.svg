@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a2f4e;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:#6b9fd4;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#0d1a2e;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <circle cx="400" cy="250" r="300" fill="url(#glow)"/>
+  <!-- Cappuccino cup -->
+  <rect x="295" y="170" width="210" height="150" rx="10" fill="#e8d5b7" opacity="0.9"/>
+  <rect x="308" y="182" width="184" height="128" rx="8" fill="#3d1a08"/>
+  <!-- Foam/Milk surface with heart latte art -->
+  <ellipse cx="400" cy="210" rx="78" ry="25" fill="#f5f0eb"/>
+  <!-- Heart shape latte art -->
+  <path d="M 400 210 Q 380 195 370 205 Q 360 215 380 230 L 400 245 L 420 230 Q 440 215 430 205 Q 420 195 400 210Z" fill="#c87941" opacity="0.8"/>
+  <!-- Handle -->
+  <path d="M 505 195 Q 545 235 505 275" stroke="#e8d5b7" stroke-width="14" fill="none" stroke-linecap="round"/>
+  <!-- Saucer -->
+  <ellipse cx="400" cy="325" rx="130" ry="20" fill="#e8d5b7" opacity="0.8"/>
+  <!-- Steam curls -->
+  <path d="M 375 165 Q 362 138 375 110" stroke="#ffffff" stroke-width="2.5" fill="none" opacity="0.5" stroke-dasharray="5,3"/>
+  <path d="M 400 160 Q 387 130 400 100" stroke="#ffffff" stroke-width="2.5" fill="none" opacity="0.6" stroke-dasharray="5,3"/>
+  <path d="M 425 165 Q 412 136 425 108" stroke="#ffffff" stroke-width="2.5" fill="none" opacity="0.5" stroke-dasharray="5,3"/>
+  <!-- Text -->
+  <text x="400" y="420" text-anchor="middle" font-family="Georgia, serif" font-size="28" font-weight="bold" fill="#e8d5b7">CAPPUCCINO</text>
+  <text x="400" y="448" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#e8d5b7" opacity="0.7">Latte Art Guide</text>
+</svg>

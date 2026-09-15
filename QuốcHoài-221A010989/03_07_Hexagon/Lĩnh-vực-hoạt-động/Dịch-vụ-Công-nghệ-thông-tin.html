@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/favicon.png">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="/manifest.json">
+
+    <title>Dịch vụ Công nghệ thông tin - Hexagon Corporation</title>
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #F8FAFC;
+            color: #1e293b;
+            line-height: 1.6;
+            padding-top: 80px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== HEADER ===== */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: #1A6B49;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-area img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .logo-area span {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #d1d5db;
+            transition: color 0.2s;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #fbbf24;
+        }
+
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 16px;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+
+        .lang-btn.active {
+            opacity: 1;
+        }
+
+        .lang-btn img {
+            width: 24px;
+            height: 16px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Mobile menu */
+        #mobile-menu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid #f1f5f9;
+            z-index: 40;
+            padding: 16px 0;
+        }
+
+        #mobile-menu.open {
+            display: block;
+        }
+
+        #mobile-menu a {
+            display: block;
+            padding: 12px 24px;
+            color: #1e293b;
+            font-weight: 500;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        #mobile-menu a:hover {
+            background: #f8fafc;
+            color: #d97706;
+        }
+
+        #mobile-menu .lang-switcher {
+            padding: 16px 24px 0;
+            border-top: 1px solid #f1f5f9;
+            margin-top: 8px;
+        }
+
+        /* ===== BREADCRUMB ===== */
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+
+        .breadcrumb a {
+            color: #94a3b8;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: #f59e0b;
+        }
+
+        .breadcrumb span {
+            color: #334155;
+        }
+
+        /* ===== HERO ===== */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            color: #f59e0b;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.125rem;
+            color: #475569;
+            max-width: 540px;
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 14px 36px;
+            background: #f59e0b;
+            color: #fff;
+            font-weight: 700;
+            border-radius: 8px;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary:hover {
+            background: #d97706;
+            box-shadow: 0 6px 24px rgba(245, 158, 11, 0.4);
+        }
+
+        .hero-image {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            transition: transform 0.4s ease;
+            aspect-ratio: 16/9;
+        }
+
+        .hero-image:hover {
+            transform: scale(1.01);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== SECTION ===== */
+        .section-title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .section-title .line {
+            width: 64px;
+            height: 4px;
+            background: #f59e0b;
+            border-radius: 4px;
+            margin: 0 auto;
+        }
+
+        .section-title p {
+            color: #64748b;
+            margin-top: 12px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== SOLUTIONS ===== */
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 80px;
+        }
+
+        .solution-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 32px 28px;
+            transition: box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .solution-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            border-color: #f59e0b;
+        }
+
+        .solution-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(26, 107, 73, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            color: #1A6B49;
+            font-size: 1.25rem;
+        }
+
+        .solution-card h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .solution-card p {
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        /* ===== PROCESS ===== */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-bottom: 80px;
+        }
+
+        .process-card {
+            background: #fff;
+            padding: 32px 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            transition: box-shadow 0.3s;
+        }
+
+        .process-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .process-number {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #f59e0b;
+            margin-bottom: 8px;
+        }
+
+        .process-card h4 {
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .process-card p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            background: #0D5939;
+            background-image: linear-gradient(135deg, #0D5939 0%, #1A6B49 100%);
+            border-radius: 16px;
+            padding: 48px 32px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 40px;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 560px;
+            margin: 0 auto 28px;
+            font-size: 1.125rem;
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .btn-outline-light {
+            padding: 14px 36px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-weight: 700;
+            border-radius: 8px;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-outline-light:hover {
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .btn-gold {
+            padding: 14px 36px;
+            background: #f59e0b;
+            color: #fff;
+            font-weight: 700;
+            border-radius: 8px;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-gold:hover {
+            background: #d97706;
+            box-shadow: 0 6px 24px rgba(245, 158, 11, 0.4);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0D5939;
+            padding: 24px 0 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 24px;
+        }
+
+        footer p {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+        footer p span {
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                gap: 32px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.25rem;
+            }
+
+            .solutions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .process-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 72px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                margin-bottom: 48px;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                max-width: 100%;
+            }
+
+            .solutions-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin-bottom: 48px;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+                margin-bottom: 48px;
+            }
+
+            .cta-section {
+                padding: 32px 20px;
+            }
+
+            .cta-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.75rem;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .nav-inner {
+                padding: 8px 16px;
+            }
+
+            .logo-area img {
+                width: 48px;
+                height: 48px;
+            }
+
+            .logo-area span {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-buttons .btn-outline-light,
+            .cta-buttons .btn-gold {
+                width: 100%;
+                max-width: 280px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header id="navbar">
+        <div class="nav-inner">
+            <div class="logo-area">
+                <a href="/">
+                    <img src="../Logo/logo-hhc.png" alt="Hexagon Logo">
+                </a>
+                <span>HEXAGON</span>
+            </div>
+
+            <nav class="nav-links">
+                <a href="../Trang-Chủ.html">Trang chủ</a>
+                <a href="/#gioi-thieu">Giới thiệu</a>
+                <a href="/#dich-vu">Dịch vụ</a>
+                <a href="https://support.hexagon.xyz/" target="_blank" rel="noopener noreferrer">Hỗ trợ</a>
+                <a href="/#lien-he">Liên hệ</a>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" title="Tiếng Việt">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                            style="width:24px;height:16px;object-fit:cover;border-radius:2px;">
+                            <defs>
+                                <clipPath id="vn-a">
+                                    <path fill-opacity=".7" d="M-85.3 0h682.6v512H-85.3z" />
+                                </clipPath>
+                            </defs>
+                            <g fill-rule="evenodd" clip-path="url(#vn-a)" transform="translate(80)scale(.9375)">
+                                <path fill="#da251d" d="M-128 0h768v512h-768z" />
+                                <path fill="#ff0"
+                                    d="M349.6 381 260 314.3l-89 67.3L204 272l-89-67.7 110.1-1 34.2-109.4L294 203l110.1.1-88.5 68.4 33.9 109.6z" />
+                            </g>
+                        </svg>
+                    </button>
+                    <button class="lang-btn" title="English">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                            style="width:24px;height:16px;object-fit:cover;border-radius:2px;">
+                            <path fill="#012169" d="M0 0h640v480H0z" />
+                            <path fill="#FFF"
+                                d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0z" />
+                            <path fill="#C8102E"
+                                d="m424 281 216 159v40L369 281zm-184 20 6 35L54 480H0zM640 0v3L391 191l2-44L590 0zM0 0l239 176h-60L0 42z" />
+                            <path fill="#FFF" d="M241 0v480h160V0zM0 160v160h640V160z" />
+                            <path fill="#C8102E" d="M0 193v96h640v-96zM273 0v480h96V0z" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                ☰
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu">
+            <a href="../Trang-Chủ.html">Trang chủ</a>
+            <a href="/#gioi-thieu">Giới thiệu</a>
+            <a href="/#dich-vu">Dịch vụ</a>
+            <a href="https://support.hexagon.xyz/" target="_blank" rel="noopener noreferrer">Hỗ trợ</a>
+            <a href="/#lien-he">Liên hệ</a>
+            <div class="lang-switcher">
+                <button class="lang-btn active" title="Tiếng Việt">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                        style="width:24px;height:16px;object-fit:cover;border-radius:2px;">
+                        <defs>
+                            <clipPath id="vn-b">
+                                <path fill-opacity=".7" d="M-85.3 0h682.6v512H-85.3z" />
+                            </clipPath>
+                        </defs>
+                        <g fill-rule="evenodd" clip-path="url(#vn-b)" transform="translate(80)scale(.9375)">
+                            <path fill="#da251d" d="M-128 0h768v512h-768z" />
+                            <path fill="#ff0"
+                                d="M349.6 381 260 314.3l-89 67.3L204 272l-89-67.7 110.1-1 34.2-109.4L294 203l110.1.1-88.5 68.4 33.9 109.6z" />
+                        </g>
+                    </svg>
+                </button>
+                <button class="lang-btn" title="English">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+                        style="width:24px;height:16px;object-fit:cover;border-radius:2px;">
+                        <path fill="#012169" d="M0 0h640v480H0z" />
+                        <path fill="#FFF"
+                            d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0z" />
+                        <path fill="#C8102E"
+                            d="m424 281 216 159v40L369 281zm-184 20 6 35L54 480H0zM640 0v3L391 191l2-44L590 0zM0 0l239 176h-60L0 42z" />
+                        <path fill="#FFF" d="M241 0v480h160V0zM0 160v160h640V160z" />
+                        <path fill="#C8102E" d="M0 193v96h640v-96zM273 0v480h96V0z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main>
+        <div class="container">
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="/">Trang chủ</a> &gt;
+                <a href="/#dich-vu">Dịch vụ</a> &gt;
+                <span>Dịch vụ Công nghệ thông tin</span>
+            </nav>
+
+            <!-- Hero -->
+            <section class="hero-grid">
+                <div class="hero-content">
+                    <h1>Dịch vụ Công nghệ thông tin</h1>
+                    <p>Thi công và lắp đặt hệ thống camera giám sát, mạng wifi chuyên nghiệp, đảm bảo an ninh, ổn định
+                        kết nối và phù hợp với mọi quy mô doanh nghiệp.</p>
+                    <a href="/#lien-he" class="btn-primary">Liên hệ tư vấn</a>
+                </div>
+                <div class="hero-image">
+                    <img src="https://beta-api.hexagon.xyz/uploads/dv-1-1782723514912-477828992.jpg"
+                        alt="Dịch vụ Công nghệ thông tin">
+                </div>
+            </section>
+
+            <!-- Solutions -->
+            <section style="margin-bottom:80px;">
+                <div class="section-title">
+                    <h2>Giải pháp nổi bật</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="solutions-grid">
+                    <div class="solution-card">
+                        <div class="solution-icon">✔</div>
+                        <h4>Giải pháp hệ thống camera giám sát</h4>
+                        <p>Thiết kế và lắp đặt hệ thống camera an ninh cho văn phòng, nhà xưởng, cửa hàng… với khả năng
+                            giám sát từ xa, lưu trữ và cảnh báo thông minh.</p>
+                    </div>
+                    <div class="solution-card">
+                        <div class="solution-icon">✔</div>
+                        <h4>Giải pháp mạng WiFi doanh nghiệp</h4>
+                        <p>Triển khai hệ thống WiFi phủ sóng ổn định, bảo mật cao, đáp ứng số lượng lớn người dùng và
+                            thiết bị trong môi trường doanh nghiệp.</p>
+                    </div>
+                    <div class="solution-card">
+                        <div class="solution-icon">✔</div>
+                        <h4>Giải pháp hạ tầng mạng &amp; tích hợp</h4>
+                        <p>Thi công hệ thống mạng tổng thể (LAN, Switch, Router, Server…), đồng bộ với camera và WiFi để
+                            đảm bảo vận hành xuyên suốt.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Process -->
+            <section style="margin-bottom:80px;">
+                <div class="section-title">
+                    <h2>Quy trình thực hiện</h2>
+                    <div class="line"></div>
+                    <p>Quy trình chuyên nghiệp, minh bạch và hiệu quả.</p>
+                </div>
+                <div class="process-grid">
+                    <div class="process-card">
+                        <div class="process-number">01</div>
+                        <h4>Khảo sát &amp; tư vấn giải pháp</h4>
+                        <p>&nbsp;</p>
+                    </div>
+                    <div class="process-card">
+                        <div class="process-number">02</div>
+                        <h4>Thiết kế sơ đồ &amp; cấu hình hệ thống</h4>
+                        <p>&nbsp;</p>
+                    </div>
+                    <div class="process-card">
+                        <div class="process-number">03</div>
+                        <h4>Thi công &amp; lắp đặt</h4>
+                        <p>&nbsp;</p>
+                    </div>
+                    <div class="process-card">
+                        <div class="process-number">04</div>
+                        <h4>Bàn giao &amp; bảo trì</h4>
+                        <p>&nbsp;</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="cta-section">
+                <h2>Sẵn sàng triển khai?</h2>
+                <p>Đừng để công nghệ làm rào cản. Hãy biến nó thành lợi thế cạnh tranh của bạn cùng Hexagon.</p>
+                <div class="cta-buttons">
+                    <a href="/" class="btn-outline-light">Về trang chủ</a>
+                    <a href="/#lien-he" class="btn-gold">Liên hệ ngay</a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <p>Copyright 2026 © <span>Hexagon Corporation</span>. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', function () {
+            mobileMenu.classList.toggle('open');
+            this.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function () {
+                mobileMenu.classList.remove('open');
+                menuToggle.textContent = '☰';
+            });
+        });
+
+        // Language switcher
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const parent = this.closest('.lang-switcher');
+                parent.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="/#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                const targetId = href.replace('/#', '');
+                if (targetId) {
+                    e.preventDefault();
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+
+        // Header shadow on scroll
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('navbar');
+            if (window.scrollY > 10) {
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+            } else {
+                header.style.boxShadow = '0 2px 12px rgba(0,0,0,0.12)';
+            }
+        });
+    </script>
+
+<script src="../translate.js"></script>
+</body>
+
+</html>

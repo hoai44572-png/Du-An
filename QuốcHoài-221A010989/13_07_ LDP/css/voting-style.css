@@ -1,0 +1,1097 @@
+/* ============================================================
+   MISS MISTER - HÀO KHÍ DU HIỆP - TRANG VOTING
+   Thiết kế theo hình mẫu - Vanilla CSS, không dùng framework
+   File: css/voting-style.css
+============================================================ */
+
+/* ===== RESET & ROOT ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --c-bg: #150822;
+  --c-bg-deep: #0c0518;
+  --c-purple-1: #2a1046;
+  --c-purple-2: #4a1a7a;
+  --c-pink: #ff2f92;
+  --c-pink-2: #ff6fc0;
+  --c-cyan: #2fe4e8;
+  --c-gold: #f6c657;
+  --c-gold-2: #a9701f;
+  --c-white: #ffffff;
+  --c-text-soft: #cbb8e6;
+  --font-display: 'Orbitron', 'Be Vietnam Pro', sans-serif;
+  --font-body: 'Be Vietnam Pro', sans-serif;
+}
+
+html,
+body {
+  background: #16002b;
+  font-family: var(--font-body);
+  color: var(--c-white);
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+}
+
+/* ===== WRAPPER & STAGE ===== */
+.v-wrapper {
+  width: 100%;
+  display: block;
+}
+
+.v-stage {
+  width: 100%;
+  background-image: url("../assets/BGTRANGVOTING.png");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  position: relative;
+}
+
+/* ===== HEADER ===== */
+.v-header {
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(90deg, #7a1a63 0%, #4a1256 40%, #2a0f45 100%);
+  border-bottom: 1px solid rgba(255, 111, 192, 0.35);
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 100;
+}
+
+.v-header__inner {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.v-header__logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.v-header__logo-img {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  object-position: left center;
+  border-radius: 8px;
+  border: 1.5px solid var(--c-gold);
+  display: block;
+}
+
+.v-header__logo-text-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.2;
+}
+
+.v-header__logo-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: var(--c-white);
+}
+
+.v-header__logo-subtext {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: var(--c-gold);
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.v-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.v-header__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--c-white);
+}
+
+.v-header__login img {
+  height: 34px;
+  width: auto;
+}
+
+/* ===== HERO ===== */
+.v-hero {
+  position: relative;
+  width: 100%;
+  padding-top: 0;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.v-hero__content {
+  position: relative;
+  z-index: 2;
+  margin-top: -20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.v-hero__game-logo {
+  max-width: 200px;
+  height: auto;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 20px rgba(255, 111, 192, 0.45));
+}
+
+.v-hero__title-img {
+  max-width: 480px;
+  width: 80%;
+  height: auto;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 0 18px rgba(255, 47, 146, 0.5));
+}
+
+.v-hero__tagline {
+  display: none;
+  /* text.png đã chứa tagline trong ảnh */
+}
+
+.v-hero__vote-btn {
+  display: inline-block;
+  margin-bottom: 30px;
+}
+
+.v-hero__vote-btn img {
+  height: 64px;
+  width: auto;
+  filter: drop-shadow(0 0 16px rgba(255, 47, 146, 0.6));
+}
+
+/* ===== HERO vote btn (hidden) ===== */
+.v-hero__vote-btn {
+  display: none;
+}
+
+/* ===== NAV TABS ===== */
+.v-navtabs {
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  height: 135px;
+  margin-top: 0;
+}
+
+/* Thanh nền absolute, nằm ở bottom trong nav container */
+.v-navtabs__rail {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 74px;
+  background: linear-gradient(90deg, #160636 0%, #3a186b 25%, #56238b 50%, #3a186b 75%, #160636 100%);
+  border-top: 2.5px solid #2fe4e8;
+  border-bottom: 2.5px solid #2fe4e8;
+  box-shadow:
+    0 0 25px rgba(47, 228, 232, 0.6),
+    0 0 60px rgba(47, 228, 232, 0.3),
+    inset 0 0 45px rgba(8, 1, 22, 0.85);
+  clip-path: polygon(
+    36px 0%,
+    calc(100% - 36px) 0%,
+    100% 50%,
+    calc(100% - 36px) 100%,
+    36px 100%,
+    0% 50%
+  );
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Hiệu ứng ánh sáng tím và xanh chạy ngang trên thanh nền */
+.v-navtabs__rail-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(47, 228, 232, 0.05) 20%,
+    rgba(255, 0, 200, 0.25) 45%,
+    rgba(47, 228, 232, 0.45) 50%,
+    rgba(255, 0, 200, 0.25) 55%,
+    rgba(47, 228, 232, 0.05) 80%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  animation: navtabsRailShimmer 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes navtabsRailShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Content overlay: flex row với tabs + badge */
+.v-navtabs__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 135px;
+  z-index: 5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Nhóm 2 tabs mỗi bên */
+.v-navtabs__group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex: 1;
+  height: 74px;
+  align-self: flex-end;
+}
+
+/* Mỗi tab button */
+.v-navtab-btn {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.22s ease;
+}
+
+/* Tab button image asset rendering (hd.png, hoafree.png, quatichluy.png, naphoa.png) */
+.v-navtab-btn img {
+  height: 56px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 0 10px rgba(47, 228, 232, 0.5));
+  transition: filter 0.22s ease, transform 0.22s ease;
+}
+
+.v-navtab-btn:hover img {
+  filter: drop-shadow(0 0 18px rgba(255, 234, 121, 0.95)) drop-shadow(0 0 32px rgba(47, 228, 232, 0.8)) brightness(1.15);
+  transform: translateY(-3px) scale(1.04);
+}
+
+.v-navtab-btn:active img {
+  transform: translateY(0) scale(0.97);
+}
+
+/* CSS fallback button (Nền tím đậm, viền xanh neon, góc cắt xéo parallelogram, chữ trắng in đậm) */
+.v-navtab-btn__text {
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13.5px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.9),
+    0 0 16px rgba(47, 228, 232, 0.6);
+}
+
+.v-navtab-btn:not(:has(img)) {
+  background: linear-gradient(180deg, #2b1154 0%, #170733 100%);
+  border: 1.5px solid #2fe4e8;
+  padding: 12px 34px;
+  clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
+  box-shadow:
+    0 0 15px rgba(47, 228, 232, 0.5),
+    inset 0 0 14px rgba(47, 228, 232, 0.25);
+  transition: transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.22s ease;
+}
+
+.v-navtab-btn:not(:has(img)):hover {
+  background: linear-gradient(180deg, #3d177a 0%, #22094c 100%);
+  border-color: #ffea79;
+  box-shadow:
+    0 0 22px rgba(255, 234, 121, 0.85),
+    0 0 35px rgba(47, 228, 232, 0.6),
+    inset 0 0 18px rgba(255, 234, 121, 0.4);
+  transform: translateY(-3px) scale(1.03);
+}
+
+/* Badge VOTE NGAY: hình khiên/lục giác nổi lên phía trên */
+.v-navtabs__vote {
+  flex-shrink: 0;
+  align-self: flex-start;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 16px;
+  height: 135px;
+  z-index: 20;
+  text-decoration: none;
+  transition: transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.v-navtabs__vote img {
+  height: 145px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 0 25px rgba(255, 170, 30, 0.95)) drop-shadow(0 0 55px rgba(255, 90, 0, 0.6));
+  transition: filter 0.22s ease, transform 0.22s ease;
+}
+
+.v-navtabs__vote:hover img {
+  filter: drop-shadow(0 0 35px rgba(255, 215, 0, 1)) drop-shadow(0 0 70px rgba(255, 90, 0, 0.85)) brightness(1.1);
+  transform: scale(1.05);
+}
+
+/* Responsive Styles for Tablet & Mobile */
+@media (max-width: 1024px) {
+  .v-navtabs {
+    height: 110px;
+  }
+  .v-navtabs__rail {
+    height: 62px;
+  }
+  .v-navtabs__content {
+    height: 110px;
+    padding: 0 10px;
+  }
+  .v-navtabs__group {
+    height: 62px;
+    gap: 12px;
+  }
+  .v-navtab-btn img {
+    height: 44px;
+  }
+  .v-navtab-btn:not(:has(img)) {
+    padding: 8px 18px;
+  }
+  .v-navtab-btn__text {
+    font-size: 11.5px;
+    letter-spacing: 1px;
+  }
+  .v-navtabs__vote {
+    height: 110px;
+    padding: 0 8px;
+  }
+  .v-navtabs__vote img {
+    height: 115px;
+  }
+}
+
+@media (max-width: 640px) {
+  .v-navtabs {
+    height: 95px;
+  }
+  .v-navtabs__rail {
+    height: 52px;
+    clip-path: polygon(15px 0%, calc(100% - 15px) 0%, 100% 50%, calc(100% - 15px) 100%, 15px 100%, 0% 50%);
+  }
+  .v-navtabs__content {
+    height: 95px;
+    padding: 0 4px;
+  }
+  .v-navtabs__group {
+    height: 52px;
+    gap: 6px;
+  }
+  .v-navtab-btn img {
+    height: 34px;
+  }
+  .v-navtab-btn:not(:has(img)) {
+    padding: 6px 10px;
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  }
+  .v-navtab-btn__text {
+    font-size: 9.5px;
+    letter-spacing: 0.5px;
+  }
+  .v-navtabs__vote {
+    height: 95px;
+    padding: 0 4px;
+  }
+  .v-navtabs__vote img {
+    height: 95px;
+  }
+}
+
+
+
+/* ===== SECTION COMMON ===== */
+.v-section-title {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 24px;
+  /* Đảm bảo ảnh căn giữa trang */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.v-section-title img {
+  max-width: 500px;
+  width: 70%;
+  height: auto;
+  filter: drop-shadow(0 0 12px rgba(47, 228, 232, 0.4));
+  display: block;
+}
+
+/* ===== DANH SÁCH THÍ SINH ===== */
+.v-candidates {
+  width: 100%;
+  padding: 30px 0 20px;
+}
+
+/* Giới hạn chỉ nội dung bên trong (filter bar + grid) */
+.v-candidates__inner {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* FILTER BAR */
+.v-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.v-filter-bar__left {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.v-filter-bar__right {
+  display: flex;
+  align-items: center;
+}
+
+.v-select-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.v-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(30, 10, 55, 0.9);
+  border: 1px solid rgba(150, 80, 220, 0.6);
+  color: var(--c-text-soft);
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 8px 32px 8px 14px;
+  border-radius: 6px;
+  outline: none;
+  min-width: 130px;
+  cursor: pointer;
+}
+
+.v-select-arrow {
+  position: absolute;
+  right: 10px;
+  color: var(--c-pink-2);
+  font-size: 10px;
+  pointer-events: none;
+}
+
+.v-search-wrap {
+  display: flex;
+  align-items: center;
+  background: rgba(30, 10, 55, 0.9);
+  border: 1px solid rgba(150, 80, 220, 0.6);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.v-search {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--c-text-soft);
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 8px 14px;
+  min-width: 200px;
+}
+
+.v-search::placeholder {
+  color: rgba(203, 184, 230, 0.5);
+}
+
+.v-search-btn {
+  background: rgba(255, 47, 146, 0.2);
+  border: none;
+  border-left: 1px solid rgba(150, 80, 220, 0.4);
+  color: var(--c-pink-2);
+  padding: 0 12px;
+  height: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CANDIDATE CARD GRID */
+.v-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.v-card {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  overflow: hidden;
+  /* Giữ clip-path để tránh click nhầm vào vùng vát trong suốt */
+  clip-path: polygon(0 0,
+      100% 0,
+      100% calc(100% - 15px),
+      calc(100% - 15px) 100%,
+      0 100%);
+}
+
+.v-card__bg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Đè lên ô stats màu hồng bên trái */
+.v-card__votes-overlay {
+  position: absolute;
+  left: -6%;
+  top: 60%;
+  width: 34%;
+  height: 11%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--c-white);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Đè lên ô stats màu xanh bên phải */
+.v-card__flowers-overlay {
+  position: absolute;
+  right: 2.5%;
+  top: 60%;
+  width: 25%;
+  height: 11%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--c-white);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.v-card__bar-icon {
+  width: 13px;
+  height: 13px;
+  fill: #00ffff;
+  filter: drop-shadow(0 0 2px rgba(0, 255, 255, 0.5));
+}
+
+.v-card__hoa-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+/* Đè lên phần thông tin màu tím nhạt dưới cùng */
+.v-card__info-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 28%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px 8px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.v-card__name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffeb3b;
+  /* Màu vàng rực rỡ */
+  margin-bottom: 2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.v-card__server {
+  font-size: 11px;
+  color: #ffffff;
+  /* Màu trắng nổi bật */
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+  opacity: 0.95;
+}
+
+/* PAGINATION */
+.v-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.v-page-btn {
+  background: rgba(30, 10, 55, 0.85);
+  border: 1px solid rgba(120, 50, 200, 0.5);
+  color: var(--c-text-soft);
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 7px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.v-page-btn--active {
+  background: linear-gradient(180deg, #9b3fdf, #6020a0);
+  border-color: rgba(200, 100, 255, 0.7);
+  color: var(--c-white);
+  font-weight: 700;
+}
+
+.v-page-btn--num {
+  min-width: 40px;
+  background: rgba(60, 20, 100, 0.9);
+  border-color: rgba(180, 80, 255, 0.6);
+  color: var(--c-white);
+  font-weight: 700;
+}
+
+/* ===== TÍCH LŨY MỐC ĐỔI QUÀ ===== */
+.v-milestone {
+  width: 100%;
+  max-width: 1100px;
+  margin: 10px auto 20px;
+  padding: 0 20px;
+}
+
+.v-milestone__box {
+  position: relative;
+  background: linear-gradient(180deg, rgba(30, 8, 60, 0.95) 0%, rgba(15, 5, 30, 0.97) 100%);
+  border: 1.5px solid rgba(47, 228, 232, 0.35);
+  border-radius: 14px;
+  padding: 28px 36px 32px;
+  box-shadow: 0 0 30px rgba(47, 228, 232, 0.1), 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.v-milestone__sub {
+  text-align: center;
+  font-size: 14px;
+  color: var(--c-text-soft);
+  margin-bottom: 30px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Progress track */
+.v-milestone__track-wrap {
+  margin: 60px 40px 70px;
+}
+
+.v-milestone__track {
+  position: relative;
+  height: 26px;
+  background: url('../assets/thanh.png') no-repeat center;
+  background-size: 100% 100%;
+  border-radius: 20px;
+  border: none;
+}
+
+.v-milestone__fill {
+  display: none;
+  /* thanh.png đã chứa sẵn tiến trình */
+}
+
+.v-milestone__marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.v-milestone__hoa {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  transform: translateY(0);
+  filter: drop-shadow(0 2px 10px rgba(255, 180, 200, 0.5));
+}
+
+.v-milestone__label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  /* Màu trắng theo hình mẫu */
+  white-space: nowrap;
+  transform: translateY(32px);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+/* Reward items */
+.v-milestone__rewards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.v-reward-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.v-reward-item__box {
+  width: 100%;
+  max-width: 160px;
+  aspect-ratio: 196 / 232;
+  /* Tỉ lệ thực tế của boxitem.png */
+  background: url('../assets/boxitem.png') no-repeat center;
+  background-size: 100% 100%;
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Cân chỉnh padding để 4 ô vuông xám lọt vào phần thân của boxitem */
+  padding: 30px 24px 24px;
+  box-sizing: border-box;
+}
+
+/* Lưới 2x2 chứa 4 ô vuông xám */
+.v-reward-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+}
+
+.v-reward-cell {
+  background: #d1d5db;
+  /* Màu xám nhạt */
+  border: 1.5px solid #000000;
+  border-radius: 4px;
+}
+
+/* Ô highlight màu cyan sáng ở mốc 500 hoa */
+.v-reward-cell--highlight {
+  border: 2px solid #00ffff;
+  box-shadow:
+    0 0 8px rgba(0, 255, 255, 0.8),
+    inset 0 0 6px rgba(0, 255, 255, 0.5);
+  background: #e5e7eb;
+}
+
+/* Nút Nhận bằng ảnh buttonnhan.png */
+.v-reward-item__btn-img {
+  background: transparent;
+  border: none;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  display: block;
+}
+
+.v-reward-item__btn-img img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+
+/* ===== BẢNG XẾP HẠNG ===== */
+.v-leaderboard {
+  width: 100%;
+  max-width: 1100px;
+  margin: 20px auto 0;
+  padding: 0 20px 40px;
+  position: relative;
+}
+
+/* Tiêu đề Bảng Xếp Hạng đè lên viền trên của khung */
+.v-leaderboard .v-section-title {
+  position: relative;
+  z-index: 10;
+  margin-bottom: -32px;
+}
+
+.v-leaderboard .v-section-title img {
+  max-width: 500px;
+  width: 60%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Khung chính sử dụng khungbxh.png */
+.v-bxh__frame {
+  position: relative;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+  /* Chừa lề trên rộng để chứa tabs và tạo khoảng cách hợp lý */
+  padding: 60px 48px 48px;
+  box-sizing: border-box;
+}
+
+/* Lớp giả chứa background-image có nền đen, lọc bằng screen */
+.v-bxh__frame::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('../assets/khungbxh.png') no-repeat center;
+  background-size: 100% 100%;
+  mix-blend-mode: screen;
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+.v-bxh__tabs {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 5;
+}
+
+.v-bxh__tab {
+  background: transparent;
+  border: none;
+  padding: 0;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  outline: none;
+}
+
+.v-bxh__tab--active {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.v-bxh__tab img {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+.v-bxh__table-wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.v-bxh__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+.v-bxh__table thead tr {
+  /* Nền màu xanh dương đậm, thu hẹp mỗi bên 2.5% bằng cách dùng transparent stops */
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    transparent 2.5%, 
+    #1134a6 2.5%, 
+    #0d287f 97.5%, 
+    transparent 97.5%, 
+    transparent 100%
+  );
+  border: none;
+}
+
+
+.v-bxh__table th {
+  padding: 14px 10px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  /* Tiêu đề màu trắng theo hình mẫu */
+  letter-spacing: 1px;
+  text-align: center;
+  /* Căn giữa tất cả các tiêu đề */
+}
+
+/* Chia tỉ lệ rộng cho 4 cột */
+.v-bxh__table th:nth-child(1),
+.v-bxh__table td:nth-child(1) {
+  width: 20%;
+}
+
+.v-bxh__table th:nth-child(2),
+.v-bxh__table td:nth-child(2) {
+  width: 30%;
+}
+
+.v-bxh__table th:nth-child(3),
+.v-bxh__table td:nth-child(3) {
+  width: 25%;
+}
+
+.v-bxh__table th:nth-child(4),
+.v-bxh__table td:nth-child(4) {
+  width: 25%;
+}
+
+.v-bxh__table tbody tr {
+  border-bottom: none;
+  /* Không hiển thị border bottom phân dòng */
+}
+
+.v-bxh__table td {
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #ffffff;
+  /* Tất cả text màu trắng */
+  font-weight: 600;
+  text-align: center;
+  /* Căn giữa tất cả các cột */
+  vertical-align: middle;
+}
+
+/* Cột hoa tặng */
+.v-bxh__table td:nth-child(4) {
+  color: #fcd34d;
+  /* Hoa tặng màu vàng nhạt/vàng sáng */
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.v-bxh__rank-img {
+  height: 38px;
+  width: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Số hạng 4, 5 */
+.v-bxh__rank-num {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+}
+
+
+/* ===== FOOTER ===== */
+.v-footer {
+  text-align: center;
+  padding: 24px 0;
+  font-size: 12px;
+  color: rgba(203, 184, 230, 0.5);
+  background: var(--c-bg-deep);
+  border-top: 1px solid rgba(80, 30, 150, 0.3);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .v-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .v-milestone__rewards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .v-filter-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .v-navtabs__list {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .v-card-grid {
+    grid-template-columns: 1fr;
+  }
+}

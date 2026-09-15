@@ -1,0 +1,118 @@
+/* Styles for "ĐÃ TẶNG HOA THÀNH CÔNG" Success Popup */
+
+.success-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent; /* No dark backdrop overlay behind */
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    z-index: 10000; /* High z-index to stay on top */
+    pointer-events: auto; /* Catch pointer clicks to prevent clicking page elements while open */
+}
+
+/* Modal container matching the layout, size, and glow of mockup */
+.success-modal-container {
+    position: relative;
+    width: 90%;
+    max-width: 680px; /* Mockup size is slightly smaller than details popup */
+    aspect-ratio: 1200 / 700;
+    background-image: url('../assets/popup_thongtinthisinh.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 8.5% 6% 6% 6%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    
+    /* Box glow effects: cyan and pink neon shadow */
+    box-shadow: 0 0 25px rgba(47, 228, 232, 0.4), 
+                0 0 50px rgba(255, 47, 146, 0.3),
+                0 15px 35px rgba(0, 0, 0, 0.8);
+    
+    /* Transition animation: fade and scale */
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Show state for modal container */
+.success-modal-overlay.show {
+    display: flex;
+}
+
+.success-modal-overlay.show .success-modal-container {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Close state for modal container (fade out) */
+.success-modal-overlay.hide-active .success-modal-container {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Close Button (✕) positioned overlaying pre-rendered close button */
+.success-modal-close {
+    position: absolute;
+    top: 10.5%;
+    right: 4.8%;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10001;
+    outline: none;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.success-modal-close:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+/* Centralized Success Text */
+.success-text {
+    color: #ffffff;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 800;
+    font-size: 26px; /* Large, bold, capitalized text */
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 1.5px;
+    line-height: 1.2;
+    margin: 0;
+    
+    /* White text glow */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.75), 
+                 0 0 20px rgba(47, 228, 232, 0.5),
+                 0 0 30px rgba(255, 47, 146, 0.4);
+    
+    /* Make sure text takes maximum container width without overflow */
+    width: 85%;
+    word-wrap: break-word;
+}
+
+/* Responsive Scaling for Success Popup */
+@media (max-width: 768px) {
+    .success-modal-container {
+        max-width: 90%;
+    }
+    .success-text {
+        font-size: 18px;
+        letter-spacing: 0.8px;
+    }
+    .success-modal-close {
+        width: 36px;
+        height: 36px;
+    }
+}

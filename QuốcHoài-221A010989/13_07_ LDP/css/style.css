@@ -1,0 +1,703 @@
+/* ============================================================
+   MISS MISTER - HÀO KHÍ DU HIỆP - LDP
+   Thiết kế theo canvas chuẩn 1920px (đúng theo Figma).
+   .ldp-stage được scale bằng JS (giữ transform-origin: top center)
+   để mọi thứ luôn đúng tỉ lệ so với ảnh nền / logo gốc.
+============================================================ */
+
+:root {
+  --c-bg: #150822;
+  --c-bg-deep: #0c0518;
+  --c-purple-1: #2a1046;
+  --c-purple-2: #4a1a7a;
+  --c-pink: #ff2f92;
+  --c-pink-2: #ff6fc0;
+  --c-cyan: #2fe4e8;
+  --c-cyan-dark: #0f8f96;
+  --c-gold: #f6c657;
+  --c-gold-2: #a9701f;
+  --c-blue: #2f7bff;
+  --c-blue-dark: #1c4fbf;
+  --c-white: #ffffff;
+  --c-text-soft: #cbb8e6;
+
+  --font-display: 'Orbitron', 'Be Vietnam Pro', sans-serif;
+  --font-body: 'Be Vietnam Pro', sans-serif;
+
+  --stage-w: 1920px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background: #16002b;
+}
+
+.ldp-stage {
+  background-image: url("../assets/BGTRANGVOTING.png");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% auto;
+}
+
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ============ STAGE / SCALE WRAPPER ============ */
+.ldp-wrapper {
+  width: 100%;
+  display: block;
+}
+
+.ldp-stage {
+  width: 100%;
+  min-width: 100%;
+  transform: none;
+}
+
+/* ============ HEADER ============ */
+.ldp-header {
+  width: 100%;
+  height: 64px;
+  background: linear-gradient(90deg, #7a1a63 0%, #4a1256 40%, #2a0f45 100%);
+  border-bottom: 1px solid rgba(255, 111, 192, .35);
+  display: flex;
+  align-items: center;
+}
+
+.header-inner {
+  width: 100%;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-logo__img {
+  height: 44px;
+  width: 44px;
+  object-fit: cover;
+  object-position: left center;
+  border-radius: 8px;
+  border: 1.5px solid var(--c-gold);
+  display: block;
+}
+
+.header-logo__text-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.2;
+}
+
+.header-logo__text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: .5px;
+  color: var(--c-white);
+}
+
+.header-logo__subtext {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: .5px;
+  color: var(--c-gold);
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .25);
+  font-size: 16px;
+  transition: .2s;
+}
+
+.header-icon:hover {
+  background: var(--c-pink);
+  border-color: var(--c-pink);
+}
+
+.btn-login {
+  background: linear-gradient(180deg, #4d9bff, var(--c-blue-dark));
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .5px;
+  padding: 9px 26px;
+  border-radius: 6px;
+  box-shadow: 0 3px 0 #123a94, 0 0 14px rgba(47, 123, 255, .55);
+}
+
+.btn-login:hover {
+  filter: brightness(1.1);
+  color: #fff;
+}
+
+/* Nút ĐĂNG NHẬP bằng ảnh thật đn.png */
+.btn-login-img {
+  display: inline-flex;
+  align-items: center;
+  transition: .15s;
+}
+
+.btn-login-img img {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.btn-login-img:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+/* fallback nếu ảnh lỗi: hiện lại nút CSS */
+.btn-login-img.img-fallback {
+  background: linear-gradient(180deg, #4d9bff, var(--c-blue-dark));
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .5px;
+  padding: 9px 26px;
+  border-radius: 6px;
+}
+
+.btn-login-img.img-fallback img {
+  display: none;
+}
+
+.btn-login-img.img-fallback::after {
+  content: "ĐĂNG NHẬP";
+}
+
+/* ============ HERO ============ */
+.ldp-hero {
+  position: relative;
+  width: 100%;
+  min-height: auto;
+  padding-top: 0;
+  padding-bottom: 350px;
+}
+
+.hero-bg {
+  display: none;
+}
+
+.hero-overlay {
+  background: linear-gradient(180deg,
+      rgba(12, 5, 24, 0) 0%,
+      rgba(12, 5, 24, .05) 70%,
+      rgba(12, 5, 24, .25) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  margin-top: -150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-game-logo {
+  max-width: 360px;
+  height: auto;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 0 20px rgba(255, 111, 192, .45));
+}
+
+.hero-title-img {
+  max-width: 580px;
+  width: 90%;
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 18px rgba(255, 47, 146, 0.5));
+}
+
+/* ============ NAV TABS ============ */
+.ldp-navtabs {
+  position: relative;
+  z-index: 3;
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navtabs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: min(1180px, 92%);
+  display: flex;
+  background: linear-gradient(180deg, #241238, #160a26);
+  border: 1px solid rgba(111, 222, 232, .35);
+  border-radius: 10px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, .5);
+  overflow: hidden;
+  position: relative;
+}
+
+.navtabs-list li {
+  flex: 1;
+}
+
+.navtab-btn {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #d8c9f0;
+  padding: 20px 10px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-right: 1px solid rgba(255, 255, 255, .08);
+  transition: .2s;
+}
+
+.navtabs-list li:last-child .navtab-btn {
+  border-right: none;
+}
+
+.navtab-btn:hover {
+  background: rgba(255, 47, 146, .15);
+  color: #fff;
+}
+
+/* Nav tabs bằng ảnh thật: thele.png / hd.png / taigame.png / napthe.png */
+.navtabs-list--img {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  gap: 14px;
+  padding: 0;
+}
+
+.navtab-img-btn {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: block;
+  cursor: pointer;
+  transition: .15s;
+}
+
+.navtab-img-btn img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.navtab-img-btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+}
+
+.navtabs-badge {
+  position: absolute;
+  top: -34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 96px;
+  background: linear-gradient(180deg, #ffe39a, var(--c-gold) 45%, var(--c-gold-2));
+  clip-path: polygon(50% 0%, 100% 20%, 100% 85%, 50% 100%, 0% 85%, 0% 20%);
+  color: #5a2a06;
+  text-align: center;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .55);
+}
+
+.badge-top {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-top: 14px;
+}
+
+.badge-main {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 1.15;
+  letter-spacing: 1px;
+}
+
+/* ============ ĐĂNG KÝ DỰ THI ============ */
+.ldp-register {
+  position: relative;
+  padding: 70px 0 90px;
+  background: transparent;
+}
+
+.section-title {
+  text-align: center;
+  margin: 0 0 46px;
+}
+
+.section-title img {
+  max-width: 420px;
+  width: 32%;
+  min-width: 280px;
+  height: auto;
+  filter: drop-shadow(0 0 14px rgba(255, 111, 192, .45));
+}
+
+.register-card {
+  width: min(1180px, 92%);
+  margin: 0 auto;
+  background: #ffffff;
+  color: #2b1a3d;
+  border-radius: 18px;
+  padding: 44px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, .55);
+}
+
+/* --- upload main: ảnh nền themanh.png (tỉ lệ gốc 803x503) --- */
+.upload-main {
+  display: block;
+  width: 100%;
+  aspect-ratio: 803 / 503;
+  border-radius: 14px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  transition: .2s;
+}
+
+.upload-main:hover {
+  filter: brightness(1.05);
+}
+
+.upload-thumbs {
+  display: flex;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.upload-thumb {
+  flex: 1;
+  aspect-ratio: 265 / 190;
+  border-radius: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+  transition: .15s;
+}
+
+.upload-thumb:hover {
+  filter: brightness(1.1);
+}
+
+/* --- info readonly --- */
+.info-readonly {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 26px;
+  justify-content: flex-end;
+  font-size: 13.5px;
+  color: #7a6a90;
+  margin-bottom: 18px;
+}
+
+.info-readonly span {
+  color: #a396b5;
+}
+
+.info-readonly b {
+  color: #4a2e63;
+}
+
+/* --- radio contest type: ảnh thật thimiss.png / thimisster.png (tỉ lệ gốc 202x65) --- */
+.contest-type {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  justify-content: flex-end;
+}
+
+.type-radio {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.type-radio input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--c-pink);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.type-radio img {
+  width: 150px;
+  height: auto;
+  opacity: .55;
+  filter: grayscale(.4);
+  transition: .2s;
+}
+
+.type-radio input:checked~img {
+  opacity: 1;
+  filter: none;
+  transform: scale(1.04);
+  filter: drop-shadow(0 0 10px rgba(255, 111, 192, .5));
+}
+
+/* --- inputs --- */
+.ldp-input {
+  height: 46px;
+  border-radius: 10px;
+  border: 1.5px solid #e3d7f0;
+  font-size: 14px;
+  padding: 0 16px;
+  color: #3b2650;
+}
+
+.ldp-input:focus {
+  border-color: var(--c-pink);
+  box-shadow: 0 0 0 .2rem rgba(255, 47, 146, .15);
+}
+
+.ldp-input::placeholder {
+  color: #b3a5c4;
+}
+
+.ldp-input-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #6b5a80;
+  margin: 6px 0 -2px;
+}
+
+/* Ảnh thật mattruoc.png / matsau.png */
+.ldp-upload-field {
+  display: block;
+  width: 100%;
+  height: 46px;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+  transition: .15s;
+}
+
+.ldp-upload-field:hover {
+  filter: brightness(1.08);
+}
+
+.register-note {
+  text-align: center;
+  font-size: 12.5px;
+  color: #b53a86;
+  margin: 26px 0 0;
+  font-style: italic;
+}
+
+.register-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+/* Nút ĐỒNG Ý / HỦY BỎ bằng ảnh thật buttondongy.png / buttonhuybo.png */
+.btn-img-agree,
+.btn-img-cancel {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: .15s;
+}
+
+.btn-img-agree img,
+.btn-img-cancel img {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+
+.btn-img-agree:hover,
+.btn-img-cancel:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* ============ FOOTER ============ */
+.ldp-footer {
+  text-align: center;
+  padding: 24px 0;
+  font-size: 12px;
+  color: #7a6a90;
+  background: var(--c-bg-deep);
+}
+
+/* ============================================================
+   MODALS (Thể lệ / Hướng dẫn / Đăng ký thành công)
+   Khung sci-fi viền cyan, góc vát (clip-path)
+============================================================ */
+.ldp-modal .modal-content {
+  background: transparent;
+  border: none;
+}
+
+.ldp-modal .modal-dialog {
+  max-width: 960px;
+  width: 95%;
+  margin: 1.75rem auto;
+}
+
+.ldp-modal--success .modal-dialog {
+  max-width: 640px;
+  width: 95%;
+}
+
+.ldp-modal .modal-content {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.ldp-modal__frame {
+  position: relative;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  width: 100%;
+  aspect-ratio: 1027 / 681;
+  min-height: auto !important;
+  border: none !important;
+  clip-path: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  /* top padding to clear the title banner (~18%), sides and bottom to stay inside cyan border */
+  padding: 18% 5.5% 7% 5.5% !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.ldp-modal--success .ldp-modal__frame {
+  aspect-ratio: 1200 / 700;
+  padding: 22% 8% 12% 8% !important;
+}
+
+.ldp-modal__close {
+  position: absolute !important;
+  /* X button in the image: ~91% from left = ~9% from right, ~14% from top */
+  top: 11% !important;
+  right: 5% !important;
+  width: 52px !important;
+  height: 52px !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  z-index: 99;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: transform 0.2s ease !important;
+}
+
+.ldp-modal__close:hover {
+  transform: scale(1.15) !important;
+  background: transparent !important;
+}
+
+.ldp-modal__close i {
+  display: none !important;
+}
+
+.ldp-modal__title {
+  display: none !important;
+}
+
+.ldp-modal__body {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 100% !important;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #cbb8e6;
+  padding-right: 10px;
+}
+
+.ldp-modal__body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ldp-modal__body::-webkit-scrollbar-thumb {
+  background: var(--c-cyan-dark);
+  border-radius: 3px;
+}
+
+.ldp-modal__success-text {
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: 18px;
+  color: #fff;
+  margin-top: 10%;
+  text-shadow: 0 0 12px rgba(47, 228, 232, 0.8);
+}
+
+/* ============================================================
+   RESPONSIVE (thu nhỏ khung nội dung form khi stage bị scale nhỏ,
+   giữ literacy cho phần chỉnh sửa nội dung / test không cần scale)
+============================================================ */
+@media (max-width:1919px) {
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
